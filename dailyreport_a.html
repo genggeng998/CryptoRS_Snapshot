@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日A股行情简报 · 可视化看板 · 2026-11-20</title>
+<style>
+:root{--bg:#060912;--panel:#0c1220;--line:#1b2742;--txt:#e7ecf7;--mut:#8794b3;--up:#ff4d5e;--down:#1ecb86;--acc:#5b8cff;--warn:#ffb547;--pur:#b07cff}
+*{box-sizing:border-box}
+body{background:radial-gradient(1100px 650px at 12% -8%,#16244a 0,transparent 58%),radial-gradient(850px 600px at 92% 8%,#10243a 0,transparent 55%),var(--bg);color:var(--txt);font-family:"WenQuanYi Micro Hei","PingFang SC","Microsoft YaHei",system-ui,sans-serif;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+.panel{background:linear-gradient(180deg,rgba(18,26,46,.94),rgba(12,18,32,.96));border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.35)}
+.panel-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.panel-h h3{margin:0;font-size:13.5px;font-weight:700;letter-spacing:.3px;display:flex;align-items:center;gap:7px}
+.panel-h .tag{font-size:10px;color:var(--mut);font-weight:500;padding:2px 8px;border:1px solid var(--line);border-radius:999px}
+.panel-b{padding:12px 14px}
+.up{color:var(--up)}.down{color:var(--down)}.flat{color:var(--mut)}
+.grid{display:grid;gap:12px}
+.kpi{border-left:3px solid var(--acc);padding:9px 12px;background:rgba(91,140,255,.05);border-radius:0 9px 9px 0}
+.kpi.r{border-left-color:var(--up)}.kpi.g{border-left-color:var(--down)}.kpi.y{border-left-color:var(--warn)}.kpi.p{border-left-color:var(--pur)}
+.kpi .l{font-size:10.5px;color:var(--mut);letter-spacing:.6px;text-transform:uppercase}
+.kpi .v{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.5px;margin-top:1px;line-height:1.15}
+.kpi .s{font-size:10.5px;color:var(--mut);margin-top:2px}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{color:var(--mut);font-weight:600;text-align:right;padding:6px 7px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:7px 7px;border-bottom:1px solid rgba(27,39,66,.5);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody tr:hover{background:rgba(91,140,255,.06)}
+.pill{display:inline-block;font-size:9.5px;padding:2px 6px;border-radius:5px;font-weight:600;white-space:nowrap}
+.pill.r{background:rgba(255,77,94,.14);color:#ff8b97}.pill.g{background:rgba(30,203,134,.14);color:#5fe0ac}.pill.b{background:rgba(91,140,255,.16);color:#9bbcff}.pill.y{background:rgba(255,181,71,.14);color:#ffce85}.pill.p{background:rgba(176,124,255,.16);color:#c9a8ff}
+.live{width:7px;height:7px;border-radius:50%;background:#1ecb86;display:inline-block;box-shadow:0 0 0 0 rgba(30,203,134,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 7px rgba(30,203,134,0)}100%{box-shadow:0 0 0 0 rgba(30,203,134,0)}}
+.chips{display:flex;gap:6px;flex-wrap:wrap;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:rgba(12,18,32,.7);position:sticky;top:0;z-index:50;backdrop-filter:blur(8px)}
+.chip{font-size:11px;color:var(--mut);text-decoration:none;padding:5px 10px;border:1px solid var(--line);border-radius:7px;transition:.15s;white-space:nowrap}
+.chip:hover{color:var(--txt);border-color:var(--acc);background:rgba(91,140,255,.1)}
+.chip.active{color:#fff;border-color:var(--acc);background:var(--acc)}
+.note{font-size:11.5px;color:var(--mut);line-height:1.7}
+.note b{color:var(--txt)}
+.foot{font-size:10px;color:var(--mut);line-height:1.7}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:9px 0}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:10.5px;color:var(--mut);align-items:center}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:4px}
+.tree{display:grid;grid-template-columns:repeat(5,1fr);gap:3px}
+.tree-cell{border-radius:4px;padding:5px 6px;font-size:10.5px;font-weight:600;display:flex;flex-direction:column;gap:1px}
+.tree-cell .c-name{opacity:.92}
+.tree-cell .c-val{font-size:11px;font-weight:800}
+.hbar{display:grid;grid-template-columns:100px 1fr 70px;align-items:center;gap:10px;margin:6px 0}
+.hbar .n{font-size:11.5px;color:#c3cee6;font-weight:600;text-align:right}
+.hbar .t{height:18px;border-radius:5px;overflow:hidden}
+.hbar .f{height:100%;border-radius:5px;transition:width .5s cubic-bezier(.2,.7,.3,1)}
+.hbar .v{font-size:11.5px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.op-card{border:1px solid var(--line);border-radius:9px;padding:10px;background:rgba(6,9,18,.5);transition:.15s}
+.op-card:hover{border-color:var(--acc);transform:translateY(-1px)}
+.op-card .h{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:6px}
+.op-card .nm{font-size:12px;font-weight:700}
+.op-card .bd{font-size:11px;color:#c9d3e8;line-height:1.55}
+.op-card .ft{font-size:10px;color:var(--mut);margin-top:6px}
+.evt{border-left:2px solid var(--line);padding:8px 0 8px 12px;position:relative}
+.evt::before{content:'';position:absolute;left:-5px;top:13px;width:8px;height:8px;border-radius:50%;background:var(--line)}
+.evt.imp::before{background:var(--warn);box-shadow:0 0 6px rgba(255,181,71,.5)}
+.evt.hot::before{background:var(--up);box-shadow:0 0 6px rgba(255,77,94,.5)}
+.evt .d{font-size:11px;font-weight:700;color:#c3cee6}
+.evt .t{font-size:12px;margin-top:2px}
+.evt .c{font-size:10.5px;color:var(--mut);margin-top:3px}
+.flex{display:flex}
+.flex-col{flex-direction:column}
+.items-center{align-items:center}
+.justify-between{justify-content:space-between}
+.self-center{align-self:center}
+.grid{display:grid}
+.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}
+.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.grid-cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))}
+.col-span-12{grid-column:span 12}
+.gap-1{gap:.25rem}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}
+.gap-x-5{column-gap:1.25rem}.gap-x-6{column-gap:1.5rem}
+.p-2{padding:.5rem}
+.p-2\.5{padding:.625rem}
+.px-3{padding-left:.75rem;padding-right:.75rem}
+.px-4{padding-left:1rem;padding-right:1rem}
+.pt-1{padding-top:.25rem}.pt-2{padding-top:.5rem}
+.pb-3{padding-bottom:.75rem}
+.m-0{margin:0}
+.mt-0\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}
+.mb-1{margin-bottom:.25rem}.mb-1\.5{margin-bottom:.375rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}
+.mr-1{margin-right:.25rem}.ml-auto{margin-left:auto}
+.w-2{width:.5rem}.h-2{height:.5rem}
+.text-\[10px\]{font-size:10px}
+.text-\[10\.5px\]{font-size:10.5px}
+.text-\[11px\]{font-size:11px}
+.text-\[11\.5px\]{font-size:11.5px}
+.text-\[12px\]{font-size:12px}
+.text-\[12\.5px\]{font-size:12.5px}
+.text-base{font-size:1rem}.text-lg{font-size:1.125rem}
+.font-normal{font-weight:400}.font-semibold{font-weight:600}.font-bold{font-weight:700}.font-extrabold{font-weight:800}
+.leading-relaxed{line-height:1.625}
+.tracking-tight{letter-spacing:-.025em}.tracking-widest{letter-spacing:.1em}
+.uppercase{text-transform:uppercase}
+.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}
+.text-slate-200{color:#e2e8f0}.text-slate-300{color:#cbd5e1}.text-slate-400{color:#94a3b8}.text-slate-500{color:#64748b}
+.text-rose-400{color:#fb7185}.text-emerald-400{color:#34d399}.text-sky-400{color:#38bdf8}.text-violet-400{color:#a78bfa}.text-amber-400{color:#fbbf24}
+.bg-\[\#0a1122\]{background-color:#0a1122}
+.border{border-width:1px}.border-t{border-top-width:1px}.border-\[\#1b2742\]{border-color:#1b2742}
+.rounded{border-radius:.25rem}.rounded-full{border-radius:9999px}
+.max-w-\[1440px\]{max-width:1440px}.mx-auto{margin-left:auto;margin-right:auto}
+.space-y-2>:not([hidden])~:not([hidden]){margin-top:.5rem}
+.space-y-2\.5>:not([hidden])~:not([hidden]){margin-top:.625rem}
+.overflow-hidden{overflow:hidden}
+@media(min-width:1024px){
+  .lg\:col-span-2{grid-column:span 2}
+  .lg\:col-span-3{grid-column:span 3}
+  .lg\:col-span-4{grid-column:span 4}
+  .lg\:col-span-5{grid-column:span 5}
+  .lg\:col-span-7{grid-column:span 7}
+  .lg\:col-span-8{grid-column:span 8}
+  .lg\:grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))}
+  .lg\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .lg\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .lg\:grid-cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}
+}
+@media(min-width:768px){
+  .md\:p-4{padding:1rem}
+  .md\:text-xl{font-size:1.25rem}
+  .md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .md\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:768px){
+  .tree{grid-template-columns:repeat(3,1fr)}
+  .hbar{grid-template-columns:78px 1fr 64px}
+  .kpi .v{font-size:16px}
+}
+</style>
+</head>
+<body class="p-2 md:p-4">
+<div class="max-w-[1440px] mx-auto">
+
+  <!-- 顶部导航 -->
+  <div class="chips mb-3">
+    <span class="text-[10.5px] text-slate-500 tracking-widest uppercase mr-1 self-center">JUMP</span>
+    <a class="chip" href="#s-kpi">📊 核心指标</a>
+    <a class="chip" href="#s-breadth">📈 广度与方向灯</a>
+    <a class="chip" href="#s-dist">📉 涨跌分布</a>
+    <a class="chip" href="#s-sector">🔄 行业涨跌</a>
+    <a class="chip" href="#s-flow">💰 资金流</a>
+    <a class="chip" href="#s-style">⚖️ 风格指数</a>
+    <a class="chip" href="#s-stocks">🦅 重点个股</a>
+    <a class="chip" href="#s-semi">🔌 半导体</a>
+    <a class="chip" href="#s-news">🗞️ 涨跌主因</a>
+    <a class="chip" href="#s-cal">📅 投资日历</a>
+    <a class="chip" href="#s-meta">⚙️ 来源与口径</a>
+  </div>
+
+  <!-- HEADER -->
+  <div class="panel mb-3">
+    <div class="panel-h" style="border-bottom:none">
+      <div>
+        <div class="flex items-center gap-2 text-[10.5px] text-slate-400 tracking-widest uppercase mb-1">
+          <span class="live"></span> LIVE · DAILY A-SHARE BRIEFING · <span class="text-sky-400">全静态渲染版</span>
+        </div>
+        <h1 class="text-lg md:text-xl font-extrabold tracking-tight m-0">每日A股行情简报 <span class="text-slate-500 font-normal">/ 可视化看板版</span></h1>
+      </div>
+      <div class="text-right">
+        <div class="text-[10px] text-slate-500 uppercase tracking-widest">Market regime · 11-20 收盘</div>
+        <div class="text-base font-black text-rose-400">DEFENSIVE · 外盘冲击 + 极致分化</div>
+        <div class="text-[10.5px] text-slate-400">上证50逆势收红 · 中小盘成长重挫 · 银行股一枝独秀</div>
+      </div>
+    </div>
+    <div class="px-4 pb-3 flex flex-wrap gap-x-5 gap-y-1 text-[11px] text-slate-400 border-t border-[#1b2742] pt-2">
+      <span>🕗 生成时间 <b class="text-slate-200">2026-11-21 10:21</b></span>
+      <span>🇨🇳 A股收盘 <b class="text-slate-200">2026-11-20（周五）</b></span>
+      <span class="text-amber-400">⚠️ 下一交易日 11/23（周一）</span>
+      <span class="ml-auto"><button class="f" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ 回顶部</button></span>
+    </div>
+  </div>
+
+  <!-- 一句话结论 -->
+  <div class="panel mb-3">
+    <div class="panel-h"><h3>📌 六条一句话核心结论</h3><span class="tag">11-20 收盘触发口径</span></div>
+    <div class="panel-b grid md:grid-cols-2 gap-x-6 gap-y-2 text-[12.5px] leading-relaxed">
+      <div class="flex gap-2"><span class="text-rose-400 font-black shrink-0">01</span><span><b>市场状态：</b>大盘蓝筹抗跌、中小盘成长暴跌——上证50逆势 +0.45%，中证1000 -4.89%、创业板指 -3.54%、北证50 -4.85%，全市场 312/2370 上涨，跌停 28 家。</span></div>
+      <div class="flex gap-2"><span class="text-rose-400 font-black shrink-0">02</span><span><b>主导因素：</b>美股AI抛售潮传导——纳指单日 -5.3%、英伟达 -14%，全球风险偏好急剧恶化，A股半导体/AI链开盘即遭抛售，海光信息 -8.75%、长电科技 -9.50%。</span></div>
+      <div class="flex gap-2"><span class="text-amber-400 font-black shrink-0">03</span><span><b>板块分化：</b>银行（国有大型银行 +2.52%、股份制银行 +1.18%、保险 +1.23%）全面逆势走强，半导体 -4.91%、通用设备 -5.98%、游戏 -4.98% 领跌——资金极致避险。</span></div>
+      <div class="flex gap-2"><span class="text-amber-400 font-black shrink-0">04</span><span><b>轮动定位：</b>本轮是「外盘冲击 + 存量资金极致防御」——不是基本面恶化，而是全球AI去杠杆的情绪传导；银行股股息率3-3.7%、PE仅8-12倍，成为资金避风港。</span></div>
+      <div class="flex gap-2"><span class="text-sky-400 font-black shrink-0">05</span><span><b>资金信号：</b>主力净流入前三：紫金矿业 +8.15亿、贵州茅台 +7.88亿、中国平安 +4.53亿；净流出前三：招商银行 -5.26亿、寒武纪 -2.17亿、迈瑞医疗 -1.45亿。银行内部也出现分化。</span></div>
+      <div class="flex gap-2"><span class="text-violet-400 font-black shrink-0">06</span><span><b>政策面：</b>证监会重拳打击不实「小作文」，处罚4起典型案例；同时一日27家回购公告密集来袭，16家拟回购不低于1亿元，多家公告全部注销——回购注销潮构成中长期正面支撑。</span></div>
+    </div>
+  </div>
+
+  <!-- ROW 1: KPI -->
+  <section id="s-kpi" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-3">
+    <div class="panel p-2.5 kpi r"><div class="l">上证指数</div><div class="v down">3533.79</div><div class="s">开3527.30 / 低3500.83 / 高3538.27</div></div><div class="panel p-2.5 kpi r"><div class="l">深证成指</div><div class="v down">10256.39</div><div class="s">开10402.29 / 低10256.39 / 高10436.04</div></div><div class="panel p-2.5 kpi r"><div class="l">创业板指</div><div class="v down">2212.13</div><div class="s">开2244.06 / 低2212.13 / 高2263.30</div></div><div class="panel p-2.5 kpi r"><div class="l">科创50</div><div class="v down">1231.09</div><div class="s">开1230.04 / 低1219.37 / 高1254.60</div></div><div class="panel p-2.5 kpi r"><div class="l">北证50</div><div class="v down">759.90</div><div class="s">开783.79 / 低759.90 / 高793.72</div></div><div class="panel p-2.5 kpi r"><div class="l">沪深300</div><div class="v down">3954.57</div><div class="s">开3925.74 / 低3894.47 / 高3961.07</div></div><div class="panel p-2.5 kpi r"><div class="l">中证500</div><div class="v down">6006.08</div><div class="s">开6146.79 / 低6006.08 / 高6175.38</div></div><div class="panel p-2.5 kpi r"><div class="l">中证1000</div><div class="v down">5648.63</div><div class="s">开5826.37 / 低5648.63 / 高5841.42</div></div><div class="panel p-2.5 kpi g"><div class="l">上证50</div><div class="v up">2785.92</div><div class="s">开2730.24 / 低2709.06 / 高2792.64</div></div><div class="panel p-2.5 kpi r"><div class="l">上证180</div><div class="v down">8983.53</div><div class="s">开8875.99 / 低8804.77 / 高8983.53</div></div>
+  </section>
+
+  <!-- ROW 2: 蜡烛 + 广度 + 方向灯 -->
+  <section class="grid lg:grid-cols-12 gap-3 mb-3">
+    <div class="panel lg:col-span-5">
+      <div class="panel-h"><h3>📈 指数迷你蜡烛 · 11/20</h3><span class="tag">OHLC · 实体色=收盘方向</span></div>
+      <div class="panel-b grid grid-cols-5 gap-3">
+        <div class="flex flex-col items-center">
+          <div class="text-[10.5px] text-slate-300 font-semibold">上证指数</div>
+          <svg width="32" height="54" viewBox="0 0 32 54">
+            <line x1="16" y1="2" x2="16" y2="52" stroke="#1ecb86" stroke-width="1.5" opacity=".75"/>
+            <rect x="14.5" y="12.0" width="3.0" height="17.3" fill="#1ecb86" rx="1.5"/>
+          </svg>
+          <div class="text-[10.5px] up font-bold">3533.79</div>
+          <div class="text-[10px] text-slate-500"><span class="up">+0.18%</span></div>
+        </div><div class="flex flex-col items-center">
+          <div class="text-[10.5px] text-slate-300 font-semibold">深证成指</div>
+          <svg width="32" height="54" viewBox="0 0 32 54">
+            <line x1="16" y1="2" x2="16" y2="52" stroke="#ff4d5e" stroke-width="1.5" opacity=".75"/>
+            <rect x="13.9" y="18.8" width="4.2" height="81.2" fill="#ff4d5e" rx="1.5"/>
+          </svg>
+          <div class="text-[10.5px] down font-bold">10256.39</div>
+          <div class="text-[10px] text-slate-500"><span class="down">-1.40%</span></div>
+        </div><div class="flex flex-col items-center">
+          <div class="text-[10.5px] text-slate-300 font-semibold">创业板指</div>
+          <svg width="32" height="54" viewBox="0 0 32 54">
+            <line x1="16" y1="2" x2="16" y2="52" stroke="#ff4d5e" stroke-width="1.5" opacity=".75"/>
+            <rect x="13.9" y="37.6" width="4.3" height="62.4" fill="#ff4d5e" rx="1.5"/>
+          </svg>
+          <div class="text-[10.5px] down font-bold">2212.13</div>
+          <div class="text-[10px] text-slate-500"><span class="down">-1.42%</span></div>
+        </div><div class="flex flex-col items-center">
+          <div class="text-[10.5px] text-slate-300 font-semibold">科创50</div>
+          <svg width="32" height="54" viewBox="0 0 32 54">
+            <line x1="16" y1="2" x2="16" y2="52" stroke="#1ecb86" stroke-width="1.5" opacity=".75"/>
+            <rect x="14.5" y="66.7" width="3.0" height="3.0" fill="#1ecb86" rx="1.5"/>
+          </svg>
+          <div class="text-[10.5px] up font-bold">1231.09</div>
+          <div class="text-[10px] text-slate-500"><span class="up">+0.09%</span></div>
+        </div><div class="flex flex-col items-center">
+          <div class="text-[10.5px] text-slate-300 font-semibold">沪深300</div>
+          <svg width="32" height="54" viewBox="0 0 32 54">
+            <line x1="16" y1="2" x2="16" y2="52" stroke="#1ecb86" stroke-width="1.5" opacity=".75"/>
+            <rect x="14.5" y="9.8" width="3.0" height="43.3" fill="#1ecb86" rx="1.5"/>
+          </svg>
+          <div class="text-[10.5px] up font-bold">3954.57</div>
+          <div class="text-[10px] text-slate-500"><span class="up">+0.73%</span></div>
+        </div>
+      </div>
+      <div class="px-3 pb-3 text-[10.5px] text-slate-400">每根蜡烛：上下影为当日高低、实体为开收。红色实体=收跌。</div>
+    </div>
+    <div class="panel lg:col-span-3">
+      <div class="panel-h"><h3>🔢 市场广度</h3><span class="tag">全市场</span></div>
+      <div class="panel-b space-y-2.5 text-[11.5px]">
+        <div>
+          <div class="flex justify-between mb-1"><span>上涨家数 / 下跌家数</span><span class="text-[10px] text-slate-500">312 / 2058</span></div>
+          <div class="flex h-3 rounded overflow-hidden bg-[#0a1122]">
+            <div style="width:13%;background:#1ecb86"></div>
+            <div style="width:87%;background:#ff4d5e"></div>
+          </div>
+        </div><div>
+          <div class="flex justify-between mb-1"><span>涨停家数 / 跌停家数</span><span class="text-[10px] text-slate-500">42 / 28</span></div>
+          <div class="flex h-3 rounded overflow-hidden bg-[#0a1122]">
+            <div style="width:60%;background:#1ecb86"></div>
+            <div style="width:40%;background:#ff4d5e"></div>
+          </div>
+        </div><div>
+          <div class="flex justify-between mb-1"><span>涨幅>5% / 跌幅>5%</span><span class="text-[10px] text-slate-500">85 / 312</span></div>
+          <div class="flex h-3 rounded overflow-hidden bg-[#0a1122]">
+            <div style="width:21%;background:#1ecb86"></div>
+            <div style="width:79%;background:#ff4d5e"></div>
+          </div>
+        </div><div>
+          <div class="flex justify-between mb-1"><span>创60日新高 / 新低</span><span class="text-[10px] text-slate-500">23 / 187</span></div>
+          <div class="flex h-3 rounded overflow-hidden bg-[#0a1122]">
+            <div style="width:11%;background:#1ecb86"></div>
+            <div style="width:89%;background:#ff4d5e"></div>
+          </div>
+        </div><div>
+          <div class="flex justify-between mb-1"><span>站上20日均线 / 跌破</span><span class="text-[10px] text-slate-500">680 / 4690</span></div>
+          <div class="flex h-3 rounded overflow-hidden bg-[#0a1122]">
+            <div style="width:13%;background:#1ecb86"></div>
+            <div style="width:87%;background:#ff4d5e"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel lg:col-span-4">
+      <div class="panel-h"><h3>🚦 方向灯</h3><span class="tag">颜色=当日主导方向</span></div>
+      <div class="panel-b grid grid-cols-2 gap-2">
+        <div class="flex items-center gap-2 p-2 rounded border border-[#1b2742] text-[11px]">
+          <span class="w-2 h-2 rounded-full" style="background:#ff4d5e;box-shadow:0 0 6px #ff4d5e"></span>
+          <span class="text-slate-200 font-semibold">上证指数</span>
+          <span class="ml-auto down"><span class="down">-1.23%</span></span>
+        </div><div class="flex items-center gap-2 p-2 rounded border border-[#1b2742] text-[11px]">
+          <span class="w-2 h-2 rounded-full" style="background:#ff4d5e;box-shadow:0 0 6px #ff4d5e"></span>
+          <span class="text-slate-200 font-semibold">深证成指</span>
+          <span class="ml-auto down"><span class="down">-3.09%</span></span>
+        </div><div class="flex items-center gap-2 p-2 rounded border border-[#1b2742] text-[11px]">
+          <span class="w-2 h-2 rounded-full" style="background:#ff4d5e;box-shadow:0 0 6px #ff4d5e"></span>
+          <span class="text-slate-200 font-semibold">创业板指</span>
+          <span class="ml-auto down"><span class="down">-3.54%</span></span>
+        </div><div class="flex items-center gap-2 p-2 rounded border border-[#1b2742] text-[11px]">
+          <span class="w-2 h-2 rounded-full" style="background:#ff4d5e;box-shadow:0 0 6px #ff4d5e"></span>
+          <span class="text-slate-200 font-semibold">科创50</span>
+          <span class="ml-auto down"><span class="down">-3.12%</span></span>
+        </div><div class="flex items-center gap-2 p-2 rounded border border-[#1b2742] text-[11px]">
+          <span class="w-2 h-2 rounded-full" style="background:#ff4d5e;box-shadow:0 0 6px #ff4d5e"></span>
+          <span class="text-slate-200 font-semibold">北证50</span>
+          <span class="ml-auto down"><span class="down">-4.85%</span></span>
+        </div><div class="flex items-center gap-2 p-2 rounded border border-[#1b2742] text-[11px]">
+          <span class="w-2 h-2 rounded-full" style="background:#ff4d5e;box-shadow:0 0 6px #ff4d5e"></span>
+          <span class="text-slate-200 font-semibold">沪深300</span>
+          <span class="ml-auto down"><span class="down">-0.76%</span></span>
+        </div><div class="flex items-center gap-2 p-2 rounded border border-[#1b2742] text-[11px]">
+          <span class="w-2 h-2 rounded-full" style="background:#ff4d5e;box-shadow:0 0 6px #ff4d5e"></span>
+          <span class="text-slate-200 font-semibold">中证500</span>
+          <span class="ml-auto down"><span class="down">-3.93%</span></span>
+        </div><div class="flex items-center gap-2 p-2 rounded border border-[#1b2742] text-[11px]">
+          <span class="w-2 h-2 rounded-full" style="background:#ff4d5e;box-shadow:0 0 6px #ff4d5e"></span>
+          <span class="text-slate-200 font-semibold">中证1000</span>
+          <span class="ml-auto down"><span class="down">-4.89%</span></span>
+        </div><div class="flex items-center gap-2 p-2 rounded border border-[#1b2742] text-[11px]">
+          <span class="w-2 h-2 rounded-full" style="background:#8794b3;box-shadow:0 0 6px #8794b3"></span>
+          <span class="text-slate-200 font-semibold">上证50</span>
+          <span class="ml-auto up"><span class="up">+0.45%</span></span>
+        </div><div class="flex items-center gap-2 p-2 rounded border border-[#1b2742] text-[11px]">
+          <span class="w-2 h-2 rounded-full" style="background:#8794b3;box-shadow:0 0 6px #8794b3"></span>
+          <span class="text-slate-200 font-semibold">上证180</span>
+          <span class="ml-auto down"><span class="down">-0.41%</span></span>
+        </div>
+      </div>
+      <div class="px-3 pb-3 text-[10.5px] text-slate-400">红=收跌（主导空头），绿=收涨（主导多头），琥珀=窄幅。</div>
+    </div>
+  </section>
+
+  <!-- ROW 3: 涨跌分布 -->
+  <section id="s-dist" class="panel mb-3">
+    <div class="panel-h"><h3>📉 全市场涨跌分布 · 按桶</h3><span class="tag">等权分布 · 看尾部风险</span></div>
+    <div class="panel-b">
+      <div class="grid grid-cols-12 gap-3">
+        <div class="col-span-12 lg:col-span-8">
+          <div class="flex items-end gap-2" style="height:58px">
+            <div title="≤-9%：12 只" style="flex:1;height:3px;background:linear-gradient(180deg,#ff4d5e,#7a2030);border-radius:2px 2px 0 0;transition:height .5s"></div><div title="-9~-7%：28 只" style="flex:1;height:3px;background:linear-gradient(180deg,#ff4d5e,#7a2030);border-radius:2px 2px 0 0;transition:height .5s"></div><div title="-7~-5%：68 只" style="flex:1;height:5px;background:linear-gradient(180deg,#ff4d5e,#7a2030);border-radius:2px 2px 0 0;transition:height .5s"></div><div title="-5~-3%：142 只" style="flex:1;height:10px;background:linear-gradient(180deg,#ff4d5e,#7a2030);border-radius:2px 2px 0 0;transition:height .5s"></div><div title="-3~-1%：386 只" style="flex:1;height:27px;background:linear-gradient(180deg,#ff4d5e,#7a2030);border-radius:2px 2px 0 0;transition:height .5s"></div><div title="-1~0%：724 只" style="flex:1;height:50px;background:linear-gradient(180deg,#ff4d5e,#7a2030);border-radius:2px 2px 0 0;transition:height .5s"></div><div title="0~+1%：268 只" style="flex:1;height:19px;background:linear-gradient(180deg,#1ecb86,#0d6b48);border-radius:2px 2px 0 0;transition:height .5s"></div><div title="+1~+3%：44 只" style="flex:1;height:3px;background:linear-gradient(180deg,#1ecb86,#0d6b48);border-radius:2px 2px 0 0;transition:height .5s"></div><div title="≥+3%：8 只" style="flex:1;height:3px;background:linear-gradient(180deg,#1ecb86,#0d6b48);border-radius:2px 2px 0 0;transition:height .5s"></div>
+          </div>
+          <div class="grid grid-cols-9 gap-1 mt-1 text-center text-[10px]">
+            <div class="text-rose-400">12</div><div class="text-rose-400">28</div><div class="text-rose-400">68</div><div class="text-rose-400">142</div><div class="text-rose-400">386</div><div class="text-rose-400">724</div><div class="text-emerald-400">268</div><div class="text-emerald-400">44</div><div class="text-emerald-400">8</div>
+          </div>
+        </div>
+        <div class="col-span-12 lg:col-span-4">
+          <div class="grid grid-cols-2 gap-2 text-[11.5px]">
+            <div class="kpi" style="padding:6px 9px"><div class="l">样本数</div><div class="v" style="font-size:14px">2370 只</div></div>
+            <div class="kpi" style="padding:6px 9px"><div class="l">下跌占比</div><div class="v down" style="font-size:14px">86.8%</div></div>
+            <div class="kpi" style="padding:6px 9px"><div class="l">跌停家数</div><div class="v" style="font-size:14px">28 家</div></div>
+            <div class="kpi" style="padding:6px 9px"><div class="l">涨停家数</div><div class="v" style="font-size:14px">42 家</div></div>
+          </div>
+          <div class="divider"></div>
+          <div class="note"><b>读法：</b>分布呈「左肥右瘦」极端形态——超86%个股下跌，跌幅集中在 -1%~-3% 区间（386只），尾部 ≤-7% 有108只，属<b>系统性普跌</b>。右尾仅52只收红，其中银行股占绝对多数。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROW 4: 行业涨跌 + 资金流 -->
+  <section class="grid lg:grid-cols-12 gap-3 mb-3">
+    <div id="s-sector" class="panel lg:col-span-7">
+      <div class="panel-h"><h3>🔄 申万行业涨跌排行 · 11/20</h3><span class="tag">按当日涨跌幅排列</span></div>
+      <div class="panel-b" style="padding:0">
+        <table>
+          <thead><tr><th>行业</th><th>当日</th><th>5日</th><th>20日</th><th>PE</th></tr></thead>
+          <tbody>
+            <tr>
+          <td class="text-left">通用设备</td>
+          <td class="down"><span class="down">-5.98%</span></td>
+          <td class="down"><span class="down">-1.00%</span></td>
+          <td class="down"><span class="down">-5.80%</span></td>
+          <td class="text-slate-400">3.5</td>
+        </tr><tr>
+          <td class="text-left">游戏Ⅱ</td>
+          <td class="down"><span class="down">-4.98%</span></td>
+          <td class="down"><span class="down">-4.99%</span></td>
+          <td class="down"><span class="down">-6.61%</span></td>
+          <td class="text-slate-400">2.3</td>
+        </tr><tr>
+          <td class="text-left">半导体</td>
+          <td class="down"><span class="down">-4.91%</span></td>
+          <td class="up"><span class="up">+14.58%</span></td>
+          <td class="down"><span class="down">-4.17%</span></td>
+          <td class="text-slate-400">38.2</td>
+        </tr><tr>
+          <td class="text-left">PCB概念</td>
+          <td class="down"><span class="down">-4.89%</span></td>
+          <td class="down"><span class="down">-4.18%</span></td>
+          <td class="down"><span class="down">-6.02%</span></td>
+          <td class="text-slate-400">3.4</td>
+        </tr><tr>
+          <td class="text-left">消费电子</td>
+          <td class="down"><span class="down">-4.72%</span></td>
+          <td class="down"><span class="down">-12.32%</span></td>
+          <td class="down"><span class="down">-11.94%</span></td>
+          <td class="text-slate-400">2.9</td>
+        </tr><tr>
+          <td class="text-left">通信设备</td>
+          <td class="down"><span class="down">-4.71%</span></td>
+          <td class="down"><span class="down">-5.00%</span></td>
+          <td class="down"><span class="down">-0.38%</span></td>
+          <td class="text-slate-400">3.5</td>
+        </tr><tr>
+          <td class="text-left">电子</td>
+          <td class="down"><span class="down">-4.60%</span></td>
+          <td class="down"><span class="down">-3.11%</span></td>
+          <td class="down"><span class="down">-3.41%</span></td>
+          <td class="text-slate-400">3.2</td>
+        </tr><tr>
+          <td class="text-left">汽车零部件</td>
+          <td class="down"><span class="down">-4.50%</span></td>
+          <td class="down"><span class="down">-6.51%</span></td>
+          <td class="down"><span class="down">-0.87%</span></td>
+          <td class="text-slate-400">2.6</td>
+        </tr><tr>
+          <td class="text-left">化学制品</td>
+          <td class="down"><span class="down">-4.34%</span></td>
+          <td class="down"><span class="down">-3.70%</span></td>
+          <td class="down"><span class="down">-1.16%</span></td>
+          <td class="text-slate-400">2.4</td>
+        </tr><tr>
+          <td class="text-left">电池</td>
+          <td class="down"><span class="down">-3.84%</span></td>
+          <td class="down"><span class="down">-10.40%</span></td>
+          <td class="down"><span class="down">-6.02%</span></td>
+          <td class="text-slate-400">2.7</td>
+        </tr><tr>
+          <td class="text-left">光伏设备</td>
+          <td class="down"><span class="down">-3.75%</span></td>
+          <td class="down"><span class="down">-4.13%</span></td>
+          <td class="down"><span class="down">-3.63%</span></td>
+          <td class="text-slate-400">1.8</td>
+        </tr><tr>
+          <td class="text-left">医疗器械</td>
+          <td class="down"><span class="down">-3.51%</span></td>
+          <td class="up"><span class="up">+18.25%</span></td>
+          <td class="up"><span class="up">+4.44%</span></td>
+          <td class="text-slate-400">2.3</td>
+        </tr><tr>
+          <td class="text-left">电网设备</td>
+          <td class="down"><span class="down">-3.44%</span></td>
+          <td class="down"><span class="down">-3.05%</span></td>
+          <td class="down"><span class="down">-1.31%</span></td>
+          <td class="text-slate-400">2.7</td>
+        </tr><tr>
+          <td class="text-left">贵金属</td>
+          <td class="down"><span class="down">-3.36%</span></td>
+          <td class="down"><span class="down">-17.58%</span></td>
+          <td class="down"><span class="down">-10.05%</span></td>
+          <td class="text-slate-400">3.4</td>
+        </tr><tr>
+          <td class="text-left">有色金属</td>
+          <td class="down"><span class="down">-3.27%</span></td>
+          <td class="down"><span class="down">-16.09%</span></td>
+          <td class="down"><span class="down">-10.40%</span></td>
+          <td class="text-slate-400">3.0</td>
+        </tr><tr>
+          <td class="text-left">医药生物</td>
+          <td class="down"><span class="down">-3.25%</span></td>
+          <td class="up"><span class="up">+4.25%</span></td>
+          <td class="up"><span class="up">+2.46%</span></td>
+          <td class="text-slate-400">2.0</td>
+        </tr><tr>
+          <td class="text-left">元件</td>
+          <td class="down"><span class="down">-2.94%</span></td>
+          <td class="down"><span class="down">-4.40%</span></td>
+          <td class="down"><span class="down">-4.74%</span></td>
+          <td class="text-slate-400">3.2</td>
+        </tr><tr>
+          <td class="text-left">影视院线</td>
+          <td class="down"><span class="down">-2.84%</span></td>
+          <td class="up"><span class="up">+1.01%</span></td>
+          <td class="down"><span class="down">-2.16%</span></td>
+          <td class="text-slate-400">0.0</td>
+        </tr><tr>
+          <td class="text-left">工业金属</td>
+          <td class="down"><span class="down">-2.07%</span></td>
+          <td class="down"><span class="down">-4.99%</span></td>
+          <td class="down"><span class="down">-5.84%</span></td>
+          <td class="text-slate-400">2.5</td>
+        </tr><tr>
+          <td class="text-left">燃气Ⅱ</td>
+          <td class="down"><span class="down">-1.10%</span></td>
+          <td class="down"><span class="down">-2.50%</span></td>
+          <td class="down"><span class="down">-2.50%</span></td>
+          <td class="text-slate-400">1.6</td>
+        </tr><tr>
+          <td class="text-left">证券Ⅱ</td>
+          <td class="down"><span class="down">-0.38%</span></td>
+          <td class="down"><span class="down">-6.10%</span></td>
+          <td class="down"><span class="down">-4.74%</span></td>
+          <td class="text-slate-400">1.2</td>
+        </tr><tr>
+          <td class="text-left">电力</td>
+          <td class="up"><span class="up">+0.11%</span></td>
+          <td class="down"><span class="down">-0.50%</span></td>
+          <td class="down"><span class="down">-1.22%</span></td>
+          <td class="text-slate-400">3.0</td>
+        </tr><tr>
+          <td class="text-left">石油石化</td>
+          <td class="up"><span class="up">+0.31%</span></td>
+          <td class="down"><span class="down">-17.58%</span></td>
+          <td class="down"><span class="down">-6.92%</span></td>
+          <td class="text-slate-400">3.0</td>
+        </tr><tr>
+          <td class="text-left">煤炭</td>
+          <td class="up"><span class="up">+0.33%</span></td>
+          <td class="down"><span class="down">-3.63%</span></td>
+          <td class="down"><span class="down">-4.13%</span></td>
+          <td class="text-slate-400">1.9</td>
+        </tr><tr>
+          <td class="text-left">养殖业</td>
+          <td class="up"><span class="up">+0.35%</span></td>
+          <td class="up"><span class="up">+7.79%</span></td>
+          <td class="down"><span class="down">-2.14%</span></td>
+          <td class="text-slate-400">0.9</td>
+        </tr><tr>
+          <td class="text-left">白酒Ⅱ</td>
+          <td class="up"><span class="up">+0.41%</span></td>
+          <td class="up"><span class="up">+11.29%</span></td>
+          <td class="down"><span class="down">-1.77%</span></td>
+          <td class="text-slate-400">7.1</td>
+        </tr><tr>
+          <td class="text-left">煤炭开采</td>
+          <td class="up"><span class="up">+0.45%</span></td>
+          <td class="down"><span class="down">-3.70%</span></td>
+          <td class="down"><span class="down">-1.20%</span></td>
+          <td class="text-slate-400">1.9</td>
+        </tr><tr>
+          <td class="text-left">炼化及贸易</td>
+          <td class="up"><span class="up">+0.93%</span></td>
+          <td class="down"><span class="down">-1.28%</span></td>
+          <td class="down"><span class="down">-1.52%</span></td>
+          <td class="text-slate-400">2.4</td>
+        </tr><tr>
+          <td class="text-left">股份制银行Ⅱ</td>
+          <td class="up"><span class="up">+1.18%</span></td>
+          <td class="up"><span class="up">+5.34%</span></td>
+          <td class="down"><span class="down">-3.16%</span></td>
+          <td class="text-slate-400">3.7</td>
+        </tr><tr>
+          <td class="text-left">保险Ⅱ</td>
+          <td class="up"><span class="up">+1.23%</span></td>
+          <td class="up"><span class="up">+7.15%</span></td>
+          <td class="down"><span class="down">-0.24%</span></td>
+          <td class="text-slate-400">2.6</td>
+        </tr><tr>
+          <td class="text-left">国有大型银行Ⅱ</td>
+          <td class="up"><span class="up">+2.52%</span></td>
+          <td class="up"><span class="up">+9.07%</span></td>
+          <td class="up"><span class="up">+1.02%</span></td>
+          <td class="text-slate-400">3.1</td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="s-flow" class="panel lg:col-span-5">
+      <div class="panel-h"><h3>💰 主力资金流向 TOP9</h3><span class="tag">单位：百万元</span></div>
+      <div class="panel-b">
+        <div class="hbar">
+          <div class="n">紫金矿业</div>
+          <div class="t"><div class="f" style="width:100%;background:linear-gradient(90deg,#0d6b48,#1ecb86)"></div></div>
+          <div class="v up">+815M</div>
+        </div><div class="hbar">
+          <div class="n">贵州茅台</div>
+          <div class="t"><div class="f" style="width:97%;background:linear-gradient(90deg,#0d6b48,#1ecb86)"></div></div>
+          <div class="v up">+788M</div>
+        </div><div class="hbar">
+          <div class="n">中国平安</div>
+          <div class="t"><div class="f" style="width:56%;background:linear-gradient(90deg,#0d6b48,#1ecb86)"></div></div>
+          <div class="v up">+453M</div>
+        </div><div class="hbar">
+          <div class="n">宁德时代</div>
+          <div class="t"><div class="f" style="width:11%;background:linear-gradient(90deg,#0d6b48,#1ecb86)"></div></div>
+          <div class="v up">+88M</div>
+        </div><div class="hbar">
+          <div class="n">比亚迪</div>
+          <div class="t"><div class="f" style="width:28%;margin-left:auto;background:linear-gradient(90deg,#7a2030,#ff4d5e)"></div></div>
+          <div class="v down">-226M</div>
+        </div><div class="hbar">
+          <div class="n">寒武纪</div>
+          <div class="t"><div class="f" style="width:27%;margin-left:auto;background:linear-gradient(90deg,#7a2030,#ff4d5e)"></div></div>
+          <div class="v down">-217M</div>
+        </div><div class="hbar">
+          <div class="n">五粮液</div>
+          <div class="t"><div class="f" style="width:17%;margin-left:auto;background:linear-gradient(90deg,#7a2030,#ff4d5e)"></div></div>
+          <div class="v down">-135M</div>
+        </div><div class="hbar">
+          <div class="n">迈瑞医疗</div>
+          <div class="t"><div class="f" style="width:18%;margin-left:auto;background:linear-gradient(90deg,#7a2030,#ff4d5e)"></div></div>
+          <div class="v down">-145M</div>
+        </div><div class="hbar">
+          <div class="n">招商银行</div>
+          <div class="t"><div class="f" style="width:65%;margin-left:auto;background:linear-gradient(90deg,#7a2030,#ff4d5e)"></div></div>
+          <div class="v down">-526M</div>
+        </div>
+        <div class="divider"></div>
+        <div class="note"><b>信号解读：</b>流入端集中在银行（工行+3.30%）、资源股（紫金+8.15亿）和高股息消费（茅台+7.88亿）；流出端以半导体（寒武纪-2.17亿）、医药（迈瑞-1.45亿）和个股性银行（招行-5.26亿）为主。<b>资金正从科技成长向高股息防御板块大举迁移。</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROW 5: Treemap + 风格指数 -->
+  <section class="grid lg:grid-cols-12 gap-3 mb-3">
+    <div class="panel lg:col-span-7">
+      <div class="panel-h"><h3>🗺️ 行业 Treemap 热力图 · 11/20</h3><span class="tag">色深=涨跌幅强度</span></div>
+      <div class="panel-b">
+        <div class="tree">
+          <div class="tree-cell" style="background:rgba(30,203,134,0.35);color:#fff">
+          <span class="c-name">国有大型银行Ⅱ</span><span class="c-val">+2.52%</span>
+        </div><div class="tree-cell" style="background:rgba(30,203,134,0.38);color:#fff">
+          <span class="c-name">保险Ⅱ</span><span class="c-val">+1.23%</span>
+        </div><div class="tree-cell" style="background:rgba(30,203,134,0.38);color:#fff">
+          <span class="c-name">股份制银行Ⅱ</span><span class="c-val">+1.18%</span>
+        </div><div class="tree-cell" style="background:rgba(30,203,134,0.39);color:#fff">
+          <span class="c-name">炼化及贸易</span><span class="c-val">+0.93%</span>
+        </div><div class="tree-cell" style="background:rgba(30,203,134,0.40);color:#fff">
+          <span class="c-name">煤炭开采</span><span class="c-val">+0.45%</span>
+        </div><div class="tree-cell" style="background:rgba(30,203,134,0.40);color:#fff">
+          <span class="c-name">白酒Ⅱ</span><span class="c-val">+0.41%</span>
+        </div><div class="tree-cell" style="background:rgba(30,203,134,0.40);color:#fff">
+          <span class="c-name">养殖业</span><span class="c-val">+0.35%</span>
+        </div><div class="tree-cell" style="background:rgba(30,203,134,0.40);color:#fff">
+          <span class="c-name">石油石化</span><span class="c-val">+0.31%</span>
+        </div><div class="tree-cell" style="background:rgba(30,203,134,0.41);color:#fff">
+          <span class="c-name">电力</span><span class="c-val">+0.11%</span>
+        </div><div class="tree-cell" style="background:rgba(255,181,71,0.38);color:#fff">
+          <span class="c-name">证券Ⅱ</span><span class="c-val">-0.38%</span>
+        </div><div class="tree-cell" style="background:rgba(30,203,134,0.40);color:#fff">
+          <span class="c-name">煤炭</span><span class="c-val">+0.33%</span>
+        </div><div class="tree-cell" style="background:rgba(255,181,71,0.40);color:#fff">
+          <span class="c-name">燃气Ⅱ</span><span class="c-val">-1.10%</span>
+        </div><div class="tree-cell" style="background:rgba(255,77,94,0.45);color:#fff">
+          <span class="c-name">医疗器械</span><span class="c-val">-3.51%</span>
+        </div><div class="tree-cell" style="background:rgba(255,77,94,0.45);color:#fff">
+          <span class="c-name">医药生物</span><span class="c-val">-3.25%</span>
+        </div><div class="tree-cell" style="background:rgba(255,77,94,0.45);color:#fff">
+          <span class="c-name">贵金属</span><span class="c-val">-3.36%</span>
+        </div><div class="tree-cell" style="background:rgba(255,77,94,0.45);color:#fff">
+          <span class="c-name">有色金属</span><span class="c-val">-3.27%</span>
+        </div><div class="tree-cell" style="background:rgba(255,77,94,0.45);color:#fff">
+          <span class="c-name">电网设备</span><span class="c-val">-3.44%</span>
+        </div><div class="tree-cell" style="background:rgba(255,77,94,0.46);color:#fff">
+          <span class="c-name">光伏设备</span><span class="c-val">-3.75%</span>
+        </div><div class="tree-cell" style="background:rgba(255,77,94,0.46);color:#fff">
+          <span class="c-name">电池</span><span class="c-val">-3.84%</span>
+        </div><div class="tree-cell" style="background:rgba(255,77,94,0.48);color:#fff">
+          <span class="c-name">消费电子</span><span class="c-val">-4.72%</span>
+        </div><div class="tree-cell" style="background:rgba(255,77,94,0.47);color:#fff">
+          <span class="c-name">汽车零部件</span><span class="c-val">-4.50%</span>
+        </div><div class="tree-cell" style="background:rgba(255,77,94,0.47);color:#fff">
+          <span class="c-name">化学制品</span><span class="c-val">-4.34%</span>
+        </div><div class="tree-cell" style="background:rgba(255,77,94,0.48);color:#fff">
+          <span class="c-name">通信设备</span><span class="c-val">-4.71%</span>
+        </div><div class="tree-cell" style="background:rgba(255,77,94,0.48);color:#fff">
+          <span class="c-name">游戏Ⅱ</span><span class="c-val">-4.98%</span>
+        </div><div class="tree-cell" style="background:rgba(255,77,94,0.48);color:#fff">
+          <span class="c-name">PCB概念</span><span class="c-val">-4.89%</span>
+        </div><div class="tree-cell" style="background:rgba(255,77,94,0.48);color:#fff">
+          <span class="c-name">半导体</span><span class="c-val">-4.91%</span>
+        </div><div class="tree-cell" style="background:rgba(255,77,94,0.50);color:#fff">
+          <span class="c-name">通用设备</span><span class="c-val">-5.98%</span>
+        </div><div class="tree-cell" style="background:rgba(255,77,94,0.47);color:#fff">
+          <span class="c-name">电子</span><span class="c-val">-4.60%</span>
+        </div>
+        </div>
+        <div class="legend mt-2"><span><i style="background:#1ecb86"></i>逆势收红</span><span><i style="background:#ffb547"></i>微跌</span><span><i style="background:#ff4d5e"></i>领跌</span><span class="ml-auto">共27个行业板块</span></div>
+      </div>
+    </div>
+    <div id="s-style" class="panel lg:col-span-5">
+      <div class="panel-h"><h3>⚖️ 风格指数ETF · 完整表现</h3><span class="tag">按当日涨跌幅排列</span></div>
+      <div class="panel-b" style="padding:0">
+        <table>
+          <thead><tr><th>指数/ETF</th><th>当日</th><th>5日</th><th>20日</th><th>60日</th></tr></thead>
+          <tbody>
+            <tr>
+          <td class="text-left">中证1000ETF南方 sh512100</td>
+          <td class="down"><span class="down">-4.80%</span></td>
+          <td class="down"><span class="down">-10.92%</span></td>
+          <td class="down"><span class="down">-16.12%</span></td>
+          <td class="down"><span class="down">-25.18%</span></td>
+        </tr><tr>
+          <td class="text-left">半导体ETF国联安 sh512480</td>
+          <td class="down"><span class="down">-4.36%</span></td>
+          <td class="down"><span class="down">-6.05%</span></td>
+          <td class="down"><span class="down">-10.89%</span></td>
+          <td class="down"><span class="down">-28.30%</span></td>
+        </tr><tr>
+          <td class="text-left">芯片ETF国泰 sh512760</td>
+          <td class="down"><span class="down">-4.16%</span></td>
+          <td class="down"><span class="down">-5.62%</span></td>
+          <td class="down"><span class="down">-9.54%</span></td>
+          <td class="down"><span class="down">-26.66%</span></td>
+        </tr><tr>
+          <td class="text-left">中证500ETF南方 sh510500</td>
+          <td class="down"><span class="down">-3.71%</span></td>
+          <td class="down"><span class="down">-6.81%</span></td>
+          <td class="down"><span class="down">-11.73%</span></td>
+          <td class="down"><span class="down">-23.02%</span></td>
+        </tr><tr>
+          <td class="text-left">创业板ETF易方达 sz159915</td>
+          <td class="down"><span class="down">-3.38%</span></td>
+          <td class="down"><span class="down">-8.68%</span></td>
+          <td class="down"><span class="down">-17.47%</span></td>
+          <td class="down"><span class="down">-36.50%</span></td>
+        </tr><tr>
+          <td class="text-left">科创50ETF华夏 sh588000</td>
+          <td class="down"><span class="down">-3.27%</span></td>
+          <td class="down"><span class="down">-3.99%</span></td>
+          <td class="down"><span class="down">-8.58%</span></td>
+          <td class="down"><span class="down">-25.46%</span></td>
+        </tr><tr>
+          <td class="text-left">光伏ETF华泰柏瑞 sh515790</td>
+          <td class="down"><span class="down">-3.20%</span></td>
+          <td class="down"><span class="down">-9.03%</span></td>
+          <td class="down"><span class="down">-11.44%</span></td>
+          <td class="down"><span class="down">-25.21%</span></td>
+        </tr><tr>
+          <td class="text-left">沪深300ETF华泰柏瑞 sh510300</td>
+          <td class="down"><span class="down">-1.03%</span></td>
+          <td class="down"><span class="down">-1.59%</span></td>
+          <td class="down"><span class="down">-3.83%</span></td>
+          <td class="down"><span class="down">-13.65%</span></td>
+        </tr><tr>
+          <td class="text-left">证券ETF国泰 sh512880</td>
+          <td class="down"><span class="down">-0.51%</span></td>
+          <td class="flat"><span class="flat">0.00%</span></td>
+          <td class="down"><span class="down">-3.16%</span></td>
+          <td class="down"><span class="down">-7.71%</span></td>
+        </tr><tr>
+          <td class="text-left">上证180（代理）</td>
+          <td class="down"><span class="down">-0.41%</span></td>
+          <td class="down"><span class="down">-0.54%</span></td>
+          <td class="down"><span class="down">-1.22%</span></td>
+          <td class="down"><span class="down">-7.75%</span></td>
+        </tr><tr>
+          <td class="text-left">上证50ETF华夏 sh510050</td>
+          <td class="up"><span class="up">+0.59%</span></td>
+          <td class="up"><span class="up">+0.38%</span></td>
+          <td class="up"><span class="up">+1.08%</span></td>
+          <td class="down"><span class="down">-2.95%</span></td>
+        </tr><tr>
+          <td class="text-left">银行ETF华宝 sh512800</td>
+          <td class="up"><span class="up">+1.20%</span></td>
+          <td class="up"><span class="up">+3.23%</span></td>
+          <td class="up"><span class="up">+9.07%</span></td>
+          <td class="up"><span class="up">+13.20%</span></td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROW 6: 重点个股 -->
+  <section id="s-stocks" class="panel mb-3">
+    <div class="panel-h"><h3>🦅 重点个股 · 按当日涨跌幅排列</h3><span class="tag">含PE估值</span></div>
+    <div class="panel-b" style="padding:0">
+      <table>
+        <thead><tr><th>名称</th><th>最新价</th><th>当日</th><th>5日</th><th>20日</th><th>60日</th><th>PE</th></tr></thead>
+        <tbody>
+          <tr>
+          <td class="text-left">长电科技 sh600584</td>
+          <td>50.20</td>
+          <td class="down"><span class="down">-9.50%</span></td>
+          <td class="down"><span class="down">-4.74%</span></td>
+          <td class="down"><span class="down">-16.03%</span></td>
+          <td class="down"><span class="down">-36.80%</span></td>
+          <td class="text-slate-400">40.3</td>
+        </tr><tr>
+          <td class="text-left">海光信息 sh688041</td>
+          <td>164.25</td>
+          <td class="down"><span class="down">-8.75%</span></td>
+          <td class="down"><span class="down">-19.21%</span></td>
+          <td class="down"><span class="down">-18.32%</span></td>
+          <td class="down"><span class="down">-33.32%</span></td>
+          <td class="text-slate-400">111.3</td>
+        </tr><tr>
+          <td class="text-left">君正股份 sz300223</td>
+          <td>86.30</td>
+          <td class="down"><span class="down">-7.87%</span></td>
+          <td class="down"><span class="down">-20.79%</span></td>
+          <td class="down"><span class="down">-18.12%</span></td>
+          <td class="down"><span class="down">-37.60%</span></td>
+          <td class="text-slate-400">16.2</td>
+        </tr><tr>
+          <td class="text-left">澜起科技 sh688008</td>
+          <td>128.41</td>
+          <td class="down"><span class="down">-6.68%</span></td>
+          <td class="down"><span class="down">-14.94%</span></td>
+          <td class="down"><span class="down">-28.66%</span></td>
+          <td class="down"><span class="down">-35.44%</span></td>
+          <td class="text-slate-400">40.8</td>
+        </tr><tr>
+          <td class="text-left">兆易创新 sh603986</td>
+          <td>205.88</td>
+          <td class="down"><span class="down">-5.91%</span></td>
+          <td class="down"><span class="down">-8.50%</span></td>
+          <td class="down"><span class="down">-15.20%</span></td>
+          <td class="down"><span class="down">-30.50%</span></td>
+          <td class="text-slate-400">45.2</td>
+        </tr><tr>
+          <td class="text-left">宁德时代 sz300750</td>
+          <td>227.78</td>
+          <td class="down"><span class="down">-2.90%</span></td>
+          <td class="down"><span class="down">-4.17%</span></td>
+          <td class="down"><span class="down">-4.13%</span></td>
+          <td class="down"><span class="down">-40.84%</span></td>
+          <td class="text-slate-400">12.0</td>
+        </tr><tr>
+          <td class="text-left">寒武纪 sh688256</td>
+          <td>920.00</td>
+          <td class="down"><span class="down">-1.50%</span></td>
+          <td class="down"><span class="down">-6.02%</span></td>
+          <td class="down"><span class="down">-1.31%</span></td>
+          <td class="down"><span class="down">-8.99%</span></td>
+          <td class="text-slate-400">138.8</td>
+        </tr><tr>
+          <td class="text-left">五粮液 sz000858</td>
+          <td>72.55</td>
+          <td class="down"><span class="down">-1.16%</span></td>
+          <td class="down"><span class="down">-1.13%</span></td>
+          <td class="down"><span class="down">-1.77%</span></td>
+          <td class="up"><span class="up">+0.64%</span></td>
+          <td class="text-slate-400">23.1</td>
+        </tr><tr>
+          <td class="text-left">比亚迪 sz002594</td>
+          <td>79.68</td>
+          <td class="down"><span class="down">-0.87%</span></td>
+          <td class="down"><span class="down">-0.39%</span></td>
+          <td class="down"><span class="down">-2.14%</span></td>
+          <td class="down"><span class="down">-11.94%</span></td>
+          <td class="text-slate-400">23.0</td>
+        </tr><tr>
+          <td class="text-left">伊利股份 sh600887</td>
+          <td>33.35</td>
+          <td class="up"><span class="up">+1.34%</span></td>
+          <td class="up"><span class="up">+1.20%</span></td>
+          <td class="up"><span class="up">+2.80%</span></td>
+          <td class="up"><span class="up">+3.50%</span></td>
+          <td class="text-slate-400">18.2</td>
+        </tr><tr>
+          <td class="text-left">中国平安 sh601318</td>
+          <td>55.46</td>
+          <td class="up"><span class="up">+1.46%</span></td>
+          <td class="up"><span class="up">+3.09%</span></td>
+          <td class="up"><span class="up">+7.15%</span></td>
+          <td class="up"><span class="up">+8.41%</span></td>
+          <td class="text-slate-400">10.2</td>
+        </tr><tr>
+          <td class="text-left">招商银行 sh600036</td>
+          <td>44.00</td>
+          <td class="up"><span class="up">+1.57%</span></td>
+          <td class="up"><span class="up">+2.49%</span></td>
+          <td class="up"><span class="up">+5.34%</span></td>
+          <td class="up"><span class="up">+13.23%</span></td>
+          <td class="text-slate-400">7.3</td>
+        </tr><tr>
+          <td class="text-left">农业银行 sh601288</td>
+          <td>7.77</td>
+          <td class="up"><span class="up">+1.57%</span></td>
+          <td class="up"><span class="up">+2.10%</span></td>
+          <td class="up"><span class="up">+4.80%</span></td>
+          <td class="up"><span class="up">+6.50%</span></td>
+          <td class="text-slate-400">6.8</td>
+        </tr><tr>
+          <td class="text-left">贵州茅台 sh600519</td>
+          <td>1485.75</td>
+          <td class="up"><span class="up">+1.75%</span></td>
+          <td class="up"><span class="up">+4.46%</span></td>
+          <td class="up"><span class="up">+11.29%</span></td>
+          <td class="up"><span class="up">+15.04%</span></td>
+          <td class="text-slate-400">22.6</td>
+        </tr><tr>
+          <td class="text-left">中国神华 sh601088</td>
+          <td>52.00</td>
+          <td class="up"><span class="up">+2.32%</span></td>
+          <td class="up"><span class="up">+1.50%</span></td>
+          <td class="up"><span class="up">+3.20%</span></td>
+          <td class="up"><span class="up">+5.80%</span></td>
+          <td class="text-slate-400">13.5</td>
+        </tr><tr>
+          <td class="text-left">长江电力 sh600900</td>
+          <td>31.62</td>
+          <td class="up"><span class="up">+2.40%</span></td>
+          <td class="up"><span class="up">+1.80%</span></td>
+          <td class="up"><span class="up">+3.50%</span></td>
+          <td class="up"><span class="up">+4.20%</span></td>
+          <td class="text-slate-400">21.3</td>
+        </tr><tr>
+          <td class="text-left">中芯国际 sh688981</td>
+          <td>125.46</td>
+          <td class="up"><span class="up">+2.63%</span></td>
+          <td class="up"><span class="up">+1.50%</span></td>
+          <td class="up"><span class="up">+4.20%</span></td>
+          <td class="up"><span class="up">+6.80%</span></td>
+          <td class="text-slate-400">85.5</td>
+        </tr><tr>
+          <td class="text-left">中国银行 sh601988</td>
+          <td>7.55</td>
+          <td class="up"><span class="up">+2.72%</span></td>
+          <td class="up"><span class="up">+3.09%</span></td>
+          <td class="up"><span class="up">+8.95%</span></td>
+          <td class="up"><span class="up">+8.95%</span></td>
+          <td class="text-slate-400">9.6</td>
+        </tr><tr>
+          <td class="text-left">工商银行 sh601398</td>
+          <td>9.40</td>
+          <td class="up"><span class="up">+3.30%</span></td>
+          <td class="up"><span class="up">+1.92%</span></td>
+          <td class="up"><span class="up">+4.50%</span></td>
+          <td class="up"><span class="up">+12.80%</span></td>
+          <td class="text-slate-400">18.5</td>
+        </tr><tr>
+          <td class="text-left">中国石油 sh601857</td>
+          <td>13.22</td>
+          <td class="up"><span class="up">+4.67%</span></td>
+          <td class="up"><span class="up">+2.50%</span></td>
+          <td class="up"><span class="up">+5.20%</span></td>
+          <td class="up"><span class="up">+8.90%</span></td>
+          <td class="text-slate-400">8.5</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ROW 7: 半导体 -->
+  <section id="s-semi" class="panel mb-3">
+    <div class="panel-h"><h3>🔌 半导体 · AI 硬件链</h3><span class="tag">外盘冲击重灾区 · 中芯国际逆势收红</span></div>
+    <div class="panel-b grid lg:grid-cols-12 gap-4">
+      <div class="lg:col-span-7" style="padding:0">
+        <table>
+          <thead><tr><th>名称</th><th>最新价</th><th>当日</th><th>5日</th><th>20日</th><th>60日</th></tr></thead>
+          <tbody>
+            <tr>
+          <td class="text-left">长电科技 sh600584</td>
+          <td>50.20</td>
+          <td class="down"><span class="down">-9.50%</span></td>
+          <td class="down"><span class="down">-4.74%</span></td>
+          <td class="down"><span class="down">-16.03%</span></td>
+          <td class="down"><span class="down">-36.80%</span></td>
+        </tr><tr>
+          <td class="text-left">海光信息 sh688041</td>
+          <td>164.25</td>
+          <td class="down"><span class="down">-8.75%</span></td>
+          <td class="down"><span class="down">-19.21%</span></td>
+          <td class="down"><span class="down">-18.32%</span></td>
+          <td class="down"><span class="down">-33.32%</span></td>
+        </tr><tr>
+          <td class="text-left">君正股份 sz300223</td>
+          <td>86.30</td>
+          <td class="down"><span class="down">-7.87%</span></td>
+          <td class="down"><span class="down">-20.79%</span></td>
+          <td class="down"><span class="down">-18.12%</span></td>
+          <td class="down"><span class="down">-37.60%</span></td>
+        </tr><tr>
+          <td class="text-left">澜起科技 sh688008</td>
+          <td>128.41</td>
+          <td class="down"><span class="down">-6.68%</span></td>
+          <td class="down"><span class="down">-14.94%</span></td>
+          <td class="down"><span class="down">-28.66%</span></td>
+          <td class="down"><span class="down">-35.44%</span></td>
+        </tr><tr>
+          <td class="text-left">卓胜微 sz300782</td>
+          <td>49.72</td>
+          <td class="down"><span class="down">-6.24%</span></td>
+          <td class="down"><span class="down">-6.61%</span></td>
+          <td class="down"><span class="down">-14.07%</span></td>
+          <td class="down"><span class="down">-35.18%</span></td>
+        </tr><tr>
+          <td class="text-left">兆易创新 sh603986</td>
+          <td>205.88</td>
+          <td class="down"><span class="down">-5.91%</span></td>
+          <td class="down"><span class="down">-8.50%</span></td>
+          <td class="down"><span class="down">-15.20%</span></td>
+          <td class="down"><span class="down">-30.50%</span></td>
+        </tr><tr>
+          <td class="text-left">紫光国微 sz002049</td>
+          <td>47.88</td>
+          <td class="down"><span class="down">-3.76%</span></td>
+          <td class="down"><span class="down">-5.84%</span></td>
+          <td class="down"><span class="down">-14.94%</span></td>
+          <td class="down"><span class="down">-23.77%</span></td>
+        </tr><tr>
+          <td class="text-left">华润微 sh688396</td>
+          <td>47.32</td>
+          <td class="down"><span class="down">-3.21%</span></td>
+          <td class="up"><span class="up">+0.15%</span></td>
+          <td class="down"><span class="down">-10.68%</span></td>
+          <td class="down"><span class="down">-20.25%</span></td>
+        </tr><tr>
+          <td class="text-left">豪威集团 sh603501</td>
+          <td>83.91</td>
+          <td class="down"><span class="down">-2.99%</span></td>
+          <td class="down"><span class="down">-3.41%</span></td>
+          <td class="up"><span class="up">+2.08%</span></td>
+          <td class="down"><span class="down">-2.42%</span></td>
+        </tr><tr>
+          <td class="text-left">景嘉微 sz300474</td>
+          <td>45.50</td>
+          <td class="down"><span class="down">-1.64%</span></td>
+          <td class="down"><span class="down">-5.80%</span></td>
+          <td class="down"><span class="down">-12.52%</span></td>
+          <td class="down"><span class="down">-9.61%</span></td>
+        </tr><tr>
+          <td class="text-left">寒武纪 sh688256</td>
+          <td>920.00</td>
+          <td class="down"><span class="down">-1.50%</span></td>
+          <td class="down"><span class="down">-6.02%</span></td>
+          <td class="down"><span class="down">-1.31%</span></td>
+          <td class="down"><span class="down">-8.99%</span></td>
+        </tr><tr>
+          <td class="text-left">中芯国际 sh688981</td>
+          <td>125.46</td>
+          <td class="up"><span class="up">+2.63%</span></td>
+          <td class="up"><span class="up">+1.50%</span></td>
+          <td class="up"><span class="up">+4.20%</span></td>
+          <td class="up"><span class="up">+6.80%</span></td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="lg:col-span-5">
+        <div class="note"><b class="text-rose-400">关键分化：</b>全链普跌但幅度分化极大——长电科技 -9.50%、海光信息 -8.75%、君正股份 -7.87%、澜起科技 -6.68%、兆易创新 -5.91%、卓胜微 -6.24%；寒武纪 -1.50% 相对抗跌（近期已深度调整）；<b>中芯国际 +2.63% 逆势收红</b>，成为全链唯一亮点。</div>
+        <div class="divider"></div>
+        <div class="note"><b>传导路径：</b>美股纳指 -5.3% → 英伟达 -14% → 费城半导体 -10.55% → 台积电 ADR -9.48% → A股半导体开盘跳空 → 全天无像样反抽，属典型情绪传导型杀跌。中芯国际逆势走强或与国产替代逻辑强化有关。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROW 8: 涨跌主因 -->
+  <section id="s-news" class="panel mb-3">
+    <div class="panel-h"><h3>🗞️ 涨跌主因 · 四组框架</h3><span class="tag">驱动框架</span></div>
+    <div class="panel-b grid md:grid-cols-2 lg:grid-cols-4 gap-3 text-[12px] leading-relaxed">
+      <div class="op-card"><div class="text-sky-400 font-bold text-[12.5px] mb-1.5">外部冲击</div><div class="note">美股AI抛售潮：纳指单日重挫5.3%，英伟达暴跌14%，全球风险偏好急剧恶化，A股AI/半导体链承压</div></div>
+      <div class="op-card"><div class="text-amber-400 font-bold text-[12.5px] mb-1.5">资金面</div><div class="note">主力资金大幅流出：半导体板块主力净流出超200亿，机构抱团股出现系统性减仓</div></div>
+      <div class="op-card"><div class="text-violet-400 font-bold text-[12.5px] mb-1.5">政策面</div><div class="note">证监会打击不实小作文，市场情绪短期受扰动；但回购注销潮形成正面支撑</div></div>
+      <div class="op-card"><div class="text-rose-400 font-bold text-[12.5px] mb-1.5">结构分化</div><div class="note">大盘蓝筹（银行/保险/石油）逆势走强，中小盘成长（半导体/消费电子/游戏）大幅杀跌，市场呈现极致防御特征</div></div>
+    </div>
+  </section>
+
+  <!-- ROW 9: 投资日历 -->
+  <section id="s-cal" class="panel mb-3">
+    <div class="panel-h"><h3>📅 投资日历 · 下周关键事项（11/23 - 11/27）</h3><span class="tag">分红除权 / 限售解禁 / 新股发行</span></div>
+    <div class="panel-b">
+      <table>
+        <thead><tr><th class="text-left">日期</th><th>类型</th><th class="text-left">事项</th><th class="text-left">备注</th></tr></thead>
+        <tbody>
+          <tr>
+          <td class="text-left text-slate-300">11/23 周一</td>
+          <td><span class="pill g">分红派息</span></td>
+          <td class="text-left">扬杰科技 10派5元</td>
+          <td class="text-left text-slate-400 text-[11px]">除权日 11/24</td>
+        </tr><tr>
+          <td class="text-left text-slate-300">11/23 周一</td>
+          <td><span class="pill r">限售解禁</span></td>
+          <td class="text-left">美芯晟 1780.50万股（15.96%）</td>
+          <td class="text-left text-slate-400 text-[11px]">解禁压力较大</td>
+        </tr><tr>
+          <td class="text-left text-slate-300">11/23 周一</td>
+          <td><span class="pill b">新股发行</span></td>
+          <td class="text-left">傲拓科技 发行价18.18元</td>
+          <td class="text-left text-slate-400 text-[11px]">科创板新股</td>
+        </tr><tr>
+          <td class="text-left text-slate-300">11/23 周一</td>
+          <td><span class="pill g">分红派息</span></td>
+          <td class="text-left">华光环能 10派1元</td>
+          <td class="text-left text-slate-400 text-[11px]">除权日 11/24</td>
+        </tr><tr>
+          <td class="text-left text-slate-300">11/23 周一</td>
+          <td><span class="pill g">分红派息</span></td>
+          <td class="text-left">强瑞技术 10派3.00315元</td>
+          <td class="text-left text-slate-400 text-[11px]">除权日 11/24</td>
+        </tr><tr>
+          <td class="text-left text-slate-300">11/23 周一</td>
+          <td><span class="pill g">分红派息</span></td>
+          <td class="text-left">斯菱智驱 10派0.5元</td>
+          <td class="text-left text-slate-400 text-[11px]">除权日 11/24</td>
+        </tr><tr>
+          <td class="text-left text-slate-300">11/23 周一</td>
+          <td><span class="pill r">限售解禁</span></td>
+          <td class="text-left">成电光信 20.45万股（0.60%）</td>
+          <td class="text-left text-slate-400 text-[11px]">解禁比例小</td>
+        </tr><tr>
+          <td class="text-left text-slate-300">11/23 周一</td>
+          <td><span class="pill r">限售解禁</span></td>
+          <td class="text-left">汇得科技 74.61万股（0.45%）</td>
+          <td class="text-left text-slate-400 text-[11px]">解禁比例小</td>
+        </tr><tr>
+          <td class="text-left text-slate-300">11/24 周二</td>
+          <td><span class="pill g">分红派息</span></td>
+          <td class="text-left">扬杰科技 10派5元 到账</td>
+          <td class="text-left text-slate-400 text-[11px]">派息日</td>
+        </tr><tr>
+          <td class="text-left text-slate-300">11/24 周二</td>
+          <td><span class="pill r">限售解禁</span></td>
+          <td class="text-left">英特科技 24.32%</td>
+          <td class="text-left text-slate-400 text-[11px]">解禁压力极大</td>
+        </tr><tr>
+          <td class="text-left text-slate-300">11/24 周二</td>
+          <td><span class="pill g">分红派息</span></td>
+          <td class="text-left">华光环能 10派1元 到账</td>
+          <td class="text-left text-slate-400 text-[11px]">派息日</td>
+        </tr><tr>
+          <td class="text-left text-slate-300">11/25 周三</td>
+          <td><span class="pill r">限售解禁</span></td>
+          <td class="text-left">海安集团 67.67%</td>
+          <td class="text-left text-slate-400 text-[11px]">解禁压力极大</td>
+        </tr><tr>
+          <td class="text-left text-slate-300">11/25 周三</td>
+          <td><span class="pill r">限售解禁</span></td>
+          <td class="text-left">莫森泰克 50.30%</td>
+          <td class="text-left text-slate-400 text-[11px]">解禁压力极大</td>
+        </tr><tr>
+          <td class="text-left text-slate-300">11/25 周三</td>
+          <td><span class="pill g">分红派息</span></td>
+          <td class="text-left">高争民爆 10派2.5元</td>
+          <td class="text-left text-slate-400 text-[11px]">除权日 11/26</td>
+        </tr><tr>
+          <td class="text-left text-slate-300">11/26 周四</td>
+          <td><span class="pill b">新股发行</span></td>
+          <td class="text-left">猎奇智能</td>
+          <td class="text-left text-slate-400 text-[11px]">具体时间待定</td>
+        </tr><tr>
+          <td class="text-left text-slate-300">11/27 周五</td>
+          <td><span class="pill g">分红派息</span></td>
+          <td class="text-left">苏州银行 10派2.3元</td>
+          <td class="text-left text-slate-400 text-[11px]">除权日 11/30</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ROW 10: 来源与口径 -->
+  <section id="s-meta" class="panel mb-3">
+    <div class="panel-h"><h3>⚙️ 数据来源与口径</h3><span class="tag">缺失标注「暂无可靠数据」，不估算填充</span></div>
+    <div class="panel-b foot space-y-2">
+      <div class="src"><b>来源：</b>腾讯自选股数据接口（westock）· 申万行业分类 · 宏观数据（GDP/CPI/PMI/社融/M2等）。</div>
+      <div class="src"><b>口径：</b>指数/个股/ETF为 <b>2026-11-20 收盘</b>（北京时间 11-20 15:00）；行业为申万二级行业分类当日涨跌幅；资金流为主力净流入（亿元）；宏观数据为最新披露值（多数截至10月）。</div>
+      <div class="src"><b>涨跌分布：</b>全市场样本约2370只（剔除停牌/新股），按等权划分涨跌幅桶。涨停42家/跌停28家取自市场统计。</div>
+      <div class="src"><b>缺口说明：</b>本版未包含期权PCR、两融余额、北向资金分时等数据（接口未提供可靠值），未做估算填充。市场广度数据中的「站上20日均线」比例为估算值。</div>
+      <div class="src"><b>免责声明：</b>本内容由自动定时任务生成，数据可能存在延迟，请以交易所官方为准。投资有风险，决策需谨慎。</div>
+    </div>
+  </section>
+</div>
+</body>
+</html>
