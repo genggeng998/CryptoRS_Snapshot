@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日美股行情简报 · 2026-11-27（周五） 收盘（可视化看板 v7 · 绿涨红跌）</title>
+<style>
+
+:root{--up:#1ecb86;--down:#ff4d5e;--flat:#8794b3;--warn:#ffb547;--bg:#070c18;--panel:#0d1526;--line:#1b2742}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#dfe6f2;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-size:12.5px;line-height:1.55}
+a{color:inherit;text-decoration:none}
+.up{color:var(--up)}.down{color:var(--down)}.flat{color:var(--flat)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.panel-h{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:9px 12px;border-bottom:1px solid var(--line)}
+.panel-h h3{margin:0;font-size:12.5px;font-weight:700;color:#eef3fb}
+.panel-b{padding:10px 12px 12px}
+.tag{font-size:10px;color:#8fa0c4;border:1px solid var(--line);border-radius:9999px;padding:2px 8px;white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font-size:10.5px;color:#9fb0d4;border:1px solid var(--line);border-radius:6px;padding:4px 8px;background:#0b1220}
+.chip:hover,.chip.active{border-color:#3b5aa0;color:#e8eefb}
+.live{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--up);box-shadow:0 0 8px var(--up)}
+.grid{display:grid}
+.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}
+.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.grid-cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.grid-cols-7{grid-template-columns:repeat(7,minmax(0,1fr))}
+.grid-cols-9{grid-template-columns:repeat(9,minmax(0,1fr))}
+.grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))}
+.col-span-12{grid-column:span 12}
+.lg\:col-span-2{grid-column:span 2}.lg\:col-span-3{grid-column:span 3}.lg\:col-span-4{grid-column:span 4}
+.lg\:col-span-5{grid-column:span 5}.lg\:col-span-6{grid-column:span 6}.lg\:col-span-7{grid-column:span 7}
+.lg\:col-span-8{grid-column:span 8}
+.gap-1{gap:.25rem}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}
+.gap-y-1{row-gap:.25rem}.gap-x-5{column-gap:1.25rem}
+.p-2{padding:.5rem}.p-2\.5{padding:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}
+.mb-1{margin-bottom:.25rem}.mb-1\.5{margin-bottom:.375rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}
+.mt-0\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}
+.m-0{margin:0}.ml-auto{margin-left:auto}.mr-1{margin-right:.25rem}.shrink-0{flex-shrink:0}
+.text-base{font-size:1rem}.text-lg{font-size:1.125rem}
+.text-\[10px\]{font-size:10px}.text-\[10\.5px\]{font-size:10.5px}.text-\[11px\]{font-size:11px}
+.text-\[11\.5px\]{font-size:11.5px}.text-\[12px\]{font-size:12px}.text-\[12\.5px\]{font-size:12.5px}
+.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-black{font-weight:900}.font-semibold{font-weight:600}.font-normal{font-weight:400}
+.leading-relaxed{line-height:1.625}
+.tracking-tight{letter-spacing:-.025em}.tracking-widest{letter-spacing:.1em}.uppercase{text-transform:uppercase}
+.text-left{text-align:left}.text-right{text-align:right}.text-center{text-align:center}
+.text-slate-200{color:#e2e8f0}.text-slate-300{color:#cbd5e1}.text-slate-400{color:#94a3b8}.text-slate-500{color:#64748b}
+.text-emerald-400{color:var(--up)}.text-rose-400{color:var(--down)}.text-sky-400{color:#38bdf8}
+.text-violet-400{color:#a78bfa}.text-amber-400{color:var(--warn)}
+.max-w-\[1440px\]{max-width:1440px}.mx-auto{margin-left:auto;margin-right:auto}
+.space-y-2>:not([hidden])~:not([hidden]){margin-top:.5rem}
+.space-y-2\.5>:not([hidden])~:not([hidden]){margin-top:.625rem}
+.flex{display:flex}.items-center{align-items:center}.justify-between{justify-content:space-between}
+.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.self-center{align-self:center}
+.rounded{border-radius:.25rem}.rounded-full{border-radius:9999px}
+.border{border-width:1px;border-color:var(--line)}
+.divider{height:1px;background:var(--line);margin:10px 0}
+.note{font-size:11.5px;color:#a9b8d6;line-height:1.6}
+.note b{color:#e8eefb}
+.src{font-size:10.5px;color:#8595b8;line-height:1.7}
+.foot .src b{color:#c9d5ee}
+/* [2026-11-26 修复] 表格宽度模型：外层 .tw 负责横向滚动，表格不再 width:100% */
+.tw{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;font-size:11.5px}
+th,td{overflow-wrap:break-word;padding:7px 7px;border-bottom:1px solid rgba(27,39,66,.5);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+th{color:#8fa0c4;font-weight:600;font-size:10.5px;position:sticky;top:0;background:#0d1526;cursor:pointer;user-select:none}
+th .ar{color:#4d5f88;font-size:9px}
+th.sorted{color:#dbe4f5}
+tbody tr:hover{background:rgba(91,140,255,.07)}
+.tabs{display:flex;gap:5px}
+.tab{font-size:10.5px;color:#8fa0c4;border:1px solid var(--line);background:#0b1220;border-radius:6px;padding:3px 9px;cursor:pointer}
+.tab.active{border-color:#3b5aa0;color:#e8eefb;background:#12203c}
+/* KPI */
+.kpi{border-left:3px solid var(--line)}
+.kpi.g{border-left-color:var(--up)}.kpi.r{border-left-color:var(--down)}.kpi.y{border-left-color:var(--warn)}
+.kpi .l{font-size:10px;color:#8595b8;letter-spacing:.04em}
+.kpi .v{font-size:18px;font-weight:800;letter-spacing:-.02em;line-height:1.25}
+.kpi .s{font-size:10px;color:#8798ba}
+/* 树图 / 条 */
+.tree{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.tree-cell{border-radius:6px;padding:7px 8px;display:flex;flex-direction:column;gap:1px;min-width:0}
+.tree-cell .c-name{font-size:10px;opacity:.9;overflow-wrap:anywhere}
+.tree-cell .c-val{font-size:12px;font-weight:800}
+.hbar{display:grid;grid-template-columns:74px 1fr 58px;align-items:center;gap:6px;margin-bottom:4px;font-size:10.5px}
+.hbar .t{height:11px;background:#0a1122;border-radius:3px;overflow:hidden}
+.hbar .f{height:100%;border-radius:3px}
+.hbar .v{text-align:right;font-variant-numeric:tabular-nums}
+.legend{display:flex;flex-wrap:wrap;gap:9px;font-size:10px;color:#8595b8}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px}
+.op-card{border:1px solid var(--line);border-radius:8px;padding:9px 10px;background:#0b1220}
+.op-card .nm{font-weight:700;font-size:11.5px;color:#e8eefb}
+.op-card .h{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;margin-bottom:5px}
+.op-card .bd{font-size:11px;color:#a9b8d6;line-height:1.65}
+.op-card .ft{font-size:9.5px;color:#6c7ea3;margin-top:6px}
+.pill{font-size:9.5px;border-radius:9999px;padding:2px 7px;white-space:nowrap}
+.pill.r{background:rgba(255,77,94,.14);color:#ff8b98;border:1px solid rgba(255,77,94,.3)}
+.pill.g{background:rgba(30,203,134,.14);color:#5ee0ad;border:1px solid rgba(30,203,134,.3)}
+.pill.y{background:rgba(255,181,71,.14);color:#ffc978;border:1px solid rgba(255,181,71,.3)}
+.pill.n{background:rgba(135,148,179,.12);color:#9fb0d4;border:1px solid rgba(135,148,179,.28)}
+.lvl{display:flex;align-items:center;gap:8px;border-left:3px solid var(--line);padding:3px 8px;margin-bottom:3px;font-size:11px}
+.lvl.sup{border-left-color:var(--up)}
+.lvl.res{border-left-color:var(--down)}
+.lvl .pos{font-weight:800;font-variant-numeric:tabular-nums;min-width:74px}
+.lvl .ds{color:#93a3c4;font-size:10.5px}
+#topBtn{position:fixed;right:14px;bottom:14px;width:34px;height:34px;border-radius:50%;background:#12203c;border:1px solid var(--line);color:#c9d5ee;font-size:14px;cursor:pointer;z-index:50}
+/* [2026-11-26 修复·第二层] grid item 默认 min-width:auto，其最小尺寸=内容最小尺寸，
+   会把卡片撑破；所有网格子项统一 min-width:0，溢出由各表自己的 .tw 滚动容器吸收 */
+.grid>*{min-width:0}
+@media(min-width:768px){.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.md\:p-4{padding:1rem}.md\:text-xl{font-size:1.25rem}}
+@media(min-width:1024px){.lg\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.lg\:grid-cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}.lg\:grid-cols-7{grid-template-columns:repeat(7,minmax(0,1fr))}.lg\:grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))}}
+@media(max-width:768px){table{min-width:420px}.tree{grid-template-columns:repeat(2,1fr)}.hbar{grid-template-columns:66px 1fr 54px}.kpi .v{font-size:16px}}
+
+</style>
+</head>
+<body class="p-2 md:p-4">
+<div class="max-w-[1440px] mx-auto">
+
+<div class="chips mb-3">
+    <span class="text-[10.5px] text-slate-500 tracking-widest uppercase mr-1 self-center">JUMP</span>
+    <a class="chip" href="#s-kpi">📊 核心指标</a>
+    <a class="chip" href="#s-breadth">📈 广度与方向灯</a>
+    <a class="chip" href="#s-dist">📉 涨跌分布</a>
+    <a class="chip" href="#s-sector">🔄 板块相对强弱</a>
+    <a class="chip" href="#s-style">⚖️ 风格因子</a>
+    <a class="chip" href="#s-tech">🦅 个股矩阵</a>
+    <a class="chip" href="#s-struct">🧩 市场结构</a>
+    <a class="chip" href="#s-semi">🔌 半导体</a>
+    <a class="chip" href="#s-tech2">📉 技术位阶梯</a>
+    <a class="chip" href="#s-news">🗞️ 涨跌主因</a>
+    <a class="chip" href="#s-opinion">💬 机构观点</a>
+    <a class="chip" href="#s-social">💬 交易台视角</a>
+    <a class="chip" href="#s-outlook">🔭 事件日历</a>
+    <a class="chip" href="#s-cal">📅 日历明细</a>
+    <a class="chip" href="#s-meta">⚙️ 来源与口径</a>
+  </div>
+
+  <div class="panel mb-3">
+    <div class="panel-h" style="border-bottom:none">
+      <div>
+        <div class="flex items-center gap-2 text-[10.5px] text-slate-400 tracking-widest uppercase mb-1">
+          <span class="live"></span> DAILY US EQUITIES BRIEFING · <span class="text-sky-400">v7 数据驱动版</span>
+        </div>
+        <h1 class="text-lg md:text-xl font-extrabold tracking-tight m-0">每日美股行情简报 <span class="text-slate-500 font-normal">/ 可视化看板</span></h1>
+      </div>
+      <div class="text-right">
+        <div class="text-[10px] text-slate-500 uppercase tracking-widest">Market regime · 11/27 收盘</div>
+        <div class="text-base font-black" style="color:#5ee0ad">REBOUND · 缩量普涨</div>
+        <div class="text-[10.5px] text-slate-400">纳指 +2.31% 收复 24,000 · 道指 +1.18% 再创新高 50,774.94 · 11/25 深 V 低点未被回踩</div>
+      </div>
+    </div>
+    <div class="panel-b pt-1 pb-3 flex flex-wrap gap-x-5 gap-y-1 text-[11px] text-slate-400">
+      <span>🕗 生成时间 <b class="text-slate-200">2026-11-28 10:30</b>（北京时间）</span>
+      <span>🇺🇸 美东收盘 <b class="text-slate-200">2026-11-27（周五）（周五 · 缩短交易日 13:00）</b></span>
+      <span>📐 口径 <b class="text-slate-200">绿涨红跌</b></span>
+      <span class="text-amber-400">⚡ 缩量普涨：11 个行业板块全绿 · 半导体 SMH +4.17%% 领涨 · 英伟达 +0.80% 明显跑输</span>
+    </div>
+  </div>
+
+
+  <section class="panel mb-3">
+    <div class="panel-b flex flex-wrap gap-x-5 gap-y-1 text-[11px] text-slate-400">
+      <span>📌 <b class="text-slate-200">六条一句话结论</b></span>
+      <span>01 市场状态：<b class="text-emerald-400">缩量普涨</b>，11 个行业板块全绿、三大指数高开高走，11/27 收 7,297.49（+1.60%%）、纳指 +2.31%% 收复 24,000、道指 +1.18%% 报 50,774.94 创历史新高。</span>
+      <span>02 主导因素：<b>假期流动性 + 超跌回补</b>，当日没有新的宏观数据；半导体 14 只样本均涨 +%.2f%%，涨幅与近 20 日跌幅高度相关。</span>
+      <span>03 龙头背离：<b class="text-rose-400">英伟达只涨 +0.80%%</b>（样本倒数第一，成交 269.5 亿美元、量比 0.51），微软 +0.60%%、谷歌 +0.68%% 同样落后。</span>
+      <span>04 波动率：VXX <b>-7.93%%</b> 至 22.40，恐慌退潮，但近 20 日仍 +28.66%%，波动中枢明显高于 11 月中旬。</span>
+      <span>05 风险点：缩量（量比普遍 &lt; 1）+ 权重缺席 + 加息仍近充分定价（核心 PCE 3.3%% 为 2023 年 11 月以来最高）。</span>
+      <span>06 下一个关键：<b class="text-amber-400">12/4 非农 → 12/9–10 FOMC 与点阵图 → 12/10 CPI</b>；技术上看 11/25 深 V 低点（标普 6,970 / 纳指 22,632）是否被回踩。</span>
+    </div>
+  </section>
+
+
+  <section id="s-kpi" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 mb-3">
+    <div class="panel p-2.5 kpi g"><div class="l">道指 DJIA</div><div class="v up">50,774.94</div><div class="s">+1.18% · 收盘创历史新高</div></div>
+    <div class="panel p-2.5 kpi g"><div class="l">S&amp;P 500</div><div class="v up">7,297.49</div><div class="s">+1.60% · 收在日内高附近</div></div>
+    <div class="panel p-2.5 kpi g"><div class="l">纳斯达克综指</div><div class="v up">24,129.50</div><div class="s">+2.31% · 收复 24,000</div></div>
+    <div class="panel p-2.5 kpi g"><div class="l">半导体 SMH</div><div class="v up">+4.17%</div><div class="s">440.06 · 14 只样本均涨 +4.72%</div></div>
+    <div class="panel p-2.5 kpi g"><div class="l">罗素 2000（IWM）</div><div class="v up">273.79</div><div class="s">+1.83% · 近 5 日 +3.62% 最强</div></div>
+    <div class="panel p-2.5 kpi r"><div class="l">VIX 代理 VXX</div><div class="v down">22.40</div><div class="s">-7.93% · 恐慌明显退潮</div></div>
+    <div class="panel p-2.5 kpi y"><div class="l">英伟达 NVDA</div><div class="v" style="color:#ffb547">150.49</div><div class="s">+0.80% · 近 20 日 -29.57%</div></div>
+  </section>
+
+
+  <section id="s-breadth" class="grid lg:grid-cols-12 gap-3 mb-3">
+    <div class="panel lg:col-span-5">
+      <div class="panel-h"><h3>📈 指数迷你蜡烛 · 11/27</h3><span class="tag">OHLC · 实体=开收、颜色=涨跌</span></div>
+      <div class="panel-b grid grid-cols-3 gap-3" id="candles"></div>
+      <div class="px-3 pb-3 text-[10.5px] text-slate-400">三大指数全部高开高走、收在日内高位附近：开盘即为全天最低区域，全天没有回踩 11/25 的深 V 低点。绿=收涨、红=收跌。</div>
+    </div>
+    <div class="panel lg:col-span-3">
+      <div class="panel-h"><h3>🔢 市场广度</h3><span class="tag">混合口径 · 见来源说明</span></div>
+      <div class="panel-b space-y-2.5 text-[11.5px]" id="breadthBody"></div>
+    </div>
+    <div class="panel lg:col-span-4">
+      <div class="panel-h"><h3>🚦 Market Direction 方向灯</h3><span class="tag">颜色=当日方向</span></div>
+      <div class="panel-b grid grid-cols-2 gap-2" id="lightsBody"></div>
+      <div class="px-3 pb-3 text-[10.5px] text-slate-400">8 盏灯 7 绿 1 琥珀：普涨且高 Beta 领先（SMH &gt; QQQ &gt; SPY），VXX 大跌说明这是<b>风险偏好回补</b>而非防御性买盘。VIX 指数本体接口未返回，全文用 VXX 作代理，不等同于 VIX 现货。</div>
+    </div>
+  </section>
+
+
+  <section id="s-dist" class="panel mb-3">
+    <div class="panel-h"><h3>📉 样本涨跌分布 · 按桶</h3><span class="tag">24 只接口实测样本 · 非全市场</span></div>
+    <div class="panel-b">
+      <div class="grid grid-cols-12 gap-3">
+        <div class="col-span-12 lg:col-span-8">
+          <div class="flex items-end gap-2" id="histBars" style="height:58px"></div>
+          <div class="grid grid-cols-9 gap-1 mt-1 text-center text-[10px]" id="histLbl"></div>
+        </div>
+        <div class="col-span-12 lg:col-span-4">
+          <div class="grid grid-cols-2 gap-2 text-[11.5px]" id="histStats"></div>
+          <div class="divider"></div>
+          <div class="note"><b>读法：</b>24 只样本<b>无一收跌</b>，分布整体右移：+2%~+5% 有 11 只、+5% 以上 6 只。右侧由存储与设备领涨（美光 +7.60%、迈威尔 +7.34%、高通 +6.29%、安谋 +6.22%）；左侧最弱的是英伟达 +0.80%、谷歌 +0.68%、微软 +0.60%——<b>权重股缺席反弹</b>是本轮上涨与 11/23 那次最大的不同。<br><b>口径：</b>仅覆盖本轮取到实测值的 24 只（Mag7 + 半导体 + 代表性权重），<b>不代表标普 500 全样本，不可外推市场涨跌家数</b>。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="s-sector" class="grid lg:grid-cols-12 gap-3 mb-3">
+    <div class="panel lg:col-span-7">
+      <div class="panel-h">
+        <h3>🔄 板块相对强弱 + 风格因子 · 行业 ETF</h3>
+        <span class="tag">11/27 当日 · 绿条越长涨越多</span>
+      </div>
+      <div class="panel-b">
+        <div class="tabs" data-tabs="sec">
+          <button class="tab active" data-v="day">11/27 当日</button>
+          <button class="tab" data-v="week">5 日涨幅</button>
+        </div>
+        <div class="text-[10.5px] text-slate-500 mt-2 mb-1">可点击表头排序 · 含 4 只风格 ETF 作基准</div>
+        <div class="tw"><table id="secTable">
+          <thead><tr><th>行业 / 风格 ETF</th><th>当日涨跌</th><th>5 日</th><th>相对 SPX(日)</th><th>近 20 日</th></tr></thead>
+          <tbody></tbody>
+        </table></div>
+      </div>
+    </div>
+    <div class="panel lg:col-span-5">
+      <div class="panel-h"><h3>🔍 轮动阶段定位</h3><span class="tag">框架解读，非预测</span></div>
+      <div class="panel-b space-y-2.5">
+        <div class="note"><b class="text-emerald-400">成长 vs 价值 · 成长反攻：</b>科技 XLK +2.80%、通讯 XLC +1.99%、可选消费 XLY +2.11%，QQQ +2.69% 明显强于 SPY +1.62%——11/24、11/25 的「成长崩塌」在缩量中被部分收回。</div>
+        <div class="note"><b class="text-emerald-400">高 Beta 领涨：</b>SMH +4.17%、IWM +1.83% 跑赢 SPY，罗素 2000 近 5 日 +3.62% 为全表最强，说明资金愿意重新承担波动，而不是只买防御。</div>
+        <div class="note"><b class="text-amber-400">但周期并没有接棒：</b>材料 XLB +1.84% 虽强，能源 XLE +1.26%（近 20 日 -10.25%）、公用 XLU +0.28%、医疗 XLV +0.28%、必需消费 XLP +0.41% 涨幅垫底——这是<b>超跌反弹</b>的形态，不是新的顺周期主线。</div>
+        <div class="note"><b class="text-rose-400">最需警惕的一条：</b>半导体样本 14 只平均 +4.72%，而英伟达只有 +0.80%、成交额 269 亿美元仍是全市场最大。<b>龙头不涨、小弟普涨</b>，通常意味着修复性行情而非趋势重启。</div>
+        <div class="divider"></div>
+        <div class="note"><b>定位结论：</b>缩量普涨 + 高 Beta 回补 + 权重缺席 = <b>跌深反弹的中段</b>。方向偏多但质量一般：11/25 深 V 低点（标普 6,970 / 纳指 22,632）是否会被回踩，比今天涨了多少更重要。12/4 非农、12/9–10 FOMC 之前不宜把单日普涨当趋势确认。</div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="grid lg:grid-cols-12 gap-3 mb-3">
+    <div class="panel lg:col-span-7">
+      <div class="panel-h"><h3>🗺️ 板块 Treemap 热力图 · 11/27 当日</h3><span class="tag">颜色=当日涨跌（绿涨红跌）</span></div>
+      <div class="panel-b">
+        <div class="tree" id="treeBody"></div>
+        <div class="legend mt-2"><span><i style="background:#1ecb86"></i>领涨</span><span><i style="background:#0d6b48"></i>温和上涨</span><span><i style="background:#ffb547"></i>持平附近</span><span><i style="background:#ff4d5e"></i>下跌</span><span class="ml-auto">11 个行业板块全部收涨 · 科技 XLK +2.80% 最强、医疗与公用 +0.28% 最弱</span></div>
+      </div>
+    </div>
+    <div class="panel lg:col-span-5">
+      <div class="panel-h"><h3>💰 行业 ETF 资金流（百万美元）</h3><span class="tag">11/27 · 成交额×方向估算</span></div>
+      <div class="panel-b">
+        <div id="flowBars"></div>
+        <div class="divider"></div>
+        <div class="note"><b class="text-amber-400">口径与背离：</b>这是<b>估算代理</b>（行业 ETF 成交额 × 当日涨跌方向），不是真实净流入，只能用于比较相对强度。科技 XLK 与能源 XLE、金融 XLF 成交额都在 11–12 亿美元量级且全部收涨，方向一致；<b>没有出现「价涨钱走」的背离</b>，但同样也没有放量——SMH 成交 33.1 亿美元却只涨 4.17%%，量比普遍低于 1（英伟达 0.51、AMD 0.53），<b>是缩量修复</b>。</div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="s-style" class="grid lg:grid-cols-5 gap-3 mb-3">
+    <div class="panel lg:col-span-3">
+      <div class="panel-h"><h3>⚖️ 板块相对强弱矩阵 · 行业 ETF vs SPX</h3><span class="tag">单元格=(板块涨跌 − SPY 涨跌)</span></div>
+      <div class="panel-b">
+        <div class="grid grid-cols-2 gap-2" id="rsBody"></div>
+        <div class="legend mt-2"><span><i style="background:#1ecb86"></i>跑赢</span><span><i style="background:#ffb547"></i>基本同步</span><span><i style="background:#ff4d5e"></i>跑输</span><span class="ml-auto">基准：SPY +1.62%</span></div>
+      </div>
+    </div>
+    <div class="panel lg:col-span-2">
+      <div class="panel-h"><h3>🎚️ 风格代理 · 完整表现（可排序）</h3><span class="tag">当日 / 5 日 / 20 日</span></div>
+      <div class="panel-b" style="padding:0">
+        <div class="tw"><table id="styleTable">
+          <thead><tr><th>风格代理</th><th>11/27</th><th>5 日</th><th>近 20 日</th></tr></thead>
+          <tbody></tbody>
+        </table></div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="s-tech" class="grid lg:grid-cols-12 gap-3 mb-3">
+    <div class="panel lg:col-span-7">
+      <div class="panel-h">
+        <h3>🦅 重点个股 · Mag 7 + 半导体龙头（11/27 收盘）</h3>
+        <div class="tabs" data-tabs="mega">
+          <button class="tab active" data-v="all">全部 24</button>
+          <button class="tab" data-v="mega">七巨头</button>
+          <button class="tab" data-v="up">仅收涨</button>
+        </div>
+      </div>
+      <div class="panel-b" style="padding:0">
+        <div class="tw"><table id="megaTable">
+          <thead><tr><th>名称</th><th>收盘</th><th>涨跌幅</th><th>日内振幅</th><th>5 日</th><th>20 日</th><th>成交额(亿$)</th><th>量比</th></tr></thead>
+          <tbody></tbody>
+        </table></div>
+      </div>
+    </div>
+    <div class="panel lg:col-span-5" id="s-struct">
+      <div class="panel-h"><h3>🧩 市场结构三栏</h3><span class="tag">衍生品 / 资金 / 宏观</span></div>
+      <div class="panel-b grid grid-cols-1 gap-3 text-[11.5px]">
+        <div>
+          <div class="text-[10.5px] text-slate-500 uppercase tracking-widest mb-1.5">衍生品 / 期权</div>
+          <div class="note">VIX 现货：接口<b>未返回有效值</b>，以 VXX <b>-7.93%</b>（22.40）作代理，恐慌显著退潮</div>
+          <div class="note">VXX 近 5 日 -6.00%，但近 20 日仍 <b>+28.66%</b>——波动率中枢仍明显高于 11 月中旬</div>
+          <div class="note">VIX 期限结构、期权 PCR：本期<b>暂无可靠数据</b>，不估算</div>
+          <div class="note">盘后期货 / 次日股指期货：<b>接口未返回，暂缺</b></div>
+        </div>
+        <div class="divider"></div>
+        <div>
+          <div class="text-[10.5px] text-slate-500 uppercase tracking-widest mb-1.5">资金面（估算代理）</div>
+          <div class="note">口径：行业 ETF 成交额 × 当日涨跌方向，<b>非真实净流入</b>。SMH 成交 33.1 亿美元居首且收涨，是最大流入方向；XLE 12.7 亿、XLF 12.4 亿、XLK 11.1 亿次之。</div>
+          <div class="note">量能：24 只样本量比普遍 &lt; 1（英伟达 0.51、AMD 0.53、微软 0.56），<b>缩量反弹特征明确</b></div>
+          <div class="note">FINRA 保证金债务、真实机构净流：<b>暂无可靠数据</b></div>
+        </div>
+        <div class="divider"></div>
+        <div>
+          <div class="text-[10.5px] text-slate-500 uppercase tracking-widest mb-1.5">宏观 / 利率商品</div>
+          <div class="note">10Y 美债：接口未返回 11/27 有效值；最近可得为 <b>11/25 的 4.85%</b>（较 11/19 的 5.04% 回落），仅作背景，不当日值使用</div>
+          <div class="note">DXY、黄金、WTI 原油：本轮接口<b>未返回</b>，一律留 —，不估算</div>
+          <div class="note">已落地：Q3 GDP 二次修正 +4.3%、10 月核心 PCE +3.3%（11/25 公布，均为超预期）</div>
+          <div class="note">下一个：12/4 非农 → 12/9–10 FOMC + 点阵图 → 12/10 CPI</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="s-semi" class="panel mb-3">
+    <div class="panel-h"><h3>🔌 半导体 · AI 硬件链（11/27）</h3><span class="tag">SMH +4.17%% · 14 只样本全绿 · 均涨 +4.72%%</span></div>
+    <div class="panel-b grid lg:grid-cols-12 gap-4">
+      <div class="lg:col-span-7" style="padding:0">
+        <div class="tw"><table id="semiTable">
+          <thead><tr><th>名称</th><th>收盘</th><th>涨跌幅</th><th>5 日</th><th>近 20 日</th><th>成交额(亿$)</th></tr></thead>
+          <tbody></tbody>
+        </table></div>
+      </div>
+      <div class="lg:col-span-5">
+        <div class="note"><b class="text-emerald-400">全面反弹但结构没变：</b>14 只样本全部收涨，14 只涨幅超过 SMH 的 +4.17%。涨最猛的是前期跌最狠的：美光 +7.60%（近 20 日 -30.75%）、迈威尔 +7.34%（20 日 -35.63%）、英特尔 +5.38%（20 日 -37.66%）——<b>典型的空头回补排序，不是基本面重估</b>。</div>
+        <div class="divider"></div>
+        <div class="note"><b class="text-amber-400">龙头缺席：</b>英伟达只涨 +0.80% 报 150.49，在 14 只里排倒数第一，成交额 269.5 亿美元仍是全表最大、但量比只有 0.51。近 20 日 -29.57%，标普全球把它 AA 评级列入负面观察（90 天内可能下调）的影响还没消化完。</div>
+        <div class="divider"></div>
+        <div class="note"><b>两端：</b>涨端 美光 +7.60%、迈威尔 +7.34%、高通 +6.29%、安谋 +6.22%、英特尔 +5.38%；弱端 英伟达 +0.80%、苹果 +0.83%、台积电 +3.21%、博通 +3.82%。<b>存储/设备/模拟强、算力龙头弱</b>，与 11/25 的「模拟涨、存储跌」正好反过来，两天都没形成一致的产业逻辑。</div>
+        <div class="divider"></div>
+        <div class="note"><b>口径：</b>费城半导体指数（SOX）本体接口未返回，全文以 <b>SMH（VanEck 半导体 ETF）+4.17%</b> 作代理，不等同于 SOX 指数涨跌；样本为 14 只龙头龙头股，非 30 只成份全样本。</div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="s-tech2" class="panel mb-3">
+    <div class="panel-h"><h3>📉 技术位阶梯 · 基于 11/27 实际 OHLC</h3><span class="tag">支撑绿 / 阻力红 · 非投资建议</span></div>
+    <div class="panel-b grid lg:grid-cols-2 gap-5">
+      <div class="op-card" style="border-color:rgba(91,140,255,.3)">
+        <div class="flex items-center justify-between mb-2"><span class="nm">S&amp;P 500</span><span class="pill n">7,297.49 · 当日区间 7,211.46–7,304.10</span></div>
+        <div class="text-[10.5px] text-slate-400 mb-1">▼ 支撑位（下方）</div>
+        <div class="lvl sup"><span class="pos text-emerald-400">7,211.46</span><span class="ds">当日最低 · 开盘即低位</span></div>
+        <div class="lvl sup"><span class="pos text-emerald-400">7,182.78</span><span class="ds">11/25 收盘 · 跳空缺口下沿</span></div>
+        <div class="lvl sup"><span class="pos text-emerald-400">6,970.11</span><span class="ds">11/25 深 V 最低 · 关键防线</span></div>
+        <div class="text-[10.5px] text-slate-400 mb-1 mt-3">▲ 阻力位（上方）</div>
+        <div class="lvl res"><span class="pos text-rose-400">7,304.10</span><span class="ds">当日最高</span></div>
+        <div class="lvl res"><span class="pos text-rose-400">7,309</span><span class="ds">11/19 前高区 · 正面临测试</span></div>
+        <div class="lvl res"><span class="pos text-rose-400">7,400</span><span class="ds">整数关口 / 上方真空区</span></div>
+      </div>
+      <div class="op-card" style="border-color:rgba(124,245,212,.3)">
+        <div class="flex items-center justify-between mb-2"><span class="nm">纳斯达克综指</span><span class="pill n">24,129.50 · 当日区间 23,690.60–24,149.09</span></div>
+        <div class="text-[10.5px] text-slate-400 mb-1">▼ 支撑位（下方）</div>
+        <div class="lvl sup"><span class="pos text-emerald-400">23,690.60</span><span class="ds">当日最低</span></div>
+        <div class="lvl sup"><span class="pos text-emerald-400">23,585.80</span><span class="ds">11/25 收盘 · 缺口下沿</span></div>
+        <div class="lvl sup"><span class="pos text-emerald-400">22,632.40</span><span class="ds">11/25 深 V 最低 · 关键防线</span></div>
+        <div class="text-[10.5px] text-slate-400 mb-1 mt-3">▲ 阻力位（上方）</div>
+        <div class="lvl res"><span class="pos text-rose-400">24,149.09</span><span class="ds">当日最高</span></div>
+        <div class="lvl res"><span class="pos text-rose-400">24,353</span><span class="ds">7/23 高点区 · 下一目标</span></div>
+        <div class="lvl res"><span class="pos text-rose-400">24,089.56</span><span class="ds">11/23 反弹高点 · 已收复</span></div>
+      </div>
+    </div>
+    <div class="px-3 pb-3 text-[10.5px] text-slate-400">说明：支撑/阻力只取当日与前一交易日实际高低点、以及此前已披露的关键价位，<b>不引入未取到数据的均线或 RSI</b>；RSI、MACD 本轮接口未返回，故不列。缺口（11/25 收盘 → 11/27 开盘）若在后续交易日被回补，是本次反弹质量转弱的第一个信号。</div>
+  </section>
+
+
+  <section id="s-news" class="panel mb-3">
+    <div class="panel-h"><h3>🗞️ 涨跌主因 · 四组因果</h3><span class="tag">11/27 驱动框架</span></div>
+    <div class="panel-b grid md:grid-cols-2 lg:grid-cols-4 gap-3 text-[12px] leading-relaxed">
+      <div class="op-card"><div class="text-emerald-400 font-bold text-[12.5px] mb-1.5">🎪 缩量普涨：假期效应为主</div><div class="note">感恩节后首个交易日、美东 13:00 提前收盘，成交显著萎缩（24 只样本量比普遍 &lt; 1，英伟达 0.51）。三大指数全部高开高走、11 个行业板块全绿，但<b>幅度由流动性主导而非新增信息</b>——当天没有任何新的宏观数据发布。</div></div>
+      <div class="op-card"><div class="text-emerald-400 font-bold text-[12.5px] mb-1.5">🔧 超跌反弹：跌最狠的涨最猛</div><div class="note">半导体 14 只样本平均 +4.72%，涨幅前列正是近 20 日跌最深的：美光 +7.60%（20 日 -30.75%）、迈威尔 +7.34%（-35.63%）、英特尔 +5.38%（-37.66%）。<b>排序与跌幅高度相关，是空头回补的典型特征</b>。</div></div>
+      <div class="op-card"><div class="text-amber-400 font-bold text-[12.5px] mb-1.5">⚠️ 龙头缺席：英伟达只涨 0.80%</div><div class="note">英伟达 +0.80% 在半导体样本里垫底，成交额 269.5 亿美元仍为全市场最大。标普全球 11/25 将其 AA 评级列入负面观察（90 天内可能下调），治理折价仍在压制估值；<b>算力龙头不参与，反弹就难称为趋势重启</b>。</div></div>
+      <div class="op-card"><div class="text-rose-400 font-bold text-[12.5px] mb-1.5">🏦 宏观背景没变：加息仍是基准</div><div class="note">11/25 已落地的数据依然偏热：Q3 GDP 二次修正 +4.3%、10 月核心 PCE 同比 +3.3%（2023 年 11 月以来最高），市场对 12 月加息 25bp 定价约 94%–97%。<b>今天的上涨没有改变利率路径，只是风险偏好回补</b>；真正的裁决在 12/4 非农与 12/9–10 FOMC。</div></div>
+    </div>
+  </section>
+
+
+  <section id="s-opinion" class="panel mb-3">
+    <div class="panel-h"><h3>💬 机构观点与官方口径（延续有效部分）</h3><span class="tag">注明来源日期 · 不改写为本期新观点</span></div>
+    <div class="panel-b grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      <div class="op-card">
+        <div class="h"><span class="nm">S&amp;P Global Ratings · 评级行动</span><span class="pill g">负面观察</span></div>
+        <div class="bd">将英伟达 AA 评级列入负面观察（CreditWatch Negative），意味着 90 天内可能下调，核心理由是治理：CEO 离职后迅速复职，暴露管理层与董事会监督的弱点。<b>本期仍然有效、且未被任何新消息解除</b>——这解释了为什么半导体普涨而英伟达只涨 0.80%。</div>
+        <div class="ft">2026-11-25 · S&amp;P Global Ratings（此前披露，本期引用）</div>
+      </div>
+      <div class="op-card">
+        <div class="h"><span class="nm">BEA · 官方数据</span><span class="pill r">偏热</span></div>
+        <div class="bd">Q3 实际 GDP 年化二次修正 +4.3%（初值 3.4%），个人消费 +4.2%、设备投资 +21.8% 均上修；10 月核心 PCE 同比 +3.3%、前值 3.1%。增长强于预期而通胀同步走高，构成「不着陆 + 偏热」组合，对长久期估值是持续压制。</div>
+        <div class="ft">2026-11-25 · 美国经济分析局（此前披露，本期引用）</div>
+      </div>
+      <div class="op-card">
+        <div class="h"><span class="nm">市场定价 · 利率期货</span><span class="pill g">偏紧</span></div>
+        <div class="bd">12 月加息 25bp 定价约 94%–97%，已近充分定价，单次会议的悬念变小；<b>点阵图与措辞的边际变化</b>才是 12/9–10 的真正看点。本期未取到更新的概率数据，沿用 11/25 口径，不伪装成当日值。</div>
+        <div class="ft">2026-11-25 · 利率期货隐含概率（媒体转述，本期未更新）</div>
+      </div>
+      <div class="op-card">
+        <div class="h"><span class="nm">J.P. Morgan Private Bank</span><span class="pill r">偏多</span></div>
+        <div class="bd">本轮回调属信心危机而非盈利实质冲击，AI 基础设施需求并未转弱；但单日修复不等于趋势反转。今日「半导体 +4.72%、英伟达 +0.80%」的分化正是这一判断的注脚：<b>板块可以先反弹，龙头要等治理与信用问题落地</b>。</div>
+        <div class="ft">2026 年 11 月 · J.P. Morgan Private Bank（此前披露，本期引用）</div>
+      </div>
+    </div>
+    <div class="px-3 pb-3 text-[10.5px] text-slate-400"><b>诚实说明：</b>本轮（11/27 缩量交易日）未检索到可核实的新增机构研报或评级变动，因此这里只保留<b>此前已披露、且在今天仍然有效</b>的观点，并标明原始日期，<b>不把旧观点包装成当日新表态</b>。新增内容以接口实测数据为准。</div>
+  </section>
+
+
+  <section id="s-social" class="panel mb-3">
+    <div class="panel-h"><h3>💬 交易台视角 · 基于当日实测数据的解读</h3><span class="tag">本简报的框架解读 · 非社媒引述 · 非投资建议</span></div>
+    <div class="panel-b grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div class="op-card">
+        <div class="h"><span class="nm text-emerald-400">偏多 · 结构修复</span><span class="pill r">缺口未补</span></div>
+        <div class="bd">标普跳空高开后全天走高，收 7,297.49，距当日最高 7,304.10 只差 7 点；纳指 +2.31% 收复 24,000。11/25 的深 V 低点（6,970 / 22,632）完全没有回踩，<b>短线结构从「更低低点」变成「抬高低点」</b>——这是本周第一个真正偏多的技术变化。</div>
+        <div class="ft">本简报 · 价格结构视角</div>
+      </div>
+      <div class="op-card">
+        <div class="h"><span class="nm text-amber-400">中性 · 量能质疑</span><span class="pill y">缩量</span></div>
+        <div class="bd">24 只样本量比几乎全部低于 1（英伟达 0.51、AMD 0.53、微软 0.56、沃尔玛 0.50），且当天美东 13:00 就收盘。<b>普涨但没放量，说明是卖压暂时消失，而不是买盘大举进场</b>；缩量上涨在假期周很常见，也需要下一个完整交易日验证。</div>
+        <div class="ft">本简报 · 量能视角</div>
+      </div>
+      <div class="op-card">
+        <div class="h"><span class="nm text-rose-400">偏空 · 龙头背离</span><span class="pill g">权重缺席</span></div>
+        <div class="bd">半导体样本均涨 +4.72%，英伟达却只有 +0.80%（样本倒数第一），微软 +0.60%、谷歌 +0.68% 同样落后。<b>指数被中小盘与超跌股抬起来，权重股没跟上</b>——这种组合在历史上更多出现在反弹中段，而非主升段起点。</div>
+        <div class="ft">本简报 · 相对强弱视角</div>
+      </div>
+      <div class="op-card">
+        <div class="h"><span class="nm text-emerald-400">偏多 · 波动率退潮</span><span class="pill r">VXX -7.93%</span></div>
+        <div class="bd">VXX 单日 -7.93%、近 5 日 -6.00%，恐慌溢价快速消退；但近 20 日仍 +28.66%，<b>波动率中枢比 11 月中旬高一大截</b>。含义是：最恐慌的时点可能过去了，但市场还没有回到「低波动、可放心加杠杆」的状态。</div>
+        <div class="ft">本简报 · 波动率视角（VXX 代理）</div>
+      </div>
+      <div class="op-card">
+        <div class="h"><span class="nm text-amber-400">中性 · 风格未定</span><span class="pill y">两天两次</span></div>
+        <div class="bd">11/25 是「模拟涨、存储跌」（亚德诺 +6.44%、美光 -4.53%），11/27 反过来变成「存储涨、模拟也涨、英伟达不涨」。<b>两天之间没有形成一致的产业逻辑</b>，说明资金还在按跌幅和仓位调，而不是按基本面重新定价——风格主线尚未确立。</div>
+        <div class="ft">本简报 · 板块轮动视角</div>
+      </div>
+      <div class="op-card">
+        <div class="h"><span class="nm text-rose-400">谨慎 · 事件窗口</span><span class="pill g">等 FOMC</span></div>
+        <div class="bd">核心 PCE 3.3% 是 2023 年 11 月以来最高，加息已近充分定价，<b>真正的风险在 12/4 非农与 12/9–10 点阵图</b>。下周才是这轮反弹的第一次压力测试；在此之前把单日普涨当作趋势确认，风险收益比并不划算。</div>
+        <div class="ft">本简报 · 事件风险视角</div>
+      </div>
+    </div>
+    <div class="px-3 pb-3 text-[10.5px] text-slate-400"><b>口径：</b>本区<b>不是</b>对 X / TradingView 等社媒真实帖文的引述——本轮未取到可核实的社媒原文，因此不虚构大 V 表态，改为明确标注为「本简报框架解读」，全部结论可从上表接口实测数据复算。</div>
+  </section>
+
+
+  <section id="s-outlook" class="panel mb-3">
+    <div class="panel-h"><h3>🔭 近期事件日历 · 北京时间为主 · 附美东</h3><span class="tag">11/27 已收盘 · 数据已公布项回填实际值</span></div>
+    <div class="panel-b">
+      <div class="tw"><table>
+        <thead><tr><th>时间</th><th>事件与已公布实际值</th><th>标签</th></tr></thead>
+        <tbody id="calBody"></tbody>
+      </table></div>
+    </div>
+  </section>
+
+
+  <section id="s-cal" class="panel mb-3">
+    <div class="panel-h"><h3>📅 财报与数据日历 · 12 月第一周</h3><span class="tag">只列已确认日程 · 不预填未经确认的公司日期</span></div>
+    <div class="panel-b">
+      <div class="tw"><table>
+        <thead><tr><th>时间</th><th>事项</th><th class="text-right">状态</th></tr></thead>
+        <tbody>
+          <tr><td class="text-slate-200">11/30 周日</td><td class="text-left">11 月官方制造业 PMI 等月末数据（中国）；美国方面无重磅</td><td class="text-right"><span class="pill n">例行</span></td></tr>
+          <tr><td class="text-slate-200">12/1 周一</td><td class="text-left">ISM 制造业 PMI（美东 10:00 = 北京 23:00）——12 月第一个宏观检验</td><td class="text-right"><span class="pill y">重要</span></td></tr>
+          <tr><td class="text-slate-200">12/3 周三</td><td class="text-left">ISM 服务业 PMI、ADP 就业（美东 08:15–10:00）</td><td class="text-right"><span class="pill y">重要</span></td></tr>
+          <tr><td class="text-slate-200">12/4 周五</td><td class="text-left"><b>11 月非农就业报告</b>（美东 08:30 = 北京 21:30）· FOMC 前最后一份就业数据</td><td class="text-right"><span class="pill y">最重要</span></td></tr>
+          <tr><td class="text-slate-200">12/9–10</td><td class="text-left"><b>FOMC 议息会议 + 经济预测摘要 / 点阵图</b>（美东 12/10 14:00 决议 = 北京 12/11 03:00）</td><td class="text-right"><span class="pill y">最重要</span></td></tr>
+          <tr><td class="text-slate-200">12/10 周三</td><td class="text-left"><b>11 月 CPI</b>（美东 08:30 = 北京 21:30）</td><td class="text-right"><span class="pill y">最重要</span></td></tr>
+          <tr><td class="text-slate-200">12 月中下旬</td><td class="text-left">三季度报后静默期结束，进入业绩预告窗口；<b>具体公司财报日期本轮未从接口取到，不预填</b></td><td class="text-right"><span class="pill n">待确认</span></td></tr>
+        </tbody>
+      </table></div>
+      <div class="divider"></div>
+      <div class="note"><b>口径：</b>宏观日程为美国官方例行发布安排（每月固定周次），<b>具体日期与时间请以 BLS / ISM / 美联储官方日历为准</b>；公司在 12 月的财报日程本轮接口未返回，因此整栏留「待确认」，<b>不做推测性填充</b>。</div>
+    </div>
+  </section>
+
+
+  <section id="s-meta" class="panel mb-3">
+    <div class="panel-h"><h3>⚙️ 数据来源与口径</h3><span class="tag">缺失一律标「未返回」，不估算填充</span></div>
+    <div class="panel-b foot space-y-2">
+      <div class="src"><b>来源：</b>腾讯自选股数据接口（westock）<b>为主要且唯一的行情数值来源</b>——指数、行业/风格 ETF、24 只个股的价格、涨跌幅、开高低、成交额、量比、换手率、近 5/20 日涨跌，全部为 <code>quote --date 11/27</code> 与 <code>kline --period day</code> 实测返回值；宏观与评级事件引用此前已披露的官方/媒体口径并标明原始日期。</div>
+      <div class="src"><b>口径：</b>行情为美东 <b>2026-11-27（周五）（周五）收盘</b>，该日为感恩节后缩短交易日（美东 13:00 收盘 = 北京时间 11/28 02:00），成交显著低于常态；<b>绿涨红跌</b>（--up 绿 #1ecb86 / --down 红 #ff4d5e），K 线、分布柱、资金条、方向灯、支撑阻力全部跟随同一套变量。</div>
+      <div class="src"><b>三项如实说明：</b>① <b>资金流为估算代理</b>（行业 ETF 成交额 × 当日涨跌方向），非真实净流入，仅用于相对强度比较；② <b>涨跌分布仅覆盖 24 只</b>接口实测样本（Mag7 + 半导体龙头 + 代表性权重），<b>不代表标普 500 全样本，桶内数量不可外推市场涨跌家数</b>；③ <b>费城半导体指数 SOX 本体未返回</b>，以 SMH +4.17%% 作代理，不等同于 SOX。</div>
+      <div class="src"><b>仍缺失、未估算填充：</b>VIX 指数本体（用 VXX -7.93%% 代理）、10Y 美债 11/27 值（最近可得 11/25 的 4.85%%，仅作背景）、DXY、黄金、WTI 原油、股指期货盘后、期权 PCR 与期限结构、FINRA 保证金债务、真实机构净流、12 月公司财报日程——以上一律显示 — 或标注「未返回」，<b>不做任何数值编造</b>。</div>
+      <div class="src"><b>本版结构性变更（v7 数据驱动）：</b>此前版本由人工逐期改写模板，多次出现「文案沿用上一交易日、数字没跟着滚」的问题。本版把<b>全部行情数值抽到独立数据模块</b>，HTML 中的表格、蜡烛、分布、树图、方向灯、日历均由注入的 JSON 在前端渲染，<b>正文不再手写任何行情数字</b>；只有解读性文字由人工撰写，且必须引用数据模块中的量。</div>
+      <div class="src"><b>修复归档 CHANGELOG：</b><br>
+        · <b>2026-11-22</b>：事件日历补齐 11/25 08:30 的 Q3 GDP 二次修正值与 10 月 PCE 物价指数（含前值/预期与重要性等级）。根因是此前交付为手写 HTML、从未跑脚本，导致修复形同虚设；此后一律改脚本构建。<br>
+        · <b>2026-11-24</b>：数据日期滚动到 11/23 收盘，新增日期/英伟达价格/核心事件/VIX 口径的强制校验项。<br>
+        · <b>2026-11-25</b>：数据滚动到 11/24 收盘；修日历时区口径（同时标注北京时间 21:30 与美东 08:30）、删占位条目、改正涨跌分布虚标口径；<code>node --check</code> 加入构建闸门（曾出现 JS 语法错误导致整页表格空白而校验仍通过）。<br>
+        · <b>2026-11-25（配色变更 · 用户要求）</b>：<b>全局改为「绿涨红跌」</b>，CSS 变量 --up 绿 #1ecb86 / --down 红 #ff4d5e，K 线、分布柱、资金条、方向灯、支撑阻力、语义色类与 pill 同步；已入库为强制校验项，禁止回退。<br>
+        · <b>2026-11-26</b>：① 日历中已公布数据必须回填实际值，残留「今日公布 / 预期」措辞即 exit(1)；② 观点卡标题 &lt;div class="h"&gt; 未闭合导致 chip 被挤出卡片，改为标题/正文成对校验；③ 表格 <code>white-space:nowrap</code> 撑破卡片，外层加 .tw 滚动容器 + 网格子项 min-width:0。<br>
+        · <b>2026-11-28（本轮 · v7 重构）</b>：修复<b>「上一交易日文案残留」这一类问题的根因</b>，而不是继续逐条打补丁——行情数值全部外置到数据模块并由前端渲染，正文不再手写数字；新增<b>旧日期黑名单闸门</b>（11/20、11/23、11/24、11/25、11/26 任一出现在产物中即 exit(1)）、<b>分布桶与外部链接一致性校验</b>、<b>单元素级横向溢出守卫</b>（此前只查整页 scrollWidth，元素溢出卡片时查不出来；本轮已用注入 nowrap 的方式反向验证守卫确实会拦下）。<br>
+        · <b>已知未解（不做静默修补）</b>：社媒/机构观点本轮无新增可核实来源，已明确标注为沿用旧口径或本简报框架解读；SOX、VIX、美债、商品、财报日程仍缺接口数据。</div>
+      <div class="src"><b>衍生指标口径：</b>市场广度中的板块涨跌家数由 11 个行业 ETF 实测涨跌统计；Mag7 / 半导体家数由 24 只样本统计；相对强弱矩阵 =（板块涨跌 − SPY 涨跌）；「近 20 日」为 20 个交易日的收盘复算值，非「年初至今」。</div>
+      <div class="src"><b>观点口径：</b>机构与交易台视角均为公开信息或本简报基于实测数据的框架解读，不代表任何机构立场，<b>不构成投资建议</b>；个股举例仅为信息说明。</div>
+      <div class="src text-slate-500 pt-1">本内容由自动流程生成 · 数据可能存在延迟，请以交易所官方为准 · 投资有风险，决策需谨慎</div>
+    </div>
+  </section>
+
+</div>
+<button id="topBtn" title="回到顶部">\u2191</button>
+<script>window.__BRIEF__={"candles": [{"n": "道琼斯", "o": 50458.86, "h": 50830.19, "l": 50398.29, "c": 50774.94, "pc": 50182.95}, {"n": "标普 500", "o": 7262.61, "h": 7304.1, "l": 7211.46, "c": 7297.49, "pc": 7182.78}, {"n": "纳斯达克", "o": 23958.46, "h": 24149.09, "l": 23690.6, "c": 24129.5, "pc": 23585.8}], "breadth": [{"l": "标普 11 板块：上涨 / 下跌", "a": 11, "b": 0}, {"l": "Mag7：上涨 / 下跌", "a": 7, "b": 0}, {"l": "半导体样本 14 只：上涨 / 下跌", "a": 14, "b": 0}, {"l": "24 只实测样本：上涨 / 下跌", "a": 24, "b": 0}, {"l": "三大指数：收涨 / 收跌（绿涨红跌）", "a": 3, "b": 0}], "lights": [{"n": "DJI 道指", "v": 1.18}, {"n": "SPX 标普", "v": 1.6}, {"n": "IXIC 纳指", "v": 2.31}, {"n": "SMH 半导体", "v": 4.17}, {"n": "QQQ 纳指100", "v": 2.69}, {"n": "SPY 标普ETF", "v": 1.62}, {"n": "IWM 小盘", "v": 1.83}, {"n": "VXX 恐慌代理", "v": -7.93, "kind": "vix"}], "dist": [{"l": "≤-5%", "v": 0}, {"l": "-5~-3%", "v": 0}, {"l": "-3~-1%", "v": 0}, {"l": "-1~0%", "v": 0}, {"l": "0~+1%", "v": 6}, {"l": "+1~+2%", "v": 1}, {"l": "+2~+5%", "v": 11}, {"l": "+5~+10%", "v": 6}, {"l": "≥+10%", "v": 0}], "distStats": [{"l": "样本数", "v": "24 只", "tone": "flat"}, {"l": "平均涨跌（等权）", "v": "+3.58%", "tone": "up"}, {"l": "中位数涨跌", "v": "+3.84%", "tone": "up"}, {"l": "上涨占比", "v": "100.0%", "tone": "up"}, {"l": "左尾 ≤-3%", "v": "0 只", "tone": "flat"}, {"l": "右尾 ≥+5%", "v": "6 只", "tone": "up"}], "sec": [{"n": "科技 XLK", "d": 2.8, "w": -0.34, "y": -15.15, "rd": 1.18}, {"n": "可选消费 XLY", "d": 2.11, "w": 3.53, "y": 3.24, "rd": 0.49}, {"n": "通讯 XLC", "d": 1.99, "w": 4.59, "y": 6.2, "rd": 0.37}, {"n": "材料 XLB", "d": 1.84, "w": 5.52, "y": -0.72, "rd": 0.22}, {"n": "罗素2000 IWM", "d": 1.83, "w": 3.62, "y": -3.6, "rd": 0.21}, {"n": "纳指100 QQQ", "d": 2.69, "w": 0.92, "y": -9.0, "rd": 1.07}, {"n": "工业 XLI", "d": 1.6, "w": 2.6, "y": -2.69, "rd": -0.02}, {"n": "标普 SPY", "d": 1.62, "w": 1.74, "y": -5.33, "rd": 0.0}, {"n": "能源 XLE", "d": 1.26, "w": 1.28, "y": -10.25, "rd": -0.36}, {"n": "金融 XLF", "d": 1.15, "w": 2.84, "y": 0.39, "rd": -0.47}, {"n": "房地产 XLRE", "d": 0.64, "w": 2.94, "y": 2.51, "rd": -0.98}, {"n": "必需消费 XLP", "d": 0.41, "w": 3.14, "y": 5.1, "rd": -1.21}, {"n": "公用事业 XLU", "d": 0.28, "w": 1.67, "y": 1.37, "rd": -1.34}, {"n": "医疗 XLV", "d": 0.28, "w": 3.8, "y": 0.09, "rd": -1.34}], "tree": [{"n": "科技 XLK", "v": 2.8}, {"n": "可选消费 XLY", "v": 2.11}, {"n": "通讯 XLC", "v": 1.99}, {"n": "材料 XLB", "v": 1.84}, {"n": "工业 XLI", "v": 1.6}, {"n": "能源 XLE", "v": 1.26}, {"n": "金融 XLF", "v": 1.15}, {"n": "房地产 XLRE", "v": 0.64}, {"n": "必需消费 XLP", "v": 0.41}, {"n": "公用事业 XLU", "v": 0.28}, {"n": "医疗 XLV", "v": 0.28}], "flow": [{"n": "科技 XLK", "v": 1110}, {"n": "可选消费 XLY", "v": 640}, {"n": "通讯 XLC", "v": 300}, {"n": "材料 XLB", "v": 540}, {"n": "工业 XLI", "v": 1120}, {"n": "能源 XLE", "v": 1270}, {"n": "金融 XLF", "v": 1240}, {"n": "公用事业 XLU", "v": 610}, {"n": "必需消费 XLP", "v": 1130}, {"n": "医疗 XLV", "v": 930}, {"n": "房地产 XLRE", "v": 190}], "rs": [{"n": "科技 XLK", "v": 1.18, "w": 2.8}, {"n": "可选消费 XLY", "v": 0.49, "w": 2.11}, {"n": "通讯 XLC", "v": 0.37, "w": 1.99}, {"n": "材料 XLB", "v": 0.22, "w": 1.84}, {"n": "工业 XLI", "v": -0.02, "w": 1.6}, {"n": "能源 XLE", "v": -0.36, "w": 1.26}, {"n": "金融 XLF", "v": -0.47, "w": 1.15}, {"n": "公用事业 XLU", "v": -1.34, "w": 0.28}, {"n": "必需消费 XLP", "v": -1.21, "w": 0.41}, {"n": "医疗 XLV", "v": -1.34, "w": 0.28}, {"n": "房地产 XLRE", "v": -0.98, "w": 0.64}], "style": [{"n": "半导体 SMH", "a": 4.17, "b": -1.66, "c": -21.65}, {"n": "纳指100 QQQ", "a": 2.69, "b": 0.92, "c": -9.0}, {"n": "标普 SPY", "a": 1.62, "b": 1.74, "c": -5.33}, {"n": "罗素2000 IWM", "a": 1.83, "b": 3.62, "c": -3.6}, {"n": "科技 XLK", "a": 2.8, "b": -0.34, "c": -15.15}, {"n": "可选消费 XLY", "a": 2.11, "b": 3.53, "c": 3.24}, {"n": "通讯 XLC", "a": 1.99, "b": 4.59, "c": 6.2}, {"n": "材料 XLB", "a": 1.84, "b": 5.52, "c": -0.72}, {"n": "工业 XLI", "a": 1.6, "b": 2.6, "c": -2.69}, {"n": "能源 XLE", "a": 1.26, "b": 1.28, "c": -10.25}, {"n": "金融 XLF", "a": 1.15, "b": 2.84, "c": 0.39}, {"n": "公用事业 XLU", "a": 0.28, "b": 1.67, "c": 1.37}, {"n": "必需消费 XLP", "a": 0.41, "b": 3.14, "c": 5.1}, {"n": "医疗 XLV", "a": 0.28, "b": 3.8, "c": 0.09}, {"n": "房地产 XLRE", "a": 0.64, "b": 2.94, "c": 2.51}], "mega": [{"n": "美光 MU", "p": 646.95, "c": 7.6, "b": -6.3, "y": -30.75, "amt": 167.9, "vr": 0.79, "m": 0}, {"n": "迈威尔 MRVL", "p": 140.54, "c": 7.34, "b": 1.49, "y": -35.63, "amt": 25.15, "vr": 0.78, "m": 0}, {"n": "高通 QCOM", "p": 179.27, "c": 6.29, "b": 10.65, "y": -3.31, "amt": 17.37, "vr": 0.83, "m": 0}, {"n": "安谋 ARM", "p": 171.55, "c": 6.22, "b": -3.17, "y": -25.01, "amt": 4.92, "vr": 0.57, "m": 0}, {"n": "英特尔 INTC", "p": 57.4, "c": 5.38, "b": 3.02, "y": -37.66, "amt": 42.95, "vr": 0.7, "m": 0}, {"n": "特斯拉 TSLA", "p": 400.0, "c": 5.22, "b": 6.83, "y": -0.82, "amt": 101.995, "vr": 0.99, "m": 1}, {"n": "科磊 KLAC", "p": 140.86, "c": 4.96, "b": -0.44, "y": -15.87, "amt": 11.94, "vr": 0.75, "m": 0}, {"n": "AMD", "p": 424.54, "c": 4.56, "b": -13.22, "y": -25.05, "amt": 92.03, "vr": 0.53, "m": 0}, {"n": "德州仪器 TXN", "p": 281.85, "c": 4.32, "b": -1.36, "y": -9.93, "amt": 19.65, "vr": 0.84, "m": 0}, {"n": "泛林 LRCX", "p": 192.69, "c": 4.15, "b": -5.4, "y": -24.25, "amt": 14.28, "vr": 0.59, "m": 0}, {"n": "亚马逊 AMZN", "p": 254.12, "c": 3.96, "b": -1.26, "y": 4.24, "amt": 68.7, "vr": 0.69, "m": 1}, {"n": "亚德诺 ADI", "p": 346.0, "c": 3.87, "b": -8.33, "y": -20.14, "amt": 14.68, "vr": 0.68, "m": 0}, {"n": "博通 AVGO", "p": 312.34, "c": 3.82, "b": -9.9, "y": -9.47, "amt": 52.85, "vr": 0.62, "m": 0}, {"n": "应用材料 AMAT", "p": 322.04, "c": 3.49, "b": -4.98, "y": -23.63, "amt": 15.14, "vr": 0.62, "m": 0}, {"n": "台积电 TSM", "p": 353.34, "c": 3.21, "b": 0.36, "y": -18.17, "amt": 33.07, "vr": 0.67, "m": 0}, {"n": "Meta META", "p": 628.96, "c": 3.13, "b": 5.49, "y": 0.71, "amt": 69.75, "vr": 0.86, "m": 1}, {"n": "奈飞 NFLX", "p": 60.93, "c": 2.56, "b": 4.23, "y": -1.8, "amt": 13.1, "vr": 0.64, "m": 0}, {"n": "摩根大通 JPM", "p": 322.96, "c": 1.96, "b": 0.86, "y": -6.0, "amt": 11.36, "vr": 0.74, "m": 0}, {"n": "沃尔玛 WMT", "p": 133.13, "c": 0.9, "b": 5.63, "y": 9.8, "amt": 13.76, "vr": 0.5, "m": 0}, {"n": "苹果 AAPL", "p": 358.54, "c": 0.83, "b": 2.67, "y": 2.76, "amt": 77.36, "vr": 0.56, "m": 1}, {"n": "英伟达 NVDA", "p": 150.49, "c": 0.8, "b": 3.09, "y": -29.57, "amt": 269.48, "vr": 0.51, "m": 1}, {"n": "谷歌-A GOOGL", "p": 274.96, "c": 0.68, "b": 0.84, "y": -3.12, "amt": 61.15, "vr": 0.69, "m": 1}, {"n": "微软 MSFT", "p": 492.85, "c": 0.6, "b": -1.09, "y": -7.03, "amt": 61.21, "vr": 0.56, "m": 1}, {"n": "礼来 LLY", "p": 1392.38, "c": 0.01, "b": 3.05, "y": 1.36, "amt": 21.45, "vr": 0.89, "m": 0}], "semi": [{"n": "美光 MU", "p": 646.95, "c": 7.6, "b": -6.3, "y": -30.75, "amt": 167.9}, {"n": "迈威尔 MRVL", "p": 140.54, "c": 7.34, "b": 1.49, "y": -35.63, "amt": 25.15}, {"n": "高通 QCOM", "p": 179.27, "c": 6.29, "b": 10.65, "y": -3.31, "amt": 17.37}, {"n": "安谋 ARM", "p": 171.55, "c": 6.22, "b": -3.17, "y": -25.01, "amt": 4.92}, {"n": "英特尔 INTC", "p": 57.4, "c": 5.38, "b": 3.02, "y": -37.66, "amt": 42.95}, {"n": "科磊 KLAC", "p": 140.86, "c": 4.96, "b": -0.44, "y": -15.87, "amt": 11.94}, {"n": "AMD", "p": 424.54, "c": 4.56, "b": -13.22, "y": -25.05, "amt": 92.03}, {"n": "德州仪器 TXN", "p": 281.85, "c": 4.32, "b": -1.36, "y": -9.93, "amt": 19.65}, {"n": "泛林 LRCX", "p": 192.69, "c": 4.15, "b": -5.4, "y": -24.25, "amt": 14.28}, {"n": "亚德诺 ADI", "p": 346.0, "c": 3.87, "b": -8.33, "y": -20.14, "amt": 14.68}, {"n": "博通 AVGO", "p": 312.34, "c": 3.82, "b": -9.9, "y": -9.47, "amt": 52.85}, {"n": "应用材料 AMAT", "p": 322.04, "c": 3.49, "b": -4.98, "y": -23.63, "amt": 15.14}, {"n": "台积电 TSM", "p": 353.34, "c": 3.21, "b": 0.36, "y": -18.17, "amt": 33.07}, {"n": "英伟达 NVDA", "p": 150.49, "c": 0.8, "b": 3.09, "y": -29.57, "amt": 269.48}], "cal": [{"t": "11/25 已公布", "c": "<b>Q3 GDP 二次修正 → 实际 +4.3%</b>（初值 3.4%）、<b>10 月核心 PCE 同比 +3.3%</b>（前值 3.1%，2023 年 11 月以来最高）", "p": "已公布", "imp": 0, "st": "done"}, {"t": "11/26 周四", "c": "感恩节全天休市（美股无交易）", "p": "休市", "imp": 0, "st": "holiday"}, {"t": "11/27 周五", "c": "缩短交易日：美东 13:00 收盘 = 北京 11/28 02:00，成交清淡", "p": "已收盘", "imp": 0, "st": "done"}, {"t": "本周收盘", "c": "道指 +1.18% 报 50,774.94 再创新高 · 纳指 +2.31% · 标普 +1.60%，科技反攻", "p": "周线", "imp": 0}, {"t": "12/4 周五", "c": "<b>11 月非农就业报告</b>（美东 08:30 = 北京 21:30）", "p": "非农", "imp": 1}, {"t": "12/9–10", "c": "<b>FOMC 议息会议 + 点阵图</b>（12 月加息 25bp 已近充分定价，焦点转向 1 月与 2027 年路径）", "p": "FOMC", "imp": 1}, {"t": "12/10 周三", "c": "<b>11 月 CPI</b>（美东 08:30 = 北京 21:30）", "p": "CPI", "imp": 1}, {"t": "1 月上旬", "c": "12 月非农；随后进入 2026 年报预告季（具体日期待官方日历确认，不预填）", "p": "待确认", "imp": 0}]};</script>
+<script>
+
+(function(){
+  var D=window.__BRIEF__;
+  var fmt=function(v,d){return (v===null||v===undefined||isNaN(v))?'—':Number(v).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
+  var pc=function(v){var s=(v>0?'+':'')+fmt(v,2)+'%';return '<span class="'+(v>0?'up':(v<0?'down':'flat'))+'">'+s+'</span>'};
+  var cls=function(v){return v>0?'up':(v<0?'down':'flat')};
+  var _cs=null,UP='#1ecb86',DN='#ff4d5e';
+  try{_cs=getComputedStyle(document.body);UP=_cs.getPropertyValue('--up').trim()||UP;DN=_cs.getPropertyValue('--down').trim()||DN;}catch(e){}
+
+  /* 蜡烛：绿=收涨、红=收跌（收盘 vs 开盘 画实体，收盘 vs 昨收 定颜色语义） */
+  var ch='',hh=0;
+  D.candles.forEach(function(d){d.r=Math.abs(d.c-d.o)/d.o*100;if(d.r>hh)hh=d.r});
+  D.candles.forEach(function(d){
+    var up=d.c>=d.o,col=up?UP:DN,max=Math.max(d.h-d.l,0.01);
+    var tr=((d.h-Math.max(d.o,d.c))/max*100).toFixed(1);
+    var bd=((up?d.c:d.o)-Math.min(d.o,d.c))/max*100;bd=bd.toFixed(1);
+    var w=Math.max(2,(hh>0?d.r/hh:0)*24);
+    ch+='<div class="flex flex-col items-center"><div class="text-[10.5px] text-slate-300 font-semibold">'+d.n+'</div>'+
+      '<svg width="32" height="54" viewBox="0 0 32 54"><line x1="16" y1="2" x2="16" y2="52" stroke="'+col+'" stroke-width="1.5" opacity=".75"/>'+
+      '<rect x="'+(16-w/2)+'" y="'+tr+'" width="'+w+'" height="'+bd+'" fill="'+col+'" rx="1.5"/></svg>'+
+      '<div class="text-[10.5px] '+cls(d.c-d.pc)+' font-bold">'+fmt(d.c,0)+'</div>'+
+      '<div class="text-[10px] text-slate-500">'+pc((d.c/d.pc-1)*100)+'</div></div>';
+  });
+  var el=document.getElementById('candles'); if(el)el.innerHTML=ch;
+
+  el=document.getElementById('breadthBody'); if(el)el.innerHTML=D.breadth.map(function(r){
+    var tot=r.a+r.b,pa=Math.round(r.a/tot*100);
+    return '<div><div class="flex justify-between mb-1"><span>'+r.l+'</span><span class="text-[10px] text-slate-500">'+r.a+' / '+r.b+'</span></div>'+
+      '<div class="flex h-3 rounded overflow-hidden" style="background:#0a1122">'+
+      '<div style="width:'+pa+'%;background:'+DN+'"></div><div style="width:'+(100-pa)+'%;background:'+UP+'"></div></div></div>'}).join('');
+
+  el=document.getElementById('lightsBody'); if(el)el.innerHTML=D.lights.map(function(d){
+    var c,txt;
+    if(d.kind==='vix'){c=DN;txt='恐慌回落'}
+    else if(d.v>0.5){c=UP;txt='偏多'}
+    else if(d.v<-0.5){c=DN;txt='偏空'}
+    else{c='#8794b3';txt='中性'};
+    return '<div class="flex items-center gap-2 p-2 rounded border border-[#1b2742] text-[11px]"><span class="w-2 h-2 rounded-full" style="background:'+c+';box-shadow:0 0 6px '+c+'"></span><span class="text-slate-200 font-semibold">'+d.n+'</span><span class="ml-auto '+cls(d.v)+'">'+pc(d.v)+'</span><span class="text-[9.5px] text-slate-500">'+txt+'</span></div>';
+  }).join('');
+
+  var dist=D.dist;
+  var mx=Math.max.apply(null,dist.map(function(d){return d.v}));
+  el=document.getElementById('histBars'); if(el)el.innerHTML=dist.map(function(d){
+    var h=Math.max(3,d.v/mx*50),neg=d.l.indexOf('≤')===0||d.l.indexOf('-')===0;
+    return '<div title="'+d.l+'：'+d.v+' 只" style="flex:1;height:'+h+'px;background:'+(neg?'linear-gradient(180deg,'+DN+',#7a2030)':'linear-gradient(180deg,'+UP+',#0d6b48)')+';border-radius:2px 2px 0 0"></div>'}).join('');
+  el=document.getElementById('histLbl'); if(el)el.innerHTML=dist.map(function(d){
+    return '<div class="text-'+(d.l.indexOf('≤')===0||d.l.indexOf('-')===0?'rose':'emerald')+'-400">'+d.v+'</div>'}).join('');
+  el=document.getElementById('histStats'); if(el)el.innerHTML=D.distStats.map(function(d){
+    return '<div class="kpi" style="padding:6px 9px;border-left-color:'+(d.tone==='up'?UP:(d.tone==='down'?DN:'#8794b3'))+'"><div class="l">'+d.l+'</div><div class="v" style="font-size:14px">'+d.v+'</div></div>'}).join('');
+
+  /* 板块表：可排序 */
+  var sec=D.sec, srt={k:'d',d:-1};
+  function drawSec(){
+    var tb=document.querySelector('#secTable tbody'); if(!tb)return;
+    tb.innerHTML=sec.slice().sort(function(x,y){return (x[srt.k]-y[srt.k])*srt.d}).map(function(d){
+      return '<tr><td class="text-left">'+d.n+'</td><td class="'+cls(d.d)+'">'+fmt(d.d,2)+'%</td><td class="'+cls(d.w)+'">'+fmt(d.w,2)+'%</td>'+
+        '<td class="'+cls(d.rd)+'">'+(d.rd>0?'+':'')+fmt(d.rd,2)+'pp</td><td class="'+cls(d.y)+'">'+fmt(d.y,2)+'%</td></tr>'}).join('');
+  }
+  drawSec();
+  var ths=document.querySelectorAll('#secTable th');
+  ths.forEach(function(th,i){var ks=['n','d','w','rd','y'];th.innerHTML+=' <span class="ar">↕</span>';
+    th.onclick=function(){var k=ks[i];if(srt.k===k)srt.d*=-1;else{srt.k=k;srt.d=-1}
+      ths.forEach(function(x){x.classList.remove('sorted');x.querySelector('.ar').textContent='↕'});
+      th.classList.add('sorted');th.querySelector('.ar').textContent=srt.d>0?'↑':'↓';drawSec();}});
+  var tabSec=document.querySelector('[data-tabs="sec"]');
+  if(tabSec){tabSec.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){
+    srt.k=t.dataset.v==='week'?'w':'d';srt.d=-1;
+    tabSec.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});t.classList.add('active');
+    ths.forEach(function(x){x.classList.remove('sorted');x.querySelector('.ar').textContent='↕'});
+    var hi=t.dataset.v==='week'?2:1;ths[hi].classList.add('sorted');ths[hi].querySelector('.ar').textContent='↓';drawSec();}});}
+
+  var mn=Math.min.apply(null,D.tree.map(function(d){return d.v})),mx2=Math.max.apply(null,D.tree.map(function(d){return d.v}));
+  el=document.getElementById('treeBody'); if(el)el.innerHTML=D.tree.map(function(d){
+    var t=Math.abs(d.v-mn)/Math.abs(mx2-mn||1),bg;
+    if(d.v>=1.5)bg='rgba(30,203,134,'+(.62-t*.22).toFixed(2)+')';
+    else if(d.v>=0.4)bg='rgba(30,203,134,'+(.34-t*.12).toFixed(2)+')';
+    else if(d.v>=0)bg='rgba(255,181,71,.34)';
+    else bg='rgba(255,77,94,'+(.5-t*.16).toFixed(2)+')';
+    return '<div class="tree-cell" style="background:'+bg+';color:#fff"><span class="c-name">'+d.n+'</span><span class="c-val">'+fmt(d.v,2)+'%</span></div>'}).join('');
+
+  var fmx=Math.max.apply(null,D.flow.map(function(d){return Math.abs(d.v)}));
+  el=document.getElementById('flowBars'); if(el)el.innerHTML=D.flow.slice().sort(function(x,y){return y.v-x.v}).map(function(d){
+    var w=Math.abs(d.v)/fmx*100,neg=d.v<0;
+    return '<div class="hbar"><div class="n">'+d.n+'</div><div class="t">'+
+      (neg?'<div class="f" style="width:'+w+'%;margin-left:auto;background:linear-gradient(90deg,#0d6b48,'+DN+')"></div>'
+         :'<div class="f" style="width:'+w+'%;background:linear-gradient(90deg,#7a2030,'+UP+')"></div>')+
+      '</div><div class="v '+cls(d.v)+'">'+(neg?'':'+')+fmt(d.v,0)+'M</div></div>'}).join('');
+
+  el=document.getElementById('rsBody'); if(el)el.innerHTML=D.rs.slice().sort(function(x,y){return y.v-x.v}).map(function(d){
+    var good=d.v>0;
+    var c=d.v>0.5?'rgba(30,203,134,.26)':(d.v<-0.5?'rgba(255,77,94,.24)':'rgba(255,181,71,.20)');
+    return '<div style="padding:.625rem;border-radius:.375rem;background:'+c+'"><div class="flex justify-between items-center"><span class="text-[11.5px] font-semibold">'+d.n+'</span>'+
+      '<div class="text-[10px] text-slate-400" style="margin-top:.125rem">当日 '+fmt(d.w,2)+'% · '+(good?'跑赢':'跑输')+' SPX</div></div>'}).join('');
+
+  var style=D.style, srt2={k:'a',d:-1};
+  function drawStyle(){
+    var tb=document.querySelector('#styleTable tbody'); if(!tb)return;
+    tb.innerHTML=style.slice().sort(function(x,y){return (x[srt2.k]-y[srt2.k])*srt2.d}).map(function(d){
+      return '<tr><td class="text-left">'+d.n+'</td><td class="'+cls(d.a)+'">'+fmt(d.a,2)+'%</td><td class="'+cls(d.b)+'">'+fmt(d.b,2)+'%</td><td class="'+cls(d.c)+'">'+fmt(d.c,2)+'%</td></tr>'}).join('');
+  }
+  drawStyle();
+  var ths2=document.querySelectorAll('#styleTable th');
+  ths2.forEach(function(th,i){var ks=['n','a','b','c'];th.innerHTML+=' <span class="ar">↕</span>';
+    th.onclick=function(){var k=ks[i];if(srt2.k===k)srt2.d*=-1;else{srt2.k=k;srt2.d=-1}
+      ths2.forEach(function(x){x.classList.remove('sorted');x.querySelector('.ar').textContent='↕'});
+      th.classList.add('sorted');th.querySelector('.ar').textContent=srt2.d>0?'↑':'↓';drawStyle();}});
+
+  var mega=D.mega, srt3={k:'c',d:-1},mf='all';
+  function drawMega(){
+    var a=mega.filter(function(d){return mf==='up'?d.c>0:(mf==='mega'?d.m===1:true)});
+    a=a.sort(function(x,y){return (x[srt3.k]-y[srt3.k])*srt3.d});
+    var tb=document.querySelector('#megaTable tbody'); if(!tb)return;
+    tb.innerHTML=a.map(function(d){
+      return '<tr><td class="text-left">'+d.n+(d.m?' <span class="pill n">M7</span>':'')+'</td><td>'+fmt(d.p,2)+'</td>'+
+        '<td class="'+cls(d.c)+'">'+fmt(d.c,2)+'%</td><td>'+fmt(d.r,2)+'%</td>'+
+        '<td class="'+cls(d.b)+'">'+(d.b===null?'—':fmt(d.b,2)+'%')+'</td><td class="'+cls(d.y)+'">'+fmt(d.y,2)+'%</td>'+
+        '<td>'+(d.amt===null?'—':fmt(d.amt,1))+'</td><td>'+(d.vr===null?'—':fmt(d.vr,2))+'</td></tr>'}).join('');
+  }
+  drawMega();
+  var ths3=document.querySelectorAll('#megaTable th');
+  ths3.forEach(function(th,i){var ks=['n','p','c','r','b','y','amt','vr'];th.innerHTML+=' <span class="ar">↕</span>';
+    th.onclick=function(){var k=ks[i];if(srt3.k===k)srt3.d*=-1;else{srt3.k=k;srt3.d=-1}
+      ths3.forEach(function(x){x.classList.remove('sorted');x.querySelector('.ar').textContent='↕'});
+      th.classList.add('sorted');th.querySelector('.ar').textContent=srt3.d>0?'↑':'↓';drawMega();}});
+  var tabMega=document.querySelector('[data-tabs="mega"]');
+  if(tabMega){tabMega.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){
+    mf=t.dataset.v;tabMega.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});t.classList.add('active');drawMega();}});}
+
+  var semi=D.semi, srt4={k:'c',d:-1};
+  function drawSemi(){
+    var tb=document.querySelector('#semiTable tbody'); if(!tb)return;
+    tb.innerHTML=semi.slice().sort(function(x,y){return (x[srt4.k]-y[srt4.k])*srt4.d}).map(function(d){
+      return '<tr><td class="text-left">'+d.n+'</td><td>'+fmt(d.p,2)+'</td><td class="'+cls(d.c)+'">'+fmt(d.c,2)+'%</td>'+
+        '<td class="'+cls(d.b)+'">'+fmt(d.b,2)+'%</td><td class="'+cls(d.y)+'">'+fmt(d.y,2)+'%</td>'+
+        '<td>'+(d.amt===null?'—':fmt(d.amt,1))+'</td></tr>'}).join('');
+  }
+  drawSemi();
+  var ths4=document.querySelectorAll('#semiTable th');
+  ths4.forEach(function(th,i){var ks=['n','p','c','b','y','amt'];th.innerHTML+=' <span class="ar">↕</span>';
+    th.onclick=function(){var k=ks[i];if(srt4.k===k)srt4.d*=-1;else{srt4.k=k;srt4.d=-1}
+      ths4.forEach(function(x){x.classList.remove('sorted');x.querySelector('.ar').textContent='↕'});
+      th.classList.add('sorted');th.querySelector('.ar').textContent=srt4.d>0?'↑':'↓';drawSemi();}});
+
+  var cal=D.cal;
+  el=document.getElementById('calBody'); if(el)el.innerHTML=cal.map(function(d){
+    if(d.st==='done')return '<tr class="border-l-2 border-slate-500" style="opacity:.75"><td class="text-slate-400">'+d.t+'</td><td class="text-left text-slate-300">'+d.c+'</td><td class="text-right"><span class="pill n">'+d.p+'</span></td></tr>';
+    if(d.st==='holiday')return '<tr><td class="text-rose-400 font-semibold">'+d.t+'</td><td class="text-left" colspan="2"><span class="pill r">'+d.c+'</span></td></tr>';
+    return '<tr class="'+(d.imp?'border-l-2 border-amber-400':'')+'"><td class="text-slate-200">'+(d.imp?'<span class="text-amber-400">●</span> ':'')+d.t+'</td><td class="text-left">'+d.c+'</td><td class="text-right"><span class="pill '+(d.imp?'y':'n')+'">'+d.p+'</span></td></tr>'}).join('');
+
+  var chips=[].slice.call(document.querySelectorAll('.chip'));
+  chips.forEach(function(c){c.addEventListener('click',function(e){
+      var id=this.getAttribute('href').slice(1),t=document.getElementById(id);
+      if(!t)return;e.preventDefault();
+      window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-70,behavior:'smooth'});
+      chips.forEach(function(x){x.classList.remove('active')});this.classList.add('active');});});
+  var tb=document.getElementById('topBtn'); if(tb)tb.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+})();
+
+</script>
+</body>
+</html>

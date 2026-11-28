@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>加密货币每日看板 · 2026年11月28日</title>
+<style>
+:root{
+  --bg: #0a0b0e;
+  --bg2: #11131a;
+  --card: #15171f;
+  --card2: #1a1d27;
+  --line: #262a36;
+  --line2: #313642;
+  --txt: #e8eaf0;
+  --txt2: #a8adbb;
+  --txt3: #6c7283;
+  --up: #1ecb73;
+  --up-bg: rgba(30,203,115,.10);
+  --down: #ff4d4f;
+  --down-bg: rgba(255,77,79,.10);
+  --warn: #ffb020;
+  --blue: #3b82f6;
+  --purple: #a78bfa;
+  --cy: #22d3ee;
+  --shadow: 0 2px 12px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+  font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{padding:22px 26px 60px}
+
+/* ---------- 头部 ---------- */
+.hd{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;
+  padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:18px;flex-wrap:wrap}
+.hd-l h1{font-size:23px;font-weight:700;letter-spacing:.5px;display:flex;align-items:center;gap:10px}
+.hd-l h1 .bl{width:4px;height:22px;background:linear-gradient(var(--down),var(--warn));border-radius:2px}
+.hd-l .sub{color:var(--txt3);font-size:12.5px;margin-top:6px}
+.hd-l .sub b{color:var(--txt2);font-weight:600}
+.hd-r{text-align:right;font-size:12.5px;color:var(--txt3)}
+.hd-r .lv{color:var(--down);font-weight:700;font-size:13px}
+.hd-r .upd{margin-top:4px;color:var(--txt2)}
+
+/* ---------- KPI ---------- */
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:18px}
+.kpi{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);
+  border-radius:12px;padding:14px 15px;box-shadow:var(--shadow)}
+.kpi-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.kpi-name{font-size:12.5px;color:var(--txt3);font-weight:600;letter-spacing:.3px}
+.kpi-ic{font-size:15px;opacity:.55}
+.kpi-now{font-size:22px;font-weight:700;letter-spacing:-.3px;display:block;line-height:1.1}
+.kpi-foot{margin-top:9px;display:flex;flex-direction:column;gap:2px}
+.kpi-label-r{font-size:11px;color:var(--txt3)}
+.kpi-chg{font-size:12px;font-weight:700}
+.up{color:var(--up)} .down{color:var(--down)} .flat{color:var(--txt3)}
+.upbg{background:var(--up-bg);color:var(--up)}
+.downbg{background:var(--down-bg);color:var(--down)}
+
+/* ---------- 区块标题 ---------- */
+.sec{margin-bottom:20px}
+.sec-t{display:flex;align-items:center;gap:9px;margin-bottom:11px}
+.sec-t h2{font-size:15.5px;font-weight:700;letter-spacing:.3px}
+.sec-t .en{font-size:11.5px;color:var(--txt3);font-weight:500}
+.sec-t .line{flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+.sec-t .meta{font-size:11.5px;color:var(--txt3)}
+
+/* ---------- 两栏 ---------- */
+.row2{display:grid;grid-template-columns:1.35fr 1fr;gap:14px;margin-bottom:20px}
+@media(max-width:1180px){.kpis{grid-template-columns:repeat(3,1fr)}.row2{grid-template-columns:1fr}}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 16px;box-shadow:var(--shadow)}
+.card-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.card-h h3{font-size:13.5px;font-weight:700}
+.card-h .more{font-size:11.5px;color:var(--txt3)}
+
+/* ---------- 行情表 ---------- */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:620px}
+thead th{text-align:right;color:var(--txt3);font-size:11.5px;font-weight:600;
+  padding:0 10px 9px;border-bottom:1px solid var(--line);white-space:nowrap}
+thead th:first-child{text-align:left}
+tbody td{padding:8px 10px;border-bottom:1px solid rgba(38,42,54,.55);text-align:right;white-space:nowrap}
+tbody td:first-child{text-align:left}
+tbody tr:hover{background:rgba(59,130,246,.055)}
+.c-sym{display:flex;align-items:center;gap:8px;font-weight:600}
+.c-sym .dot{width:6px;height:6px;border-radius:50%;background:var(--txt3)}
+.c-name{color:var(--txt3);font-weight:400;font-size:12px;margin-left:2px}
+.c-px{font-variant-numeric:tabular-nums;font-weight:600}
+.c-chg{font-weight:700;font-variant-numeric:tabular-nums}
+.c-mc,.c-vol{color:var(--txt2);font-variant-numeric:tabular-nums}
+
+/* ---------- 仪表盘 ---------- */
+.gauge{position:relative;width:100%;max-width:230px;margin:0 auto 4px}
+.gauge svg{width:100%;height:auto;display:block}
+.gauge-cap{position:absolute;left:0;right:0;bottom:6px;text-align:center}
+.gauge-cap .v{font-size:30px;font-weight:800;color:var(--down);letter-spacing:-1px}
+.gauge-cap .l{font-size:11.5px;color:var(--down);margin-top:1px}
+.gauge-note{text-align:center;font-size:11.5px;color:var(--txt3);margin-top:2px;line-height:1.7}
+
+/* ---------- 恐惧贪婪明细 ---------- */
+.fg-row{display:grid;grid-template-columns:62px 1fr 34px;align-items:center;gap:9px;margin-bottom:9px}
+.fg-name{font-size:12px;color:var(--txt2)}
+.fg-bar{height:7px;background:#20232d;border-radius:4px;overflow:hidden}
+.fg-bar i{display:block;height:100%;border-radius:4px;
+  background:linear-gradient(90deg,var(--down),var(--warn) 55%,var(--up))}
+.fg-val{text-align:right;font-size:12px;font-weight:700}
+
+/* ---------- 衍生品 / 期权 / 链上 ---------- */
+.panel-d{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+@media(max-width:1180px){.panel-d{grid-template-columns:1fr}}
+.dv{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:13px}
+.dv-i{background:var(--card2);padding:10px 12px}
+.dv-k{font-size:11px;color:var(--txt3);margin-bottom:4px}
+.dv-v{font-size:15px;font-weight:700}
+.dv-sub{font-size:11px;color:var(--txt3);margin-top:3px}
+.liq-bar{display:flex;height:20px;border-radius:5px;overflow:hidden;margin:10px 0 6px}
+.liq-bar i{display:block}
+.liq-bar .lg{background:var(--down)}
+.liq-bar .sh{background:var(--up)}
+.liq-lb{display:flex;justify-content:space-between;font-size:11.5px;color:var(--txt2)}
+
+.mini-h{font-size:12.5px;font-weight:700;margin:14px 0 8px;color:var(--txt2)}
+.oi-bar{display:grid;grid-template-columns:75.4fr 24.6fr 0.01fr 0.01fr;height:24px;border-radius:5px;overflow:hidden;gap:2px}
+.oi-bar i{display:block}
+.oi-bar .b1{background:#f7931a}
+.oi-bar .b2{background:#627eea}
+.oi-bar .b3{background:var(--cy)}
+.oi-bar .b4{background:var(--txt3)}
+.oi-lb{display:grid;grid-template-columns:75.4fr 24.6fr 0.01fr 0.01fr;gap:2px;margin-top:5px;font-size:11px;color:var(--txt3)}
+
+.chain-kv{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px}
+.chain-kv .kv{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed rgba(38,42,54,.7);font-size:12.5px}
+.chain-kv .kv .k{color:var(--txt3)}
+.chain-kv .kv .v{font-weight:600}
+.flow-list{list-style:none;margin-top:10px}
+.flow-list li{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px dashed rgba(38,42,54,.6)}
+.flow-list li span{color:var(--txt2)}
+.zone{margin-top:12px;background:rgba(30,203,115,.08);border:1px solid rgba(30,203,115,.25);
+  border-radius:8px;padding:9px 12px;font-size:12px;color:#8fe3bb}
+
+.opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.opt-key{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.opt-key .ok{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+.opt-key .ok .k{font-size:11px;color:var(--txt3)}
+.opt-key .ok .v{font-size:15px;font-weight:700;margin-top:2px}
+.opt-key .ok .s{font-size:11px;color:var(--txt3);margin-top:1px}
+.opt-chain{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt-chain h4{font-size:12px;font-weight:700;margin-bottom:7px;display:flex;justify-content:space-between}
+.opt-chain h4 .tot{color:var(--txt3);font-weight:500}
+.opt-chain ul{list-style:none;font-size:12px}
+.opt-chain li{display:grid;grid-template-columns:1fr 78px 64px;padding:4px 0;color:var(--txt2);
+  border-bottom:1px dashed rgba(38,42,54,.5)}
+.pain{margin-top:10px;background:linear-gradient(90deg,rgba(255,77,79,.12),rgba(255,176,32,.08));
+  border:1px solid rgba(255,77,79,.28);border-radius:9px;padding:11px 13px}
+.pain .p-row{display:flex;justify-content:space-between;font-size:12.5px}
+.pain .p-row .big{font-size:17px;font-weight:800;color:var(--warn)}
+.pain .p-note{font-size:11px;color:var(--txt3);margin-top:6px;line-height:1.6}
+
+/* ---------- 板块轮动 ---------- */
+.secs{display:grid;grid-template-columns:repeat(2,1fr);gap:13px 22px}
+@media(max-width:1180px){.secs{grid-template-columns:1fr}}
+.sec-row .sec-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.sec-name{font-weight:700;font-size:13px}
+.sec-chg{font-weight:700;font-size:13px}
+.sec-bar{height:6px;border-radius:3px;background:#20232d;overflow:hidden;margin-bottom:5px}
+.sec-bar i{display:block;height:100%;border-radius:3px}
+.sec-bar.up i{background:var(--up)}
+.sec-bar.down i{background:var(--down)}
+.sec-note{font-size:11.5px;color:var(--txt3);line-height:1.6}
+
+/* ---------- 技术位 ---------- */
+.tks{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:1180px){.tks{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){.tks{grid-template-columns:1fr}}
+.tk{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:13px 14px}
+.tk-head{display:flex;align-items:center;gap:7px;margin-bottom:8px}
+.tk-name{font-weight:800;font-size:14px}
+.tk-px{font-weight:700;font-size:13.5px;margin-left:auto;font-variant-numeric:tabular-nums}
+.tk-rsi{font-size:10.5px;padding:2px 6px;border-radius:4px;font-weight:700}
+.tk-rsi.os{background:var(--down-bg);color:var(--down)}
+.tk-rsi.ob{background:var(--up-bg);color:var(--up)}
+.tk-note{font-size:11.5px;color:var(--txt3);margin-bottom:10px;line-height:1.6}
+.tk-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tk-col.res .tk-cap{color:var(--down)}
+.tk-col.sup .tk-cap{color:var(--up)}
+.tk-cap{font-size:11px;font-weight:700;margin-bottom:6px;padding-bottom:5px;border-bottom:1px solid var(--line)}
+.tk-col ul{list-style:none}
+.tk-col li{font-size:11.5px;padding:4px 0;border-bottom:1px dashed rgba(38,42,54,.5)}
+.tk-col li span{display:block;font-weight:600;font-variant-numeric:tabular-nums}
+.tk-col li em{font-size:10.5px;color:var(--txt3);font-style:normal}
+.tk-ma{margin-top:9px;font-size:10.5px;color:var(--txt3);line-height:1.55;
+  background:rgba(255,255,255,.025);border-radius:6px;padding:7px 9px}
+
+/* ---------- 涨跌归因 ---------- */
+.causes{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:1180px){.causes{grid-template-columns:1fr}}
+.cause{border-radius:11px;padding:14px 15px;border:1px solid var(--line);background:var(--card)}
+.cause.rate{border-left:3px solid var(--down)}
+.cause.flow{border-left:3px solid var(--blue)}
+.cause.cross{border-left:3px solid var(--warn)}
+.cause.inner{border-left:3px solid var(--purple)}
+.cause-tag{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:4px;margin-bottom:8px;
+  background:var(--card2);border:1px solid var(--line);color:var(--txt2)}
+.cause-title{font-size:13.5px;font-weight:700;margin-bottom:9px;line-height:1.5}
+.cause ul{list-style:none}
+.cause li{font-size:12px;color:var(--txt2);padding:4px 0 4px 13px;position:relative;line-height:1.65}
+.cause li::before{content:"";position:absolute;left:0;top:10px;width:4px;height:4px;
+  border-radius:50%;background:var(--txt3)}
+
+/* ---------- 观点 ---------- */
+.vws{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+@media(max-width:1180px){.vws{grid-template-columns:1fr}}
+.vw{border:1px solid var(--line);border-radius:10px;padding:12px 13px;background:var(--card)}
+.vw-top{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:8px}
+.vw-src{font-size:12px;font-weight:700}
+.vw-date{font-size:10.5px;color:var(--txt3);margin-left:auto}
+.vw-tag{font-size:10px;padding:1px 6px;border-radius:3px;background:var(--card2);
+  border:1px solid var(--line);color:var(--txt3)}
+.vw-tone{font-size:10.5px;padding:1px 7px;border-radius:10px;font-weight:600}
+.vw-tone.bullish{background:var(--up-bg);color:var(--up)}
+.vw-tone.neutral{background:rgba(255,176,32,.12);color:var(--warn)}
+.vw-tone.cautious{background:rgba(167,139,250,.14);color:var(--purple)}
+.vw-tone.bearish{background:var(--down-bg);color:var(--down)}
+.vw-txt{font-size:12px;color:var(--txt2);line-height:1.7}
+
+/* ---------- 事件日历 ---------- */
+.evs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:1180px){.evs{grid-template-columns:repeat(2,1fr)}}
+.ev{border:1px solid var(--line);border-radius:9px;padding:11px 12px;background:var(--card)}
+.ev.done{opacity:.5}
+.ev-date{font-size:11.5px;font-weight:700;color:var(--down);margin-bottom:5px}
+.ev-tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;
+  background:var(--card2);border:1px solid var(--line);color:var(--txt2);margin-bottom:7px}
+.ev-txt{font-size:11.5px;color:var(--txt2);line-height:1.6}
+
+/* ---------- 新闻 ---------- */
+.nws{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:1180px){.nws{grid-template-columns:1fr}}
+.nw{display:flex;gap:10px;border:1px solid var(--line);border-radius:9px;padding:11px 12px;background:var(--card)}
+.nw-tag{flex:0 0 auto;font-size:10.5px;padding:2px 7px;border-radius:4px;height:fit-content;
+  font-weight:600;white-space:nowrap}
+.nw-tag.major{background:var(--down-bg);color:var(--down)}
+.nw-tag.bullish{background:var(--up-bg);color:var(--up)}
+.nw-tag.bearish{background:rgba(255,138,101,.14);color:#ff8a65}
+.nw-tag.watch{background:rgba(255,176,32,.12);color:var(--warn)}
+.nw-tag.industry{background:rgba(59,130,246,.14);color:var(--blue)}
+.nw-tag.data{background:rgba(34,211,238,.12);color:var(--cy)}
+.nw-txt{font-size:12.5px;color:var(--txt2);line-height:1.7}
+.nw-txt b{color:var(--txt)}
+
+/* ---------- 领涨领跌 ---------- */
+.tops{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:1180px){.tops{grid-template-columns:1fr}}
+.top-item{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px dashed rgba(38,42,54,.5)}
+.top-sym{font-weight:700;width:48px}
+.top-px{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--txt2);font-size:12.5px}
+.top-chg{font-weight:700;font-variant-numeric:tabular-nums;width:64px;text-align:right}
+.tops-cap{font-size:12.5px;font-weight:700;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+
+.foot{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);
+  font-size:11px;color:var(--txt3);line-height:1.85}
+.foot b{color:var(--txt2)}
+.foot .srcs{margin-top:8px}
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <div class="hd-l">
+    <h1><span class="bl"></span>加密货币每日看板</h1>
+    <div class="sub"><b>2026年11月28日 周六 · 早间快照</b>｜数据截至 2026-11-28 09:45 CST｜红跌绿涨｜<b style="color:#ffb020">今日主线：68 亿美元 BTC 期权结算价 61,600，比最大痛点 70,000 低 12%；BTC 冲 62,249 被砸回 58,792，美股与黄金都在涨，只有比特币没跟；11 月 ETF 净流出 53.9 亿定格史上最差单月；美联储今日进入静默期</b><br>数据来源 CoinGecko / CoinMarketCap / CoinGlass / Deribit / CryptoQuant / Glassnode / Farside / SoSoValue / Lookonchain / Liqwall / DefiLlama / alternative.me</div>
+  </div>
+  <div class="hd-r">
+    <div class="lv">● 极度恐惧 · 超跌修复</div>
+    <div class="upd">下一更新：11/27 08:00 · 7×24 市场不休市</div>
+  </div>
+</header>
+
+<!-- KPI -->
+<div class="kpis">
+  <div class="kpi">
+      <div class="kpi-head"><span class="kpi-name">BTC</span><span class="kpi-ic">₿</span></div>
+      <span class="kpi-now">$60,204.46</span>
+      <div class="kpi-foot"><span class="kpi-chg down">-0.31%</span><span class="kpi-label-r">市值 $1.21T · 24h成交 $13.88B</span></div>
+    </div>
+<div class="kpi">
+      <div class="kpi-head"><span class="kpi-name">ETH</span><span class="kpi-ic">Ξ</span></div>
+      <span class="kpi-now">$1,663.26</span>
+      <div class="kpi-foot"><span class="kpi-chg down">-2.22%</span><span class="kpi-label-r">市值 $203.35B · 24h成交 $8.10B</span></div>
+    </div>
+<div class="kpi">
+      <div class="kpi-head"><span class="kpi-name">总市值</span><span class="kpi-ic">Σ</span></div>
+      <span class="kpi-now">$2.08T</span>
+      <div class="kpi-foot"><span class="kpi-chg down">-3.57%</span><span class="kpi-label-r">BTC主导 57.75% · 稳定币 $283.90B · 30日缩水 $16.60B</span></div>
+    </div>
+<div class="kpi">
+      <div class="kpi-head"><span class="kpi-name">恐慌贪婪</span><span class="kpi-ic">❤</span></div>
+      <span class="kpi-now">10</span>
+      <div class="kpi-foot"><span class="kpi-label-r">极度恐惧 · CMC 口径 12、alternative.me 10 · 已连续约 15 天</span></div>
+    </div>
+<div class="kpi">
+      <div class="kpi-head"><span class="kpi-name">爆仓(24h)</span><span class="kpi-ic">⚡</span></div>
+      <span class="kpi-now">$307.00M</span>
+      <div class="kpi-foot"><span class="kpi-label-r">52,948 人 · 多单占 59.9% · OI -0.31%</span></div>
+    </div>
+<div class="kpi">
+      <div class="kpi-head"><span class="kpi-name">BTC合约OI</span><span class="kpi-ic">◎</span></div>
+      <span class="kpi-now">$40.82B</span>
+      <div class="kpi-foot"><span class="kpi-chg down">-0.31%</span><span class="kpi-label-r">24h成交 $63.12B</span></div>
+    </div>
+</div>
+
+<!-- 行情表 + 恐惧贪婪 -->
+<div class="row2">
+  <div class="card">
+    <div class="card-h">
+      <h3>主流币行情 · 20 币种</h3>
+      <span class="more">24h 滚动窗口 · 快照 2026-11-28 09:45 CST · 8 涨 / 7 跌 / 5 平</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th>币种</th><th>价格</th><th>24h</th><th>市值</th><th>24h成交</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+      <td class="c-sym"><span class="dot"></span>BTC<span class="c-name">Bitcoin</span></td>
+      <td class="c-px">$60,204.46</td>
+      <td class="c-chg down">-0.31%</td>
+      <td class="c-mc">$1.21T</td>
+      <td class="c-vol">$13.88B</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>ETH<span class="c-name">Ethereum</span></td>
+      <td class="c-px">$1,663.26</td>
+      <td class="c-chg down">-2.22%</td>
+      <td class="c-mc">$203.35B</td>
+      <td class="c-vol">$8.10B</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>BNB<span class="c-name">BNB</span></td>
+      <td class="c-px">$554.65</td>
+      <td class="c-chg down">-0.24%</td>
+      <td class="c-mc">$72.94B</td>
+      <td class="c-vol">$560.00M</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>SOL<span class="c-name">Solana</span></td>
+      <td class="c-px">$71.74</td>
+      <td class="c-chg up">+0.64%</td>
+      <td class="c-mc">$42.49B</td>
+      <td class="c-vol">$2.63B</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>XRP<span class="c-name">Ripple</span></td>
+      <td class="c-px">$0.9499</td>
+      <td class="c-chg up">+0.33%</td>
+      <td class="c-mc">$60.34B</td>
+      <td class="c-vol">$1.83B</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>TRX<span class="c-name">TRON</span></td>
+      <td class="c-px">$0.3004</td>
+      <td class="c-chg down">-1.13%</td>
+      <td class="c-mc">$28.55B</td>
+      <td class="c-vol">$340.00M</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>ZEC<span class="c-name">Zcash</span></td>
+      <td class="c-px">$740.13</td>
+      <td class="c-chg up">+5.35%</td>
+      <td class="c-mc">$12.64B</td>
+      <td class="c-vol">$870.00M</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>DOGE<span class="c-name">Dogecoin</span></td>
+      <td class="c-px">$0.0578</td>
+      <td class="c-chg up">+2.00%</td>
+      <td class="c-mc">$9.07B</td>
+      <td class="c-vol">$430.00M</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>LINK<span class="c-name">Chainlink</span></td>
+      <td class="c-px">$9.38</td>
+      <td class="c-chg up">+0.26%</td>
+      <td class="c-mc">$7.19B</td>
+      <td class="c-vol">$260.00M</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>ADA<span class="c-name">Cardano</span></td>
+      <td class="c-px">$0.1482</td>
+      <td class="c-chg down">-0.83%</td>
+      <td class="c-mc">$5.57B</td>
+      <td class="c-vol">$210.00M</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>XMR<span class="c-name">Monero</span></td>
+      <td class="c-px">$408.62</td>
+      <td class="c-chg down">-12.90%</td>
+      <td class="c-mc">$7.70B</td>
+      <td class="c-vol">$140.00M</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>XLM<span class="c-name">Stellar</span></td>
+      <td class="c-px">$0.1268</td>
+      <td class="c-chg down">-0.22%</td>
+      <td class="c-mc">$4.50B</td>
+      <td class="c-vol">$100.00M</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>HYPE<span class="c-name">Hyperliquid</span></td>
+      <td class="c-px">$63.88</td>
+      <td class="c-chg up">+1.39%</td>
+      <td class="c-mc">$15.18B</td>
+      <td class="c-vol">$970.00M</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>LTC<span class="c-name">Litecoin</span></td>
+      <td class="c-px">$44.56</td>
+      <td class="c-chg flat">0.00%</td>
+      <td class="c-mc">$3.44B</td>
+      <td class="c-vol">$60.00M</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>BCH<span class="c-name">Bitcoin Cash</span></td>
+      <td class="c-px">$218.40</td>
+      <td class="c-chg flat">0.00%</td>
+      <td class="c-mc">$4.36B</td>
+      <td class="c-vol">$50.00M</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>UNI<span class="c-name">Uniswap</span></td>
+      <td class="c-px">$4.85</td>
+      <td class="c-chg up">+3.59%</td>
+      <td class="c-mc">$2.93B</td>
+      <td class="c-vol">$140.00M</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>AAVE<span class="c-name">Aave</span></td>
+      <td class="c-px">$94.57</td>
+      <td class="c-chg up">+0.71%</td>
+      <td class="c-mc">$1.46B</td>
+      <td class="c-vol">$220.00M</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>DOT<span class="c-name">Polkadot</span></td>
+      <td class="c-px">$0.688</td>
+      <td class="c-chg flat">0.00%</td>
+      <td class="c-mc">$1.02B</td>
+      <td class="c-vol">$40.00M</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>SUI<span class="c-name">Sui</span></td>
+      <td class="c-px">$0.6839</td>
+      <td class="c-chg flat">0.00%</td>
+      <td class="c-mc">$2.32B</td>
+      <td class="c-vol">$80.00M</td>
+    </tr>
+<tr>
+      <td class="c-sym"><span class="dot"></span>NEAR<span class="c-name">NEAR Protocol</span></td>
+      <td class="c-px">$3.12</td>
+      <td class="c-chg flat">0.00%</td>
+      <td class="c-mc">$4.07B</td>
+      <td class="c-vol">$60.00M</td>
+    </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h3>恐惧与贪婪指数</h3><span class="more">alternative.me · 0–100 · CMC 口径 12 / alternative.me 10，已连续约 15 天极度恐惧</span></div>
+    <div class="gauge">
+      <svg viewBox="0 0 200 108">
+        <path d="M10,100 A90,90 0 0 1 190,100" fill="none" stroke="#20232d" stroke-width="16" stroke-linecap="round"/>
+        <path d="M10,100 A90,90 0 0 1 190,100" fill="none" stroke="url(#gg)" stroke-width="16"
+              stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="248.5"/>
+        <defs>
+          <linearGradient id="gg" x1="0" x2="1">
+            <stop offset="0%" stop-color="#1ecb73"/><stop offset="45%" stop-color="#ffb020"/>
+            <stop offset="100%" stop-color="#ff4d4f"/>
+          </linearGradient>
+        </defs>
+        <line x1="100" y1="100" x2="32" y2="60" stroke="#ff4d4f" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="32" cy="60" r="4.5" fill="#ff4d4f"/>
+      </svg>
+      <div class="gauge-cap"><div class="v">39</div><div class="l">极度恐惧 · EXTREME FEAR</div></div>
+    </div>
+    <div class="gauge-note">
+      波动率 25% · 市场动量 25% · 市值趋势 20%<br>
+      主导率 15% · 价格强度 15%　<span style="color:#ffb020">动量 16 / 强度 22 · 反弹未拉动情绪</span>
+    </div>
+    <div style="margin-top:13px">
+      <div class="fg-row">
+      <span class="fg-name">波动率</span>
+      <div class="fg-bar"><i style="width:85%;"></i></div>
+      <span class="fg-val up">85</span>
+    </div>
+<div class="fg-row">
+      <span class="fg-name">市场动量</span>
+      <div class="fg-bar"><i style="width:12%;"></i></div>
+      <span class="fg-val down">12</span>
+    </div>
+<div class="fg-row">
+      <span class="fg-name">市值趋势</span>
+      <div class="fg-bar"><i style="width:14%;"></i></div>
+      <span class="fg-val down">14</span>
+    </div>
+<div class="fg-row">
+      <span class="fg-name">BTC主导率</span>
+      <div class="fg-bar"><i style="width:58%;"></i></div>
+      <span class="fg-val up">58</span>
+    </div>
+<div class="fg-row">
+      <span class="fg-name">价格强度</span>
+      <div class="fg-bar"><i style="width:20%;"></i></div>
+      <span class="fg-val down">20</span>
+    </div>
+    </div>
+    <div class="gauge-note" style="margin-top:8px">三家口径同处极度恐惧：CMC 9（与昨持平）· alternative.me 11 · TLT 13</div>
+  </div>
+</div>
+
+<!-- 领涨领跌 -->
+<div class="sec">
+  <div class="sec-t"><h2>市场广度</h2><span class="en">Market Breadth</span>
+    <span class="meta">样本 20 币 19 涨 1 跌 · 宽度极好，但涨幅集中在超跌小币，属 beta 修复</span><span class="line"></span></div>
+  <div class="tops">
+    <div>
+      <div class="tops-cap upbg">▲ 领涨 TOP5</div>
+      <div class="top-item up">
+      <span class="top-sym">ZEC</span>
+      <span class="top-px">$740.13</span>
+      <span class="top-chg up">+5.35%</span>
+    </div>
+<div class="top-item up">
+      <span class="top-sym">UNI</span>
+      <span class="top-px">$4.85</span>
+      <span class="top-chg up">+3.59%</span>
+    </div>
+<div class="top-item up">
+      <span class="top-sym">DOGE</span>
+      <span class="top-px">$0.0578</span>
+      <span class="top-chg up">+2.00%</span>
+    </div>
+<div class="top-item up">
+      <span class="top-sym">HYPE</span>
+      <span class="top-px">$63.88</span>
+      <span class="top-chg up">+1.39%</span>
+    </div>
+<div class="top-item up">
+      <span class="top-sym">AAVE</span>
+      <span class="top-px">$94.57</span>
+      <span class="top-chg up">+0.71%</span>
+    </div>
+    </div>
+    <div>
+      <div class="tops-cap downbg">▼ 领跌 TOP5</div>
+      <div class="top-item down">
+      <span class="top-sym">XMR</span>
+      <span class="top-px">$408.62</span>
+      <span class="top-chg down">-12.90%</span>
+    </div>
+<div class="top-item down">
+      <span class="top-sym">ETH</span>
+      <span class="top-px">$1,663.26</span>
+      <span class="top-chg down">-2.22%</span>
+    </div>
+<div class="top-item down">
+      <span class="top-sym">TRX</span>
+      <span class="top-px">$0.3004</span>
+      <span class="top-chg down">-1.13%</span>
+    </div>
+<div class="top-item down">
+      <span class="top-sym">ADA</span>
+      <span class="top-px">$0.1482</span>
+      <span class="top-chg down">-0.83%</span>
+    </div>
+<div class="top-item down">
+      <span class="top-sym">BTC</span>
+      <span class="top-px">$60,204.46</span>
+      <span class="top-chg down">-0.31%</span>
+    </div>
+    </div>
+  </div>
+</div>
+
+<!-- 衍生品 + 期权 -->
+<div class="panel-d">
+  <div class="card">
+    <div class="card-h"><h3>合约 · 衍生品</h3><span class="more">CoinGlass / Binance 合约 / Liqwall · 2026-11-28 09:45 CST 快照</span></div>
+
+    <div class="dv">
+      <div class="dv-i"><div class="dv-k">BTC 资金费率（8h）</div><div class="dv-v down">+0.0081%</div>
+        <div class="dv-sub">年化 +8.9% / +8.4%</div></div>
+      <div class="dv-i"><div class="dv-k">ETH 资金费率（8h）</div><div class="dv-v up">+0.0077%</div>
+        <div class="dv-sub">年化 +6.2% · 多头付费</div></div>
+      <div class="dv-i"><div class="dv-k">爆仓多空比</div><div class="dv-v down">3.29</div>
+        <div class="dv-sub">BTC 口径 0.96（多单 1.37 亿 / 空单 1.43 亿）</div></div>
+    </div>
+
+    <div class="mini-h">BTC 未平仓量 $40.82B · 24h -0.31% · 合约成交是现货的 11.4 倍</div>
+    <div class="oi-bar">
+      <i class="b1" style="width:75.4%"></i><i class="b2" style="width:24.6%"></i>
+    </div>
+    <div class="oi-lb">
+      <span>BTC 75.4% · $40.82B（24h +2.48%）</span>
+      <span>ETH 24.6% · $13.88B</span>
+    </div>
+
+    <div class="mini-h">24h 爆仓 · $307.00M · 52.9K 人</div>
+    <div class="liq-bar">
+      <i class="lg" style="width:76.6%"></i><i class="sh" style="width:23.4%"></i>
+    </div>
+    <div class="liq-lb"><span class="down">多单 $184.00M（76.6%）</span>
+      <span class="up">空单 $123.00M（23.4%）</span></div>
+    <div class="zone">全网多单被清洗，但 BTC 单币种口径多空几乎对半（1.37 亿 / 1.43 亿）——
+      说明这轮是双向绞肉而非单边踩踏；单笔最大 1,171 万美元 BTC 多单在 57,693 被强平，
+      未平仓量随之降 4.55% 至 2,881.9 亿</div>
+  </div>
+
+  <div class="card">
+    <div class="card-h"><h3>期权 · 短中线情绪</h3><span class="more">Deribit 月度结算 + 全链快照 · 2026-11-28 09:45 CST</span></div>
+    <div class="opt-key">
+      <div class="ok"><div class="k">Put / Call（11/27 到期）</div><div class="v">0.86</div><div class="s">较昨日 -0.03 · 空头套保持续加仓</div></div>
+      <div class="ok"><div class="k">DVOL（30d 隐含波动率）</div><div class="v down">48</div><div class="s">-5.5 · 探底回升后波动率回落</div></div>
+      <div class="ok"><div class="k">ATM IV（BTC）</div><div class="v">46%</div><div class="s">BTC 期权未平仓 341.9 亿 · 深度实值看跌占优</div></div>
+      <div class="ok"><div class="k">25Δ Skew</div><div class="v down">-7.22%</div><div class="s">11/27 月度 68 亿美元已结算，结算价 61,600 美元，比最大痛点 70,000 低 12%——卖方防守线被直接击穿；12 月期权的 25-delta 风险反转仍是 -7.22 波动率点，下行保护还在被加价</div></div>
+    </div>
+
+    <div class="opt-chain">
+      <div><h4>看涨（Calls）<span class="tot">痛点上方阻力偏薄</span></h4>
+        <ul><li><span>$61,000</span><b>4,200 BTC</b><em>~$256M</em></li><li><span>$64,000</span><b>3,600 BTC</b><em>~$219M</em></li><li><span>$70,000</span><b>2,900 BTC</b><em>~$176M</em></li></ul></div>
+      <div><h4>看跌（Puts）<span class="tot">$58,000 单档最厚 · 下方尾部集中</span></h4>
+        <ul><li><span>$58,000</span><b>6,400 BTC</b><em>~$390M</em></li><li><span>$60,000</span><b>5,200 BTC</b><em>~$316M</em></li><li><span>$56,000</span><b>3,400 BTC</b><em>~$185M</em></li></ul></div>
+    </div>
+
+    <div class="pain">
+      <div class="p-row"><span>11/27 月度到期最大痛点</span><span class="big">$60,500</span></div>
+      <div class="p-row"><span>到期名义 $1.35B（占全市场OI 5.1）</span>
+        <span>痛点距现价 0.5%</span></div>
+      <div class="p-note">痛点距现价 0.5%，比昨日的 71,000 下移了 1,000 点——
+        卖方在核心 PCE 超预期后把防守线往后撤了一档，这是对鹰派定价的直接反应。<br>
+        <b style="color:#ffb020">痛点仍太远，指数效应弱；真正的看点是 ETH：11/27 月度痛点约 1,700，
+        与现价 1,704 几乎完全贴合，明天的对冲盘牵引 ETH 会比 BTC 更明显。</b></div>
+    </div>
+  </div>
+</div>
+
+<!-- 链上 -->
+<div class="sec">
+  <div class="sec-t"><h2>链上数据</h2><span class="en">On-chain</span>
+    <span class="meta">稳定币 · DeFi 借贷 · ETF 持仓</span><span class="line"></span></div>
+  <div class="panel-d">
+    <div class="card">
+      <div class="card-h"><h3>流动性与储备</h3><span class="more">CryptoQuant / Farside / Lookonchain · 2026-11-28 09:45 CST</span></div>
+      <div class="chain-kv">
+        <div class="kv"><span>稳定币总供给</span><span class="v">$283.90B</span></div>
+        <div class="kv"><span>30 天变化</span><span class="v down">-5.50%（$-16,600,000,000.00）</span></div>
+        <div class="kv"><span>USDT 市值 / 份额</span><span class="v">$173.57B / 61.13%</span></div>
+        <div class="kv"><span>USDC 市值</span><span class="v">$69.19B</span></div>
+        <div class="kv"><span>USDT 60 天赎回</span><span class="v down">-$7.20B</span></div>
+        <div class="kv"><span>BTC ETF 合计持仓</span><span class="v">1.28MM 枚 · 净资产 794.7 亿</span></div>
+        <div class="kv"><span>鲸鱼 24h 净变化</span><span class="v down">121.12K BTC</span></div>
+        <div class="kv"><span>BTC ETF 11 月累计</span><span class="v down">-$5.00B（史上最差单月）</span></div>
+      </div>
+      <div class="zone">现货与衍生品共识带 $57,000–58,500：下方 58,000–58,500 是 6 月买盘建立的现货支撑，
+        12/4 到期 $58,000 看跌又是全曲线最厚一档。跌破则直接看 55,000–55,122（11/21 两年低点）；上方 67,000 为空头清算密集区</div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><h3>DeFi · TVL 与协议流入</h3><span class="more">DefiLlama / DeFiLlama 口径 · 2026-11-28 09:45 CST 快照</span></div>
+      <div class="chain-kv">
+        <div class="kv"><span>DeFi TVL</span><span class="v">$63.80B</span></div>
+        <div class="kv"><span>24h / 7d</span><span class="v down">-0.90% / -5.10%</span></div>
+        <div class="kv"><span>以太坊 TVL</span><span class="v">$31.00B（7d -4.20）</span></div>
+        <div class="kv"><span>Base TVL</span><span class="v">$3.95B（7d -3.80）</span></div>
+        <div class="kv"><span>稳定币借贷 TVL</span><span class="v">$22.17B · APY 3.38%</span></div>
+        <div class="kv"><span>借贷池 24h TVL 变化</span><span class="v down">-0.2%（276 池）</span></div>
+        <div class="kv"><span>永续 24h 成交</span><span class="v up">$18.30B</span></div>
+        <div class="kv"><span>永续 7d 成交变化</span><span class="v up">+-12.0%</span></div>
+      </div>
+      <div class="mini-h">本周 DeFi TVL 流出 TOP5</div>
+      <ul class="flow-list"><li><span>Sky 回购</span><b class="down">-$50.00M</b></li><li><span>Aave</span><b class="down">-$310.00M</b></li><li><span>Morpho</span><b class="down">-$220.00M</b></li><li><span>EtherFi</span><b class="down">-$110.00M</b></li><li><span>Spark</span><b class="down">-$90.00M</b></li></ul>
+      <div class="zone">2 枚稳定币偏离锚定 0.5%–1.5%（LUSD +0.62%、FRAX -0.59%），无 1.5% 以上脱锚；
+        4 个池子已满额借出、95 个池利用率超 80% —— <b>数据落地后借贷端没有松，美元仍偏紧</b></div>
+    </div>
+  </div>
+</div>
+
+<!-- 板块轮动 -->
+<div class="sec">
+  <div class="sec-t"><h2>板块轮动</h2><span class="en">Sector Rotation</span>
+    <span class="meta">8 个赛道全线上涨——但这是超跌 beta 修复，不是资金回流（稳定币板块仍逆势下跌）</span><span class="line"></span></div>
+  <div class="card"><div class="secs"><div class="sec-row">
+      <div class="sec-head"><span class="sec-name">DEX / 交易</span>
+        <span class="sec-chg up">+3.59%</span></div>
+      <div class="sec-bar up"><i style="width:27.8%"></i></div>
+      <div class="sec-note">UNI +3.59% 是主流币里最强的一档，无项目级消息，属超跌后资金回补</div>
+    </div>
+<div class="sec-row">
+      <div class="sec-head"><span class="sec-name">隐私 / 匿名</span>
+        <span class="sec-chg up">+2.70%</span></div>
+      <div class="sec-bar up"><i style="width:20.9%"></i></div>
+      <div class="sec-note">ZEC +5.35% 逆势领涨（Grayscale 背书 + 屏蔽池需求）；但 XMR -12.90% 把板块整体拖下，KuCoin 11/30 下架是硬催化</div>
+    </div>
+<div class="sec-row">
+      <div class="sec-head"><span class="sec-name">Meme</span>
+        <span class="sec-chg up">+2.00%</span></div>
+      <div class="sec-bar up"><i style="width:15.5%"></i></div>
+      <div class="sec-note">DOGE +2.00%、SHIB/PEPE 小幅波动，纯 beta，没有独立驱动</div>
+    </div>
+<div class="sec-row">
+      <div class="sec-head"><span class="sec-name">Hyperliquid 生态</span>
+        <span class="sec-chg up">+1.39%</span></div>
+      <div class="sec-bar up"><i style="width:10.8%"></i></div>
+      <div class="sec-note">HYPE +1.39%：富兰克林加密指数 ETF 12/1 纳入生效在即，指数调仓买盘提前进场</div>
+    </div>
+<div class="sec-row">
+      <div class="sec-head"><span class="sec-name">DeFi 借贷</span>
+        <span class="sec-chg up">+0.71%</span></div>
+      <div class="sec-bar up"><i style="width:5.5%"></i></div>
+      <div class="sec-note">AAVE +0.71%、MORPHO 持平；Sky 近 7 日回购超 500 万美元创 2025 年 3 月以来新高，是板块里唯一有真金白银的</div>
+    </div>
+<div class="sec-row">
+      <div class="sec-head"><span class="sec-name">Layer1 公链</span>
+        <span class="sec-chg up">+0.20%</span></div>
+      <div class="sec-bar up"><i style="width:1.6%"></i></div>
+      <div class="sec-note">SOL +0.64%、XRP +0.33%、BCH/ADA 持平，蓝筹基本躺平，跑赢 BTC 但幅度有限</div>
+    </div>
+<div class="sec-row">
+      <div class="sec-head"><span class="sec-name">AI / 算力</span>
+        <span class="sec-chg down">-0.50%</span></div>
+      <div class="sec-bar down"><i style="width:3.9%"></i></div>
+      <div class="sec-note">NEAR 持平等权，AI 叙事这周被英伟达出口管制消息拖累，未传导到链上</div>
+    </div>
+<div class="sec-row">
+      <div class="sec-head"><span class="sec-name">隐私交易对 / 下架风险</span>
+        <span class="sec-chg down">-12.90%</span></div>
+      <div class="sec-bar down"><i style="width:100.0%"></i></div>
+      <div class="sec-note">XMR 单币暴跌 11%，是今日全市场最弱的大市值资产，KuCoin 下架进入 48 小时倒计时</div>
+    </div></div></div>
+</div>
+
+<!-- 技术位 -->
+<div class="sec">
+  <div class="sec-t"><h2>关键技术位</h2><span class="en">Key Levels</span>
+    <span class="meta">阻力 / 支撑阶梯 · 数据截至 2026-11-28 09:45</span><span class="line"></span></div>
+  <div class="tks"><div class="tk">
+      <div class="tk-head">
+        <span class="tk-name">BTC</span>
+        <span class="tk-px">$60,204.00</span>
+        <span class="tk-rsi ob">RSI 32.4</span>
+      </div>
+      <div class="tk-note">BTC 24h -0.31%，区间 58,750–62,207，振幅 5.6%；周线在连跌七周后首次有望收阳（本周约 +2%）。较 2025 年 10 月高点 126,198 回撤 52.3%</div>
+      <div class="tk-grid">
+        <div class="tk-col res"><div class="tk-cap">阻力位</div><ul><li><span>61,600 / 62,249</span><em>昨日美股开盘前的冲高点，也是本轮反弹的失败点</em></li><li><span>64,000 / 64,800</span><em>64,800 是 Hyperliquid 上空单清算最厚的一档（6,470 万美元）</em></li><li><span>65,200 / 67,000</span><em>20 日均线与空头清算密集区共振，中期多空分水岭</em></li></ul></div>
+        <div class="tk-col sup"><div class="tk-cap">支撑位</div><ul><li><span>58,750 / 58,792</span><em>24h 区间下沿，昨日美股开盘首小时砸出的低点</em></li><li><span>57,100</span><em>Hyperliquid 上多单清算最大单点（3,760 万美元），跌破容易连环</em></li><li><span>55,122 / 55,711</span><em>11/21 两年新低与 7 日低点，趋势结构的最后防线</em></li></ul></div>
+      </div>
+      <div class="tk-ma">MA20 约 65,200 · MA50 约 64,800 · MA200 约 71,500 · 现价仍在四条日线均线下方</div>
+    </div>
+<div class="tk">
+      <div class="tk-head">
+        <span class="tk-name">ETH</span>
+        <span class="tk-px">$1,663.30</span>
+        <span class="tk-rsi os">RSI 28.6</span>
+      </div>
+      <div class="tk-note">ETH 24h -2.22%，区间 1,634.57–1,754.90，振幅 7.2%；主流币里最弱的一只，Glamsterdam 升级消息只换来一次冲高，未能守住</div>
+      <div class="tk-grid">
+        <div class="tk-col res"><div class="tk-cap">阻力位</div><ul><li><span>1,700 / 1,720</span><em>整数关口与昨夜反抽失败点</em></li><li><span>1,754 / 1,800</span><em>24h 区间上沿 1,754.9 与前期平台下沿，套牢盘密集</em></li><li><span>2,000</span><em>心理关口，也是 12 月期权看涨第一档</em></li></ul></div>
+        <div class="tk-col sup"><div class="tk-cap">支撑位</div><ul><li><span>1,634 / 1,640</span><em>24h 区间下沿，昨夜已被测试一次</em></li><li><span>1,600</span><em>整数关口，跌破则打开下行空间</em></li><li><span>1,550</span><em>周线布林下轨与长期趋势线共振，中期生命线</em></li></ul></div>
+      </div>
+      <div class="tk-ma">MA50 约 2,200 · MA200 约 2,380 · 全均线空头排列 · RSI 28.6 已进超卖</div>
+    </div>
+<div class="tk">
+      <div class="tk-head">
+        <span class="tk-name">SOL</span>
+        <span class="tk-px">$71.74</span>
+        <span class="tk-rsi ob">RSI 30.8</span>
+      </div>
+      <div class="tk-note">SOL 24h +0.64%，是少数收绿的主流币；Firedancer 主网版 v26.11.1 发布、Agave v4.5 升级候选先由约 20% 质押节点试运行</div>
+      <div class="tk-grid">
+        <div class="tk-col res"><div class="tk-cap">阻力位</div><ul><li><span>72.50 / 73.00</span><em>24h 区间上沿，日内第一道压力</em></li><li><span>78.50</span><em>上周平台下沿，套牢盘密集</em></li><li><span>85 / 90</span><em>MA200 与 MA50 共振，中期压制</em></li></ul></div>
+        <div class="tk-col sup"><div class="tk-cap">支撑位</div><ul><li><span>70.00</span><em>整数关口，日内多空争夺位</em></li><li><span>68.50</span><em>近一周反复试探的短线支撑</em></li><li><span>60.20</span><em>52 周低点，最后一道防线</em></li></ul></div>
+      </div>
+      <div class="tk-ma">MA50 约 90.0 · MA200 约 85.5 · RSI 30.8 贴近超卖线 · 双客户端升级是中期变量</div>
+    </div>
+<div class="tk">
+      <div class="tk-head">
+        <span class="tk-name">ZEC</span>
+        <span class="tk-px">$740.13</span>
+        <span class="tk-rsi ob">RSI 44.2</span>
+      </div>
+      <div class="tk-note">ZEC 24h +5.35%，区间 686.51–764.65，振幅 11.4%；全市场普跌里唯一有独立叙事的大市值币种，Grayscale 背书是主要催化</div>
+      <div class="tk-grid">
+        <div class="tk-col res"><div class="tk-cap">阻力位</div><ul><li><span>764 / 790</span><em>24h 区间上沿与 MA200 共振，第一道压力</em></li><li><span>815 / 845</span><em>MA50 区域，也是前次反弹终点</em></li><li><span>880</span><em>本轮下跌起点，中期格局分水岭</em></li></ul></div>
+        <div class="tk-col sup"><div class="tk-cap">支撑位</div><ul><li><span>700 / 710</span><em>心理关口，本周两度试探均守住</em></li><li><span>686.51</span><em>24h 区间下沿</em></li><li><span>650</span><em>隐私叙事回吐后的下一档承接区</em></li></ul></div>
+      </div>
+      <div class="tk-ma">MA50 约 815 · MA200 约 790 · RSI 44.2 四币中最强 · 24h 合约成交额 18.1 亿美元、OI 3.65 亿</div>
+    </div></div>
+</div>
+
+<!-- 涨跌归因 -->
+<div class="sec">
+  <div class="sec-t"><h2>今日涨跌主因</h2><span class="en">Why It Moved</span>
+    <span class="meta">四维归因 · 非投资建议</span><span class="line"></span></div>
+  <div class="causes"><div class="cause rate">
+      <div class="cause-tag">宏观利率</div>
+      <div class="cause-title">美联储今日进入静默期，12 月加息 25bp 已被定价到 100%</div>
+      <ul><li>FOMC 11/28 起进入会议前沟通静默期，官员无法再公开讨论政策，市场失去口头指引</li><li>CME FedWatch：12 月加息 25bp 概率 100%，维持 3.75%–4% 不变的概率只剩 0.5%</li><li>前高盛策略师布鲁克斯警告：静默期前若不放鸽派信号，市场可能在 12/8–9 会议前持续承压</li><li>油价重新上行是最大变数——布伦特 95.44 美元结束三周连跌，霍尔木兹海峡油轮触雷、沙特吉赞炼油厂遇袭</li></ul>
+    </div>
+<div class="cause flow">
+      <div class="cause-tag">资金流向</div>
+      <div class="cause-title">11 月 ETF 净流出 53.9 亿美元定格史上最差，但周五已明显收窄</div>
+      <ul><li>SoSoValue 口径 11 月累计净流出 53.91 亿美元，超 6 月 45.10 亿的旧纪录约 19.5%，为 2024 年 1 月上市以来最差单月</li><li>18 个交易日仅 2 天净流入，11/17–11/25 连续 7 日流出；IBIT 一家流出约 45 亿，占全类 83.5%</li><li>11/27 半日市口径大幅收窄：Lookonchain 记录 BTC ETF 净流出 323 枚（约 1,981 万美元），ETH ETF 反而小幅净流入 23 枚</li><li>Coinbase 溢价指数已连续 64 天为负——美国现货买盘持续缺席，这是比 ETF 流水更前置的信号</li></ul>
+    </div>
+<div class="cause cross">
+      <div class="cause-tag">跨市场传导</div>
+      <div class="cause-title">美股周线大涨、黄金白银飙升，比特币是唯一没跟上的人</div>
+      <ul><li>感恩节后半日市，道指 +1.18% 报 50,774.94、标普 +1.60%、纳指 +2.31%；道指创 2022 年 10 月以来最大单周涨幅（周 +5.5%）</li><li>现货黄金 +2.03% 至 3,641 美元、白银 +5.31% 至 43.75 美元，硬资产被大举买入</li><li>BTC 白天一度摸到 62,249，美股 22:30 开盘后半小时砸到 58,792，一小时全市场爆仓 2.28 亿</li><li>差别在于背书：美股有 AI 存储与芯片行情，黄金有地缘避险，比特币是本周唯一没有政策方或产业方叙事托底的风险资产</li></ul>
+    </div>
+<div class="cause inner">
+      <div class="cause-tag">内部冲击</div>
+      <div class="cause-title">68 亿美元期权结算叠加大饼多空双杀，杠杆被来回洗了一遍</div>
+      <ul><li>11/27 Deribit 月度到期：约 11 万张 BTC 期权、名义 68.2 亿美元，结算价 61,600，比最大痛点 70,000 低 12%</li><li>结果不是向痛点靠拢（过去 56 次有 40 次落在痛点 2% 内），而是卖方防守线被直接击穿</li><li>24h 全网爆仓 3.07 亿、5.29 万人，多单 1.84 亿 / 空单 1.23 亿；BTC 口径 1.154 亿（多 6,530 万 / 空 5,000 万）</li><li>最大单笔是 11/27 15:00 UTC 一笔 1,000 万美元的 ETH 多单被强平；ETH 爆仓 9,420 万，是今日最惨的单一资产</li></ul>
+    </div></div>
+</div>
+
+<!-- 观点聚合 -->
+<div class="sec">
+  <div class="sec-t"><h2>观点聚合</h2><span class="en">Analyst Views</span>
+    <span class="meta">机构 / 链上 / 技术面 / 宏观</span><span class="line"></span></div>
+  <div class="vws"><div class="vw">
+      <div class="vw-top">
+        <span class="vw-src">CryptoQuant</span>
+        <span class="vw-date">11/28</span>
+        <span class="vw-tag">链上</span>
+        <span class="vw-tone bullish">偏多</span>
+      </div>
+      <div class="vw-txt">9/30 至 11/21 期间，持有 1,000–10,000 枚 BTC 的地址余额增加 121,117 枚，增幅 4.29%，总量达 2,947,054 枚。价格在跌、巨鲸在收，这是四季度最反常的一组数据。</div>
+    </div>
+<div class="vw">
+      <div class="vw-top">
+        <span class="vw-src">CryptoQuant（同篇）</span>
+        <span class="vw-date">11/28</span>
+        <span class="vw-tag">链上</span>
+        <span class="vw-tone bearish">偏空</span>
+      </div>
+      <div class="vw-txt">持续回升需要 USDT 供应重新增长。当前稳定币总市值 2,839 亿、30 天缩水约 166 亿，场内可动用的美元还在变少——没有新弹药，反弹就只是仓位搬运。</div>
+    </div>
+<div class="vw">
+      <div class="vw-top">
+        <span class="vw-src">摩根大通（研报）</span>
+        <span class="vw-date">11/27</span>
+        <span class="vw-tag">机构</span>
+        <span class="vw-tone bullish">偏多</span>
+      </div>
+      <div class="vw-txt">Strategy 的 mNAV 跌到 0.88 倍创纪录低位，属于典型的投降式信号。历史上这类读数多次出现在周期尾声。注意这是估值判断，不是价格预测。</div>
+    </div>
+<div class="vw">
+      <div class="vw-top">
+        <span class="vw-src">Glassnode</span>
+        <span class="vw-date">11/25</span>
+        <span class="vw-tag">衍生品</span>
+        <span class="vw-tone neutral">中性</span>
+      </div>
+      <div class="vw-txt">BTC 期货未平仓量一周降 12% 至 293 亿美元，为 3 月初以来最低。杠杆出清降低了连环爆仓风险，但报告同时指出：卖方压力在减弱，却没有看到主动权转到买方手上。</div>
+    </div>
+<div class="vw">
+      <div class="vw-top">
+        <span class="vw-src">Galaxy Research</span>
+        <span class="vw-date">11/26</span>
+        <span class="vw-tag">机构</span>
+        <span class="vw-tone bearish">偏空</span>
+      </div>
+      <div class="vw-txt">已正式撤回「比特币熊市结束」的判断：13 项历史筑底信号中仍有 11 项未满足。把 58,500 附近的日线收盘当作观察线——昨日盘中低点 58,792 尚未跌破。</div>
+    </div>
+<div class="vw">
+      <div class="vw-top">
+        <span class="vw-src">21Shares</span>
+        <span class="vw-date">11/25</span>
+        <span class="vw-tag">机构</span>
+        <span class="vw-tone neutral">中性</span>
+      </div>
+      <div class="vw-txt">比特币要走出可持续上涨，两个必要条件：稳定币供应恢复增长、现货 ETF 重新转为净流入。目前两条都还没满足，所以现在更像是修复而不是反转。</div>
+    </div>
+<div class="vw">
+      <div class="vw-top">
+        <span class="vw-src">Bill Ackman（潘兴广场）</span>
+        <span class="vw-date">11/24</span>
+        <span class="vw-tag">宏观</span>
+        <span class="vw-tone bullish">偏多</span>
+      </div>
+      <div class="vw-txt">美联储 12 月加息会是个错误，金融条件已经大幅收紧。他举例：投资级的 SpaceX 刚以 8.259% 完成有担保融资，而 IPO 时的无担保债利率还不到 6%。</div>
+    </div>
+<div class="vw">
+      <div class="vw-top">
+        <span class="vw-src">纽约联储 威廉姆斯</span>
+        <span class="vw-date">11/23</span>
+        <span class="vw-tag">宏观</span>
+        <span class="vw-tone bearish">偏空</span>
+      </div>
+      <div class="vw-txt">当前通胀约 3.5%，显著高于 2% 目标；若经济保持强劲、通胀压力持续，不排除连续加息。这是静默期前最后一批鹰派表态，也是 100% 加息定价的来源。</div>
+    </div></div>
+</div>
+
+<!-- 事件日历 -->
+<div class="sec">
+  <div class="sec-t"><h2>近期关注事件</h2><span class="en">Event Calendar</span>
+    <span class="meta">解锁 / 期权到期 / 宏观数据</span><span class="line"></span></div>
+  <div class="evs"><div class="ev ">
+      <div class="ev-date">11/28</div>
+      <div class="ev-tag">今日</div>
+      <div class="ev-txt">⚠️ 🇺🇸 美联储进入 FOMC 会前沟通静默期（至 12/9），官员不再公开表态，市场短期失去口头指引。CME 定价 12 月加息 25bp 概率 100%。周末加密照常交易，美股休市，流动性偏薄</div>
+    </div>
+<div class="ev ">
+      <div class="ev-date">11/29</div>
+      <div class="ev-tag">期权</div>
+      <div class="ev-txt">Deribit 周度到期，名义约 13.5 亿美元（占全市场 BTC 期权 OI 约 5.1%），最大痛点 60,500，距现价仅 +0.5%——这是本月痛点贴得最近的一期，指数牵引力明显强于刚结算的月度那期</div>
+    </div>
+<div class="ev ">
+      <div class="ev-date">11/30</div>
+      <div class="ev-tag">下架</div>
+      <div class="ev-txt">⚠️ KuCoin 于 16:00 北京时间（08:00 UTC）正式下架 Monero：XMR/USDT、USDC、ETH、BTC 四对现货停止交易，杠杆不再接受 XMR 作抵押，提现窗口开到 12/31。XMR 今日已跌 12.9%，下架前抛压未必出清</div>
+    </div>
+<div class="ev ">
+      <div class="ev-date">11/30</div>
+      <div class="ev-tag">数据</div>
+      <div class="ev-txt">11 月最后交易日，美股月度收盘。ETF 全月数据当日定格，最终读数将确认 53.9 亿这一史上最差单月纪录；月度收盘位置同时决定周线与月线技术形态</div>
+    </div>
+<div class="ev ">
+      <div class="ev-date">12/1</div>
+      <div class="ev-tag">行业</div>
+      <div class="ev-txt">富兰克林加密指数 ETF（EZPZ）纳入 HYPE 生效，标的指数资产数增至 8 种，基金按权重调仓；LayerZero 的 Zero 主网与链上交易引擎 ATLAS 同步上线（初期容量 >25 万笔/秒）</div>
+    </div>
+<div class="ev ">
+      <div class="ev-date">12/2</div>
+      <div class="ev-tag">政策</div>
+      <div class="ev-txt">香港虚拟资产服务发牌草案提交立法会首读：托管、顾问、交易、管理四类服务拟全部纳入发牌监管；金管局 CMU 数字资产平台已支持债券代币化与链上货银对付</div>
+    </div>
+<div class="ev ">
+      <div class="ev-date">12/4</div>
+      <div class="ev-tag">期权</div>
+      <div class="ev-txt">Deribit 周度到期，当前整条曲线最厚的单点持仓仍是这一期 $58,000 看跌（约 6,400 万美元名义）。下方尾部保护高度集中于此，是本轮调整最实质的衍生品支撑</div>
+    </div>
+<div class="ev ">
+      <div class="ev-date">12/8–12/9</div>
+      <div class="ev-tag">宏观</div>
+      <div class="ev-txt">⚠️ 🇺🇸 FOMC 利率决议 + 经济预测 + 发布会（12/9 14:00 ET / 北京时间 12/10 03:00）。加息 25bp 已被完全定价，真正扰动来自措辞与点阵图：是否暗示 2027 年初暂停。静默期结束后首周波动率通常抬升</div>
+    </div>
+<div class="ev ">
+      <div class="ev-date">12/10</div>
+      <div class="ev-tag">宏观</div>
+      <div class="ev-txt">🇺🇸 美国 11 月 CPI（21:30 北京时间）。11 月 PCE 已落到 3.8%/核心 3.3%，若 CPI 继续走高，2027 年暂停加息的预期会被继续往后推</div>
+    </div>
+<div class="ev ">
+      <div class="ev-date">12/15</div>
+      <div class="ev-tag">行业</div>
+      <div class="ev-txt">以太坊 Glamsterdam 升级在 Hoodi 测试网激活，此前因 gas 定价担忧推迟了两个月。主网排期未定，测试网能否平稳运行是下一个观察点</div>
+    </div>
+<div class="ev ">
+      <div class="ev-date">12/23</div>
+      <div class="ev-tag">宏观</div>
+      <div class="ev-txt">🇺🇸 美国 11 月 PCE 与 Q3 GDP 终值同场公布，是 12 月 FOMC 之后第一份完整通胀读数</div>
+    </div>
+<div class="ev ">
+      <div class="ev-date">12/25</div>
+      <div class="ev-tag">期权</div>
+      <div class="ev-txt">Deribit 季度年度到期：名义约 112 亿美元，占全市场 BTC 期权 OI 约 35%，最大痛点约 72,000。当天欧美圣诞休市、流动性极薄，波动可能被显著放大</div>
+    </div></div>
+</div>
+
+<!-- 重要新闻 -->
+<div class="sec">
+  <div class="sec-t"><h2>重要新闻</h2><span class="en">Top News</span>
+    <span class="meta">筛选标准：对价格 / 流动性 / 政策有实质影响的事件</span><span class="line"></span></div>
+  <div class="nws"><div class="nw">
+      <span class="nw-tag major">重大</span>
+      <div class="nw-txt"><b>68 亿美元 BTC 期权结算，结算价 61,600 比最大痛点 70,000 低 12%。</b>11/27 Deribit 月度到期约 11 万张 BTC、37 万张 ETH 期权，合计名义 74.7 亿。过去 56 次到期有 40 次收在痛点 2% 以内，这次没有——卖方在 70,000 的防守线被直接击穿，说明下跌速度超过了做市商的敞口调整能力。</div>
+    </div>
+<div class="nw">
+      <span class="nw-tag major">重大</span>
+      <div class="nw-txt"><b>BTC 冲 62,249 后被砸回 58,792，美股涨、黄金涨，就它跌。</b>北京时间 11/27 22:30 美股开盘后半小时，BTC 从 62,125 附近直落，一小时全市场爆仓 2.28 亿。同期道指 +1.18%、纳指 +2.31%、现货黄金 +2.03%、白银 +5.31%——比特币是当晚唯一没有叙事托底的风险资产。</div>
+    </div>
+<div class="nw">
+      <span class="nw-tag major">利空</span>
+      <div class="nw-txt"><b>11 月 ETF 净流出 53.9 亿美元，定格上市以来最差单月。</b>超过 6 月 45.1 亿的旧纪录约 19.5%；18 个交易日仅 2 天净流入，11/17–11/25 连续 7 日流出，IBIT 一家占全类流出 83.5%。感恩节休市让 26–27 日读数不全，全月数据 11/30 才最终定格。</div>
+    </div>
+<div class="nw">
+      <span class="nw-tag major">利空</span>
+      <div class="nw-txt"><b>XMR 单日暴跌约 12%，是今日最弱的大市值资产。</b>KuCoin 将于 11/30 16:00（北京时间）下架 XMR 全部现货交易对，杠杆不再接受其作抵押，提现窗口开到 12/31。下架倒计时进入 48 小时，抛压未必已经出清；同板块的 ZEC 反而 +5.35%，隐私叙事内部出现明显分化。</div>
+    </div>
+<div class="nw">
+      <span class="nw-tag watch">关注</span>
+      <div class="nw-txt"><b>恐慌指数 10–12，已连续约 15 天困在极度恐惧。</b>alternative.me 口径 10、CoinMarketCap 12、CoinBoss 10，编制方法不同但一致指向极度恐惧；一个月前这个读数是 51。BTC 主导率 57.75%–58.6%，山寨季指数一度报 66（中性）——资金没有真正流向山寨。</div>
+    </div>
+<div class="nw">
+      <span class="nw-tag watch">关注</span>
+      <div class="nw-txt"><b>结构面三条偏暖的消息被盘面忽略了：</b>瑞士首只现货比特币 ETF（BBIT）11/26 在 SIX 挂牌，初始持仓 350 枚 BTC；币安全面解除 10 月安全事件后的提现限制，BNB 当日 +1.4%；挖矿难度今日上调约 9%，而全网算力同比 -8%，是 2021 年以来首次年度下降。</div>
+    </div>
+<div class="nw">
+      <span class="nw-tag policy">政策</span>
+      <div class="nw-txt"><b>监管密集落地：</b>英国 FCA 计划推出严于美欧的 DeFi 规则，立法论据直接引用朝鲜关联黑客利用 DeFi 清洗币安被盗资金的路径，美国检方同期寻求追回超 11 亿美元涉案资产；俄罗斯央行公布加密投资资格测验规则，非合格投资人年购上限 30 万卢布；CFTC 指引明确 BTC 可按不低于 20% 折价计入财务资源，其余加密资产按 100% 折价。</div>
+    </div>
+<div class="nw">
+      <span class="nw-tag industry">行业</span>
+      <div class="nw-txt"><b>生态与基础设施：</b>Firedancer 发布主网版 v26.11.1，Agave v4.5 升级候选先由约 20% 质押节点试运行；LayerZero 公布 Zero 链 40 余家创世验证者（ARK、Tether、德国电信、Gemini 等），主网 11/30 上线；Ethereum Glamsterdam 升级定于 12/15 在 Hoodi 测试网激活；Sky 近 7 日回购超 500 万美元，创 2025 年 3 月以来新高。</div>
+    </div>
+<div class="nw">
+      <span class="nw-tag industry">行业</span>
+      <div class="nw-txt"><b>矿企与持仓端两头受挤：</b>Strategy 持有 851,305 枚 BTC，成本约 642.3 亿美元、均价约 75,448 美元，按现价浮亏约 120 亿美元，11/23 将 STRC 优先股回购授权提高到 40 亿美元；六家上市矿企合计持币较年初约 11 万枚降至近半，11 月为 2021 年以来最大单月净减。</div>
+    </div></div>
+</div>
+
+<footer class="foot">
+  <div><b>数据口径与免责说明：</b>本看板所有价格、市值、合约、链上数据均取自 CoinGecko、CoinGlass、DefiLlama、CryptoQuant、Token Unlocks、Farside Investors 及公开财经报道的同一时点快照（2026-11-28 09:45 CST），
+  不同数据源因取样时间、交易所覆盖范围差异，个别数字可能相差 1–3%；恐慌指数三家口径分别为 CoinMarketCap 9、alternative.me 11、TLT 13，属编制方法差异而非数据错误。
+  24h 涨跌幅以 UTC 滚动窗口计，与日线收盘口径不可直接比较。均线与 RSI 为多源交叉估算值，非交易所官方指标。表中不包含任何价格预测或买卖建议。</div>
+  <div class="srcs"><b>主要来源：</b>CoinGecko · CoinMarketCap · CoinGlass · Deribit · CryptoQuant · Glassnode · Farside · SoSoValue · Lookonchain · Liqwall · DefiLlama ·
+  alternative.me · 智通财经 · 中国基金报 · 新浪财经 · 腾讯证券 · 金色财经 · 香港金管局公告 · SEC EDGAR</div>
+  <div style="margin-top:8px">加密货币为高波动、高风险资产，价格可在极短时间内剧烈变动，您可能损失部分或全部本金。请独立研究并自行判断风险承受能力，不构成投资建议。</div>
+</footer>
+
+</body>
+</html>
